@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f8f8fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Margin">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>Margin — talk with your kid about school</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2b2e3d; --ink-soft:#6b7280; --paper:#f8f8fb; --paper-dim:#eef0f7; --chalk:#e4e7f1;
+    --primary:#7c6fe0; --primary-strong:#5b4fc4; --primary-soft:#efecfd; --sage:#3fa876; --sage-bg:#e6f6ee;
+    --silver:#c7cbe0; --silver-deep:#9aa0c2; --line: rgba(43,46,61,0.10);
+    --marigold:#e0a030; --marigold-deep:#c9821f; --clay:#e2695a; --clay-bg:#fdece9;
+    --teal:#1f9d85; --teal-deep:#187b68;
+    --shadow: 0 1px 3px rgba(43,46,61,0.05), 0 8px 20px rgba(43,46,61,0.06);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,sans-serif; -webkit-font-smoothing:antialiased; overscroll-behavior-y: none;}
+  .display{font-family:'Poppins', -apple-system, sans-serif; font-weight:700;}
+  .hand{font-family:'Caveat', cursive;}
+  a{color:inherit;} button{font-family:inherit;}
+
+  .shell{max-width:600px;margin:0 auto;padding:18px 16px calc(110px + env(safe-area-inset-bottom));}
+  header.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding-bottom:14px; margin-bottom:14px;
+    border-bottom:2px solid var(--chalk); position:sticky; top:0; background:rgba(248,248,251,0.92); backdrop-filter:blur(8px); z-index:5; padding-top:2px;}
+  .logo{display:flex;align-items:center;gap:8px; min-width:0; flex:1;}
+  .logo .mmark{width:26px; height:26px; border-radius:8px; flex:none; display:flex; align-items:center; justify-content:center;
+    background:var(--teal); color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:13px;}
+  .logo .mark{font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; letter-spacing:-0.01em; color:var(--primary-strong); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .logo .tag{font-size:11.5px; color:var(--ink-soft); font-style:italic; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .top-login{display:flex; align-items:center; gap:10px; margin-left:auto; padding:7px 10px; border:1px solid var(--line); border-radius:999px; background:#ffffff; box-shadow:var(--shadow);}
+  .top-login .login-pill{padding:5px 10px; border-radius:999px; background:var(--primary-soft); color:var(--primary-strong); font-weight:700; font-size:11px; letter-spacing:.04em; text-transform:uppercase;}
+  .top-login .login-meta{font-size:11.5px; color:var(--ink-soft); font-weight:600; line-height:1.2; text-align:right;}
+
+  .child-row{display:flex; gap:8px; overflow-x:auto; flex-wrap:nowrap; padding:2px 2px 10px; margin-bottom:6px; scrollbar-width:none;}
+  .child-row::-webkit-scrollbar{display:none;}
+  .chip{display:inline-flex; align-items:center; gap:6px; flex:none; padding:9px 14px; border-radius:999px; border:1.5px solid var(--line);
+    background:#ffffff; font-size:14px; font-weight:600; cursor:pointer; color:var(--ink-soft); transition:all .15s ease;}
+  .chip.active{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .chip.add{background:transparent; border-style:dashed; color:var(--teal);}
+  .chip .x{padding:2px; opacity:.6;}
+
+  .card{background:#ffffff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:20px;}
+  .card + .card{margin-top:12px;}
+
+  .coach-hero{padding:22px 20px; background:var(--primary-soft); border:1px solid var(--line);}
+  .coach-hero h2{margin:0 0 10px; font-size:24px; line-height:1.15; color:var(--primary-strong);}
+  .coach-hero p{margin:0; color:var(--ink-soft); line-height:1.6; font-size:14px;}
+  .benefit-grid{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; margin-top:18px;}
+  .benefit-tile{padding:16px 14px; border-radius:12px; background:#ffffff; border:1px solid var(--line); box-shadow:var(--shadow);}
+  .benefit-tile .icon{font-size:18px; margin-bottom:8px; }
+  .benefit-tile h3{margin:0 0 6px; font-size:14px; color:var(--ink);}
+  .benefit-tile p{margin:0; color:var(--ink-soft); font-size:12.5px; line-height:1.5;}
+  .tab-btn{flex:1; padding:12px 0; border:none; background:transparent; border-radius:9px; font-weight:800; font-size:14px; color:var(--ink-soft); cursor:pointer; letter-spacing:0.02em;}
+  .tab-btn.active-tab{background:#ffffff; color:var(--ink); box-shadow:var(--shadow);}
+
+  .onboard{text-align:center; padding:40px 22px; max-width:440px; margin:24px auto;}
+  .onboard .mark-big{font-size:36px; margin-bottom:6px;}
+  .onboard h1{font-size:22px; margin:0 0 8px; font-weight:600;}
+  .onboard p{color:var(--ink-soft); font-size:14.5px; line-height:1.55; margin:0 0 22px;}
+  .field-stack{display:flex; flex-direction:column; gap:10px;}
+
+  input[type=text], textarea{font-family:inherit; font-size:16px; padding:12px 14px; border-radius:9px; border:1.5px solid var(--line);
+    background:var(--paper-dim); color:var(--ink); outline:none; width:100%;}
+  input[type=text]:focus, textarea:focus{border-color:var(--teal);}
+  input:disabled, textarea:disabled{opacity:.65;}
+  textarea{resize:vertical;}
+
+  .btn{font-weight:700; font-size:15px; padding:13px 20px; border-radius:10px; border:none; cursor:pointer;}
+  .btn:active{transform:scale(0.98);}
+  .btn-primary{background:var(--teal); color:#fff;}
+  .btn-primary:disabled{opacity:.45;}
+  .btn-ghost{background:transparent; color:var(--ink-soft); border:1.5px solid var(--line);}
+  .btn-block{width:100%;}
+
+  .section-eyebrow{text-transform:uppercase; letter-spacing:.08em; font-size:11px; font-weight:700; color:var(--ink-soft); margin:18px 0 10px;}
+  .section-eyebrow:first-child{margin-top:2px;}
+
+  .analyzing{display:flex; align-items:center; gap:13px;}
+  .spinner{width:20px; height:20px; border-radius:50%; border:3px solid var(--chalk); border-top-color:var(--teal); animation:spin 0.8s linear infinite; flex:none;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .analyzing-txt{font-size:14px; color:var(--ink-soft);}
+
+  .tab-row{display:flex; gap:4px; background:var(--paper-dim); padding:4px; border-radius:12px; margin-bottom:14px;}
+  .tab-btn{flex:1; padding:9px 0; border:none; background:transparent; border-radius:9px; font-weight:600; font-size:13.5px; color:var(--ink-soft); cursor:pointer;}
+  .tab-btn.active-tab{background:#ffffff; color:var(--ink); box-shadow:var(--shadow);}
+  .plan-summary-row{display:flex; align-items:center; justify-content:space-between;}
+  .plan-progress-track{background:var(--chalk); border-radius:99px; height:6px; margin-top:8px; overflow:hidden;}
+  .plan-progress-fill{background:var(--sage); height:100%; border-radius:99px;}
+
+  .empty-state{text-align:center; padding:38px 18px;}
+  .empty-state .ico{font-size:28px; margin-bottom:8px;}
+  .empty-state .t1{font-weight:600; margin-bottom:3px; font-size:15px;}
+  .sub-txt{font-size:13px; color:var(--ink-soft);}
+
+  .src-tag{font-size:11.5px; color:var(--ink-soft); font-weight:600;}
+  .result-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:12px;}
+  .result-date{font-size:12px; color:var(--ink-soft); font-weight:700; text-transform:uppercase; letter-spacing:.05em;}
+  .icon-btn{background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:15px; padding:5px 7px; border-radius:6px;}
+  .icon-btn:active{color:var(--clay); background:var(--clay-bg);}
+
+  .summary-txt{font-size:14.5px; line-height:1.6; color:var(--ink); margin:0 0 14px;}
+  .entry-photo{width:100%; max-height:260px; object-fit:cover; border-radius:12px; margin-bottom:14px; display:block; border:1px solid var(--line);}
+
+  .subject-row{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--chalk);}
+  .subject-row:first-of-type{border-top:none;}
+  .subject-name{font-weight:600; font-size:14px;}
+  .subject-score{font-weight:700; font-size:12.5px; padding:3px 9px; border-radius:6px; white-space:nowrap;}
+  .score-strong{background:var(--sage-bg); color:var(--sage);}
+  .score-steady{background:rgba(224,160,48,0.14); color:var(--marigold-deep);}
+  .score-needs_attention{background:var(--clay-bg); color:var(--clay);}
+
+  .twocol{display:flex; flex-direction:column; gap:14px; margin-top:16px;}
+  .pill-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px;}
+  .pill-list li{font-size:13.5px; line-height:1.4; padding-left:16px; position:relative;}
+  .pill-list.strength li:before{content:"✓"; position:absolute; left:0; color:var(--sage); font-weight:700;}
+  .pill-list.growth li:before{content:"→"; position:absolute; left:0; color:var(--clay); font-weight:700;}
+
+  .questions-block{margin-top:18px; padding-top:16px; border-top:1px dashed var(--line);}
+  .q-item{display:flex; gap:10px; align-items:flex-start; padding:8px 0; font-size:14px; line-height:1.5;}
+  .q-item input[type=checkbox]{margin-top:3px; width:19px; height:19px; accent-color:var(--sage); flex:none; cursor:pointer;}
+  .q-item.asked label{color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--line);}
+  .q-item label{cursor:pointer;}
+  .cadence{color:var(--ink-soft); font-weight:500; font-size:12px;}
+  .plan-goal{font-weight:600; font-size:14px; margin-bottom:8px;}
+
+  .encourage{margin-top:16px; padding:13px 15px; background:var(--paper-dim); border-radius:10px; font-family:'Caveat',cursive; font-size:19px; color:var(--ink); border-left:3px solid var(--marigold);}
+
+  .tl-row{display:flex; align-items:center; gap:12px; padding:13px 15px; cursor:pointer; border:1px solid var(--line); border-radius:12px; background:#ffffff; margin-bottom:8px;}
+  .tl-row:active{border-color:var(--teal);}
+  .tl-date{font-size:12px; font-weight:700; color:var(--ink-soft); width:56px; flex:none;}
+  .tl-badges{display:flex; gap:6px; flex-wrap:wrap; flex:1;}
+  .tl-badge{font-size:11.5px; font-weight:600; padding:2px 8px; border-radius:5px;}
+  .tl-chev{color:var(--ink-soft); font-size:13px;}
+
+  .err-banner{background:var(--clay-bg); color:var(--clay); border-radius:10px; padding:12px 14px; font-size:13.5px; margin-bottom:12px;}
+  input[type=file]{display:none;}
+  .privacy-note{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:20px; line-height:1.5;}
+
+  .fab{position:fixed; right:20px; bottom:calc(22px + env(safe-area-inset-bottom)); width:58px; height:58px; border-radius:50%;
+    background:var(--teal); color:#fff; font-size:28px; line-height:1; display:flex; align-items:center; justify-content:center;
+    border:none; box-shadow:var(--shadow); cursor:pointer; z-index:50;}
+  .fab:active{transform:scale(0.94);}
+
+  .sheet-overlay{position:fixed; inset:0; background:rgba(43,46,61,0.35); z-index:60; animation:fadeIn .15s ease;}
+  @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+  .sheet{position:fixed; left:0; right:0; bottom:0; background:#ffffff; border-radius:20px 20px 0 0; padding:8px 20px calc(24px + env(safe-area-inset-bottom));
+    max-height:88vh; overflow-y:auto; z-index:61; box-shadow:0 -10px 30px rgba(43,46,61,0.18); animation:slideUp .2s ease;}
+  @keyframes slideUp{from{transform:translateY(100%);} to{transform:translateY(0);}}
+  .sheet-handle{width:38px; height:4px; background:var(--chalk); border-radius:99px; margin:8px auto 6px;}
+  .sheet-close{position:absolute; top:10px; right:12px;}
+  .sheet-title{font-weight:700; font-size:15.5px; margin:10px 0 14px;}
+
+  .action-btn-big{display:flex; align-items:center; gap:12px; width:100%; padding:16px; border-radius:12px; border:1.5px solid var(--line);
+    background:var(--paper-dim); font-weight:600; font-size:15px; cursor:pointer; text-align:left; color:var(--ink);}
+  .action-btn-big:active{border-color:var(--teal);}
+  .action-btn-big .em{font-size:20px;}
+
+  .manual-row{padding:12px 0; border-top:1px solid var(--chalk);}
+  .manual-row:first-child{border-top:none; padding-top:2px;}
+  .manual-inputs{display:flex; gap:8px;}
+  .chip-group{margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;}
+  .chip-mini{display:inline-block; padding:5px 11px; border-radius:999px; font-size:11.5px; font-weight:700; border:1.5px solid transparent; cursor:pointer; opacity:.4;}
+  .chip-mini.active-mini{opacity:1; border-color:currentColor;}
+  .sheet-err{color:var(--clay); font-size:13px; margin-top:8px;}
+
+  .plan-summary-row2{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .rag-chip{display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:999px; font-size:11.5px; font-weight:700; cursor:pointer; white-space:nowrap; border:none;}
+  .rag-chip:before{content:''; width:7px; height:7px; border-radius:50%; background:currentColor; flex:none;}
+  .rag-green{background:var(--sage-bg); color:var(--sage);}
+  .rag-amber{background:rgba(224,160,48,0.14); color:var(--marigold-deep);}
+  .rag-red{background:var(--clay-bg); color:var(--clay);}
+  .rag-none{background:var(--paper-dim); color:var(--ink-soft);}
+
+  .plan-row-head{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px;}
+  .plan-subject-input{font-weight:700; font-size:15.5px; border:none; background:transparent; padding:4px 0; flex:1; border-bottom:1.5px solid transparent; appearance:none; -webkit-appearance:none; font-family:inherit; color:var(--ink); cursor:pointer;}
+  .plan-subject-input:focus{border-bottom-color:var(--teal); outline:none;}
+  select.plan-subject-input:disabled{opacity:.65; cursor:default;}
+  .day-picker{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;}
+  .day-chip{width:38px; height:32px; display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700; border-radius:8px; border:1.5px solid var(--line); cursor:pointer; color:var(--ink-soft); background:#ffffff;}
+  .day-chip.day-active{background:var(--teal); border-color:var(--teal); color:#fff;}
+  input[type=time]{font-family:inherit; font-size:14px; padding:9px 10px; border-radius:9px; border:1.5px solid var(--line); background:var(--paper-dim); color:var(--ink);}
+  .plan-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;}
+  .mini-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); font-weight:700; margin-bottom:4px;}
+  .plan-grid input[type=text]{font-size:14px; padding:10px 12px;}
+  .plan-row-foot{display:flex; justify-content:space-between; align-items:center; margin-top:12px;}
+
+  .session-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .session-top input[type=date]{width:auto; flex:none; padding:9px 10px; font-size:13px; font-family:inherit; border-radius:9px; border:1.5px solid var(--line); background:var(--paper-dim); color:var(--ink);}
+  .session-done-label{display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--ink-soft); cursor:pointer;}
+  .session-done-label input{width:18px; height:18px; accent-color:var(--sage); cursor:pointer;}
+  .suggested-tag{font-size:12px; color:var(--teal); margin-top:6px;}
+
+  .confirm-pending{background:var(--clay) !important; color:#fff !important; font-weight:700; padding:5px 10px; border-radius:7px; font-size:12px;}
+  .note-save-row{display:flex; justify-content:flex-end; margin-top:8px; gap:8px;}
+  .btn-save-note{background:var(--paper-dim); border:1.5px solid var(--line); color:var(--ink-soft); font-weight:700; font-size:12.5px; padding:7px 14px; border-radius:8px; cursor:pointer;}
+  .btn-save-note.saved{background:var(--sage-bg); color:var(--sage); border-color:transparent;}
+  .btn-cal{background:var(--paper-dim); border:1.5px solid var(--line); color:var(--ink-soft); font-weight:700; font-size:12.5px; padding:7px 14px; border-radius:8px; cursor:pointer;}
+  .btn-cal:disabled{opacity:.4; cursor:default;}
+
+  .fold-row{display:flex; align-items:center; gap:10px; padding:13px 15px; cursor:pointer; border:1px solid var(--line); border-radius:12px; background:#ffffff; margin-bottom:8px;}
+  .fold-row:active{border-color:var(--teal);}
+  .fold-title{font-weight:600; font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .fold-chev{color:var(--ink-soft); font-size:13px; flex:none;}
+
+  /* ---------- modes / profile / avatars / gamification ---------- */
+  .mode-row{display:flex; gap:4px; background:var(--paper-dim); padding:4px; border-radius:12px; margin-bottom:12px;}
+  .mode-pill{flex:1; padding:8px 0; border:none; background:transparent; border-radius:9px; font-weight:700; font-size:12.5px; color:var(--ink-soft); cursor:pointer;}
+  .mode-pill.active-mode{background:var(--primary); color:#fff;}
+  .mode-pill:disabled{opacity:.35; cursor:default;}
+
+  .profile-bar{display:flex; align-items:center; gap:12px; padding:10px 4px; margin-bottom:10px; cursor:pointer;}
+  .profile-bar.static{cursor:default;}
+  .avatar-circle{width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:21px; flex:none; box-shadow:var(--shadow);}
+  .profile-info{flex:1; min-width:0;}
+  .profile-name{font-weight:700; font-size:14.5px;}
+
+  .emoji-grid{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .emoji-opt{width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-size:19px; border-radius:10px; border:1.5px solid var(--line); cursor:pointer; background:#ffffff;}
+  .emoji-opt.emoji-active{border-color:var(--teal); background:var(--primary-soft);}
+  .color-grid{display:flex; gap:8px; margin:4px 0 8px;}
+  .color-opt{width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent;}
+  .color-opt.color-active{border-color:var(--ink);}
+  .avatar-picker-preview{width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; margin:4px auto 4px;}
+
+  .badge-chip{display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--paper-dim); color:var(--ink-soft);}
+  .welcome-back{border-color:var(--marigold) !important;}
+
+  .cg-note{font-size:12.5px; color:var(--ink-soft); margin-top:12px; line-height:1.5;}
+  .summary-box{width:100%; min-height:220px; font-family:'Inter',monospace; font-size:12.5px; line-height:1.5; white-space:pre-wrap; padding:12px; border-radius:9px; border:1.5px solid var(--line); background:var(--paper-dim); color:var(--ink);}
+
+  .gap-row{display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; padding-bottom:14px; border-bottom:1px dashed var(--line);}
+  .gap-metric{text-align:center;}
+  .gap-value{font-weight:700; font-size:17px;}
+  .gap-arrow{color:var(--ink-soft); font-size:14px;}
+  .gap-chip{margin-left:auto; font-size:12px; font-weight:700; padding:5px 11px; border-radius:999px; white-space:nowrap;}
+  .gap-met{background:var(--sage-bg); color:var(--sage);}
+  .gap-open{background:rgba(224,160,48,0.14); color:var(--marigold-deep);}
+  .gap-unknown{background:var(--paper-dim); color:var(--ink-soft);}
+
+  .lock-toggle{cursor:pointer; font-weight:700; color:var(--teal); text-transform:none; letter-spacing:0; font-size:10.5px;}
+  .lock-toggle.static{cursor:default; color:var(--ink-soft);}
+  .notes-log{margin-top:10px; display:flex; flex-direction:column; gap:8px;}
+  .note-entry{background:var(--paper-dim); border-radius:9px; padding:9px 12px;}
+  .note-entry-text{font-size:13.5px; line-height:1.4; white-space:pre-wrap;}
+  .note-entry-meta{font-size:11px; color:var(--ink-soft); margin-top:4px; font-weight:600;}
+</style>
+</head>
+<body>
+<div class="shell" id="app"></div>
+<input type="file" id="global-file-input" accept="image/*" capture="environment">
+
+<script>
+const AVATAR_EMOJIS = ['🙂','😄','🦁','🐯','🐼','🦊','🐸','🦉','🌟','🚀','🎨','⚽','📚','🎵','🌈','🐉'];
+const AVATAR_COLORS = ['#DC9A3C','#5F8A68','#BF5E45','#6C8EBF','#9B6FB0','#4A5568'];
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+const state = {
+  children: [],
+  activeChildId: null,
+  resultsByChild: {},
+  plansByChild: {},
+  sessionsByChild: {},
+  tipsByChild: {},
+  parentProfile: null,     // {name, email, avatarEmoji, avatarColor, pin}
+  mode: 'parent',          // 'parent' | 'child' | 'caregiver'
+  authenticated: false,
+  loginEmail: '',
+  loginPassword: '',
+  loginError: '',
+  showWelcomeBack: false,
+  analyzing: false,
+  error: null,
+  sheet: null,             // null|'addChild'|'action'|'manual'|'tip'|'pinGate'|'caregiver'|'parentProfileEdit'|'childProfileEdit'|'summary'
+  sheetError: null,
+  pendingModeSwitch: null,
+  pinInput: '',
+  manualSubjects: [],
+  manualNotes: '',
+  view: 'results',         // 'results' | 'plan' | 'tips'
+  confirmTarget: null,
+  confirmTimer: null,
+  savedNoteFlash: null,
+  tipSubject: '',
+  tipStruggle: '',
+  tipLoading: false,
+  avatarTemp: { pp:{emoji:AVATAR_EMOJIS[0], color:AVATAR_COLORS[0]}, newChild:{emoji:AVATAR_EMOJIS[2], color:AVATAR_COLORS[1]} },
+};
+
+// ---------- storage helpers ----------
+async function storeGet(key){
+  try{
+    if(window.storage && typeof window.storage.get === 'function'){
+      const r = await window.storage.get(key, false);
+      return r ? JSON.parse(r.value) : null;
+    }
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e){
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch(inner){
+      return null;
+    }
+  }
+}
+async function storeSet(key, value){
+  try{
+    if(window.storage && typeof window.storage.set === 'function'){
+      await window.storage.set(key, JSON.stringify(value), false);
+      return;
+    }
+    if(typeof localStorage !== 'undefined'){
+      localStorage.setItem(key, JSON.stringify(value));
+      return;
+    }
+  } catch(e){
+    console.error('storage set failed', e);
+  }
+}
+function uid(){ return Math.random().toString(36).slice(2,10); }
+function stripOpen(list){ return list.map(({_open, ...rest})=>rest); }
+
+// ---------- init ----------
+async function init(){
+  state.parentProfile = await storeGet('parentProfile');
+
+  const lastActive = await storeGet('lastActive');
+  const now = Date.now();
+  if(lastActive && (now - lastActive) > (1000*60*60*24*90)) state.showWelcomeBack = true;
+  await storeSet('lastActive', now);
+
+  const children = await storeGet('children');
+  state.children = children || [];
+  if(state.children.length){
+    state.activeChildId = state.children[0].id;
+    await loadChildData(state.activeChildId);
+  }
+  render();
+}
+async function loadChildData(childId){
+  if(!state.resultsByChild[childId]) state.resultsByChild[childId] = (await storeGet('results:'+childId)) || [];
+  state.resultsByChild[childId] = (state.resultsByChild[childId] || []).map(entry => ({ ...entry, _open: entry._open !== undefined ? entry._open : true }));
+  if(!state.plansByChild[childId]) state.plansByChild[childId] = (await storeGet('plan:'+childId)) || [];
+  if(!state.sessionsByChild[childId]) state.sessionsByChild[childId] = (await storeGet('sessions:'+childId)) || [];
+  if(!state.tipsByChild[childId]) state.tipsByChild[childId] = (await storeGet('tips:'+childId)) || [];
+  await pruneExpired(childId);
+}
+
+// ---------- gamification ----------
+function getBadge(points){
+  points = points || 0;
+  if(points >= 150) return {label:'Gold streak', icon:'🏆'};
+  if(points >= 60) return {label:'Silver streak', icon:'🥈'};
+  if(points >= 20) return {label:'Bronze streak', icon:'🥉'};
+  return {label:'Just starting', icon:'🌱'};
+}
+function awardPoints(childId, role, amount){
+  const child = state.children.find(c=>c.id===childId);
+  if(!child) return;
+  if(role==='child') child.childPoints = (child.childPoints||0) + amount;
+  else child.parentPoints = (child.parentPoints||0) + amount;
+  storeSet('children', state.children);
+}
+
+// ---------- parent profile ----------
+async function saveParentProfile(){
+  const name = (document.getElementById('pp-name').value||'').trim();
+  const email = (document.getElementById('pp-email').value||'').trim();
+  const pin = (document.getElementById('pp-pin').value||'').trim();
+  if(!name){ state.setupError = 'Add your name to continue.'; render(); return; }
+  const av = state.avatarTemp.pp;
+  state.parentProfile = { name, email, avatarEmoji: av.emoji, avatarColor: av.color, pin: pin ? pin : null };
+  state.setupError = null;
+  await storeSet('parentProfile', state.parentProfile);
+  render();
+}
+function openParentProfileEdit(){
+  state.avatarTemp.parentEdit = { emoji: state.parentProfile.avatarEmoji, color: state.parentProfile.avatarColor };
+  state.sheetError = null;
+  state.sheet = 'parentProfileEdit';
+  render();
+}
+async function saveParentProfileEdit(){
+  const name = (document.getElementById('ppe-name').value||'').trim();
+  const email = (document.getElementById('ppe-email').value||'').trim();
+  const pin = (document.getElementById('ppe-pin').value||'').trim();
+  if(!name){ state.sheetError = 'Add your name.'; render(); return; }
+  const av = state.avatarTemp.parentEdit;
+  state.parentProfile = { name, email, avatarEmoji: av.emoji, avatarColor: av.color, pin: pin ? pin : null };
+  await storeSet('parentProfile', state.parentProfile);
+  state.sheet = null;
+  render();
+}
+function openChildProfileEdit(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  state.avatarTemp.childEdit = { emoji: child.avatarEmoji||AVATAR_EMOJIS[2], color: child.avatarColor||AVATAR_COLORS[1] };
+  state.sheet = 'childProfileEdit';
+  render();
+}
+async function saveChildProfileEdit(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  const av = state.avatarTemp.childEdit;
+  child.avatarEmoji = av.emoji; child.avatarColor = av.color;
+  await storeSet('children', state.children);
+  state.sheet = null;
+  render();
+}
+
+// ---------- mode switching ----------
+function switchMode(target){
+  if(target===state.mode) return;
+  if(target==='parent' && state.parentProfile && state.parentProfile.pin){
+    state.pinInput=''; state.sheetError=null; state.pendingModeSwitch='parent'; state.sheet='pinGate'; render(); return;
+  }
+  state.mode = target;
+  state.view = 'results';
+  render();
+}
+function checkPin(){
+  const entered = document.getElementById('pin-input') ? document.getElementById('pin-input').value : state.pinInput;
+  if(entered === state.parentProfile.pin){
+    state.mode = state.pendingModeSwitch || 'parent';
+    state.pendingModeSwitch = null;
+    state.sheet = null;
+    state.view = 'results';
+    render();
+  } else {
+    state.sheetError = 'Incorrect PIN, try again.';
+    render();
+  }
+}
+
+// ---------- child actions ----------
+async function addChild(name, grade){
+  if(!name.trim()) return;
+  const av = state.avatarTemp.newChild;
+  const child = { id: uid(), name: name.trim(), grade: grade.trim(), avatarEmoji: av.emoji, avatarColor: av.color, childPoints:0, parentPoints:0, caregiver:null };
+  state.children.push(child);
+  await storeSet('children', state.children);
+  state.activeChildId = child.id;
+  state.resultsByChild[child.id] = [];
+  state.plansByChild[child.id] = [];
+  state.sessionsByChild[child.id] = [];
+  state.tipsByChild[child.id] = [];
+  state.avatarTemp.newChild = { emoji: AVATAR_EMOJIS[Math.floor(Math.random()*AVATAR_EMOJIS.length)], color: AVATAR_COLORS[Math.floor(Math.random()*AVATAR_COLORS.length)] };
+  state.sheet = null;
+  render();
+}
+async function removeChild(id){
+  state.children = state.children.filter(c=>c.id!==id);
+  await storeSet('children', state.children);
+  delete state.resultsByChild[id]; delete state.plansByChild[id]; delete state.sessionsByChild[id]; delete state.tipsByChild[id];
+  if(state.activeChildId===id){
+    state.activeChildId = state.children.length ? state.children[0].id : null;
+    if(state.activeChildId) await loadChildData(state.activeChildId);
+  }
+  render();
+}
+async function selectChild(id){
+  state.activeChildId = id; state.error = null;
+  await loadChildData(id);
+  render();
+}
+async function removeEntry(childId, entryId){
+  if(state.mode==='caregiver') return;
+  state.resultsByChild[childId] = state.resultsByChild[childId].filter(e=>e.id!==entryId);
+  await storeSet('results:'+childId, stripOpen(state.resultsByChild[childId]));
+  render();
+}
+async function toggleQuestion(childId, entryId, qIdx){
+  if(state.mode==='caregiver') return;
+  const entry = state.resultsByChild[childId].find(e=>e.id===entryId);
+  entry.coachingQuestions[qIdx].asked = !entry.coachingQuestions[qIdx].asked;
+  await storeSet('results:'+childId, stripOpen(state.resultsByChild[childId]));
+  awardPoints(childId, 'parent', 2);
+  render();
+}
+function toggleExpand(entryId){
+  const entry = findEntry(entryId);
+  if(entry) entry._open = !entry._open;
+  render();
+}
+function findEntry(entryId){
+  for(const list of Object.values(state.resultsByChild)){
+    const e = list.find(x=>x.id===entryId);
+    if(e) return e;
+  }
+  return null;
+}
+
+// ---------- delete confirmation (native confirm() is blocked in the sandboxed preview) ----------
+function isConfirming(key){ return state.confirmTarget === key; }
+function requestConfirm(key, action){
+  if(state.confirmTarget === key){
+    clearTimeout(state.confirmTimer);
+    state.confirmTarget = null;
+    action();
+    return;
+  }
+  state.confirmTarget = key;
+  render();
+  clearTimeout(state.confirmTimer);
+  state.confirmTimer = setTimeout(()=>{ state.confirmTarget = null; render(); }, 2500);
+}
+
+// ---------- study plan (per subject, lives at the child level) ----------
+function persistPlan(childId){ storeSet('plan:'+childId, stripOpen(state.plansByChild[childId] || [])); }
+function persistResults(childId){ storeSet('results:'+childId, stripOpen(state.resultsByChild[childId] || [])); }
+function ragLabel(rag){ return rag==='green' ? 'On track' : rag==='amber' ? 'Slipping' : rag==='red' ? 'Off track' : 'Not rated'; }
+function cycleRag(childId, rowId){
+  if(state.mode!=='parent') return;
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(!row) return;
+  const order = [null,'green','amber','red'];
+  row.rag = order[(order.indexOf(row.rag)+1) % order.length];
+  persistPlan(childId); awardPoints(childId,'parent',2); render();
+}
+function togglePlanRowOpen(childId, rowId){
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(row) row._open = !row._open;
+  render();
+}
+function toggleTargetLock(childId, rowId){
+  if(state.mode!=='parent') return;
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(!row) return;
+  row.targetLocked = !row.targetLocked;
+  persistPlan(childId); render();
+}
+function renderNotesLog(row){
+  const log = row.notesLog && row.notesLog.length ? row.notesLog : (row.notes ? [{id:'legacy', text:row.notes, date: row.lastUpdated || new Date().toISOString()}] : []);
+  if(!log.length) return '';
+  return `
+    <div class="notes-log">
+      ${log.slice().reverse().map(n=>`
+        <div class="note-entry">
+          <div class="note-entry-text">${escapeHtml(n.text)}</div>
+          <div class="note-entry-meta">${fmtDateTime(n.date)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+function saveNoteEntry(childId, rowId, text){
+  if(state.mode==='caregiver') return;
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(!row) return;
+  const val = (text!==undefined ? text : (row.notesDraft||'')).trim();
+  if(!val) return;
+  if(!row.notesLog){ row.notesLog = row.notes ? [{id:uid(), text:row.notes, date: row.lastUpdated || new Date().toISOString()}] : []; }
+  row.notesLog.push({ id: uid(), text: val, date: new Date().toISOString() });
+  row.notes = '';
+  row.notesDraft = '';
+  persistPlan(childId);
+  awardPoints(childId, state.mode==='child'?'child':'parent', 1);
+  state.savedNoteFlash = rowId;
+  render();
+  setTimeout(()=>{ if(state.savedNoteFlash===rowId){ state.savedNoteFlash=null; render(); } }, 1400);
+}
+function addPlanRow(childId){
+  if(state.mode==='caregiver') return;
+  const plan = state.plansByChild[childId] || [];
+  plan.unshift({
+    id:uid(),
+    subject:'',
+    currentResult:'',
+    targetResult:'',
+    targetLocked:false,
+    studyDays:[],
+    studyTime:'',
+    studyScheduleHint:'',
+    practiceTestOption:'none',
+    practiceTestDate:'',
+    practiceTestTime:'',
+    practiceTestSchedule:'',
+    notes:'',
+    notesLog:[],
+    rag:null,
+    lastUpdated:null,
+    _open:true
+  });
+  state.plansByChild[childId] = plan;
+  persistPlan(childId);
+  awardPoints(childId, state.mode==='child'?'child':'parent', 2);
+  render();
+}
+function removePlanRow(childId, rowId){
+  if(state.mode!=='parent') return;
+  state.plansByChild[childId] = (state.plansByChild[childId]||[]).filter(r=>r.id!==rowId);
+  persistPlan(childId); render();
+}
+function mergePlanFromResult(childId, subjects, subjectPlans, suggestedSession){
+  const plan = state.plansByChild[childId] || [];
+  subjects.forEach(s=>{
+    const match = plan.find(p=>p.subject.trim().toLowerCase()===s.name.trim().toLowerCase());
+    const suggestion = (subjectPlans||[]).find(sp=>sp.name && sp.name.trim().toLowerCase()===s.name.trim().toLowerCase());
+    if(match){
+      match.currentResult = s.score;
+      match.lastUpdated = new Date().toISOString();
+      match._open = true;
+      if(!match.targetResult && !match.targetLocked && suggestion) match.targetResult = suggestion.targetResult ? formatAsPercent(suggestion.targetResult) : '';
+      if(suggestion && suggestion.studySchedule) match.studyScheduleHint = suggestion.studySchedule;
+      if(!match.practiceTestOption && suggestion) match.practiceTestOption = suggestion.practiceTestOption || 'none';
+      if(!match.notes && suggestion) match.notes = suggestion.notes || '';
+    } else {
+      plan.push({
+        id: uid(), 
+        subject: s.name, 
+        currentResult: s.score,
+        targetResult: suggestion && suggestion.targetResult ? formatAsPercent(suggestion.targetResult) : '',
+        targetLocked: false,
+        studyDays: [], 
+        studyTime: '',
+        studyScheduleHint: suggestion ? (suggestion.studySchedule||'') : '',
+        practiceTestOption: suggestion ? (suggestion.practiceTestOption || 'none') : 'none',
+        practiceTestDate: '',
+        practiceTestTime: '',
+        practiceTestSchedule: '',
+        notes: suggestion ? (suggestion.notes || '') : '', 
+        notesLog: [], 
+        rag: null, 
+        lastUpdated: new Date().toISOString(), 
+        _open: true,
+        notesDraft: ''
+      });
+    }
+  });
+  state.plansByChild[childId] = plan;
+  persistPlan(childId);
+  if(suggestedSession && suggestedSession.topic){
+    const sessions = state.sessionsByChild[childId] || [];
+    sessions.unshift({ id: uid(), date:'', topic: suggestedSession.topic, done:false, suggested:true, _open:true });
+    state.sessionsByChild[childId] = sessions;
+    persistSessions(childId);
+  }
+}
+
+// ---------- parent-child collaboration sessions ----------
+function persistSessions(childId){ storeSet('sessions:'+childId, stripOpen(state.sessionsByChild[childId] || [])); }
+function addSession(childId){
+  if(state.mode==='caregiver') return;
+  const sessions = state.sessionsByChild[childId] || [];
+  sessions.unshift({ id:uid(), date:'', topic:'', done:false, suggested:false, _open:true });
+  state.sessionsByChild[childId] = sessions;
+  persistSessions(childId);
+  awardPoints(childId, state.mode==='child'?'child':'parent', 2);
+  render();
+}
+function toggleSessionOpen(childId, id){
+  const s = (state.sessionsByChild[childId]||[]).find(x=>x.id===id);
+  if(s) s._open = !s._open;
+  render();
+}
+function toggleSessionDone(childId, id){
+  if(state.mode==='caregiver') return;
+  const s = (state.sessionsByChild[childId]||[]).find(x=>x.id===id);
+  if(s) s.done = !s.done;
+  persistSessions(childId);
+  awardPoints(childId, state.mode==='child'?'child':'parent', 3);
+  render();
+}
+function removeSession(childId, id){
+  if(state.mode!=='parent') return;
+  state.sessionsByChild[childId] = (state.sessionsByChild[childId]||[]).filter(x=>x.id!==id);
+  persistSessions(childId); render();
+}
+function downloadICS(title, description, dateStr){
+  if(!dateStr) return;
+  const dt = dateStr.replace(/-/g,'');
+  const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Margin//EN\nBEGIN:VEVENT\nUID:${uid()}@margin.app\nDTSTART;VALUE=DATE:${dt}\nSUMMARY:${(title||'Study session').replace(/\n/g,' ')}\nDESCRIPTION:${(description||'').replace(/\n/g,' ')}\nEND:VEVENT\nEND:VCALENDAR`;
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'margin-reminder.ics';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+}
+
+// ---------- caregiver (view-only, +1 per child) ----------
+function openCaregiverSheet(){ state.sheetError=null; state.sheet='caregiver'; render(); }
+async function saveCaregiver(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  const name = (document.getElementById('cg-name').value||'').trim();
+  const email = (document.getElementById('cg-email').value||'').trim();
+  if(!name){ state.sheetError='Add a name for this viewer.'; render(); return; }
+  child.caregiver = { name, email };
+  await storeSet('children', state.children);
+  state.sheet = null; render();
+}
+async function removeCaregiver(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  child.caregiver = null;
+  await storeSet('children', state.children);
+  state.sheet = null; render();
+}
+
+// ---------- subject-specific tips (parent-phrased + child-phrased) ----------
+function getTrackedSubjects(childId){
+  const seen = new Map();
+  (state.plansByChild[childId]||[]).forEach(r=>{ const n=(r.subject||'').trim(); if(n) seen.set(n.toLowerCase(), n); });
+  (state.resultsByChild[childId]||[]).forEach(e=>{
+    (e.subjects||[]).forEach(s=>{ const n=(s.name||'').trim(); if(n && !seen.has(n.toLowerCase())) seen.set(n.toLowerCase(), n); });
+  });
+  return [...seen.values()];
+}
+function getResultSubjects(childId){
+  const seen = new Map();
+  (state.resultsByChild[childId]||[]).forEach(e=>{
+    (e.subjects||[]).forEach(s=>{ const n=(s.name||'').trim(); if(n && !seen.has(n.toLowerCase())) seen.set(n.toLowerCase(), n); });
+  });
+  return [...seen.values()];
+}
+function latestResultScoreFor(childId, subjectName){
+  const entries = state.resultsByChild[childId] || []; // stored newest-first
+  for(const e of entries){
+    const s = (e.subjects||[]).find(x=>x.name.trim().toLowerCase()===subjectName.trim().toLowerCase());
+    if(s) return s.score;
+  }
+  return null;
+}
+function selectPlanSubject(childId, rowId, subjectName){
+  if(state.mode==='caregiver') return;
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(!row) return;
+  row.subject = subjectName;
+  const latest = latestResultScoreFor(childId, subjectName);
+  if(latest !== null) row.currentResult = latest;
+  row.lastUpdated = row.lastUpdated || new Date().toISOString();
+  persistPlan(childId); render();
+}
+function toggleStudyDay(childId, rowId, day){
+  if(state.mode==='caregiver') return;
+  const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+  if(!row) return;
+  row.studyDays = row.studyDays || [];
+  const idx = row.studyDays.indexOf(day);
+  if(idx>=0) row.studyDays.splice(idx,1); else row.studyDays.push(day);
+  persistPlan(childId); render();
+}
+function openTipSheet(){
+  if(!state.activeChildId) return;
+  state.tipSubject=''; state.tipStruggle=''; state.sheetError=null; state.sheet='tip'; render();
+}
+function selectTipSubject(name){ state.tipSubject = name; render(); }
+
+function buildLocalTip(subject, struggle, grade=''){
+  const subjectLower = subject.toLowerCase();
+  const struggleLower = struggle.toLowerCase();
+  
+  // Map of subject-specific tips
+  const tipLibrary = {
+    'math': {
+      parentTip: {
+        headline: 'Work through one problem together, step by step',
+        explanation: 'Math builds on understanding each step. Solve one example together, then let them try the next one.',
+        tryThis: 'Pick a similar problem and ask "What would we do first?" after each step.'
+      },
+      childTip: {
+        headline: 'Start with a problem you can do, build from there',
+        explanation: 'You learn best by doing similar problems in order—easier to harder. It helps your brain see the pattern.',
+        tryThis: 'Do the easiest problem first, then the next one. Say each step out loud.'
+      }
+    },
+    'english': {
+      parentTip: {
+        headline: 'Read the passage aloud together, then ask what happened',
+        explanation: 'Hearing the words helps with comprehension. Questions check understanding without pressure.',
+        tryThis: 'Read one paragraph, then ask "What just happened?" and listen to their answer.'
+      },
+      childTip: {
+        headline: 'Read it twice—once fast, once slow—then retell it',
+        explanation: 'Your brain remembers stories better when you say them in your own words. That\'s understanding.',
+        tryThis: 'Read the section once, then tell someone what you just read as if explaining a movie.'
+      }
+    },
+    'science': {
+      parentTip: {
+        headline: 'Show a real example, then explain why it works that way',
+        explanation: 'Science makes sense when you see it in the real world. Connection helps memory.',
+        tryThis: 'Find something at home that relates to the topic and ask them to explain it to you.'
+      },
+      childTip: {
+        headline: 'Find a real example around you, then look up how it works',
+        explanation: 'Science is everywhere. When you connect it to real life, it sticks in your memory.',
+        tryThis: 'Look for one thing in your house or outside that uses this idea. Draw it or describe it.'
+      }
+    },
+    'history': {
+      parentTip: {
+        headline: 'Ask "Why did this happen?" and "How did it change things?"',
+        explanation: 'History isn\'t just facts—it\'s stories about cause and effect. That\'s what sticks.',
+        tryThis: 'Pick one event and ask them to explain what caused it and what happened after.'
+      },
+      childTip: {
+        headline: 'Think of it as a story with reasons and consequences',
+        explanation: 'History is easier to remember when you see it as a chain of "why" and "what happened next."',
+        tryThis: 'Draw a timeline with 3 events. For each, write one reason it happened and one result.'
+      }
+    }
+  };
+  
+  // Find the best-matching subject tip
+  let selectedTip = null;
+  for (const key in tipLibrary) {
+    if (subjectLower.includes(key) || key.includes(subjectLower)) {
+      selectedTip = tipLibrary[key];
+      break;
+    }
+  }
+  
+  // If no specific subject match, use a generic growth tip
+  if (!selectedTip) {
+    selectedTip = {
+      parentTip: {
+        headline: `Take one small part of ${subject}, practice it together`,
+        explanation: `Breaking ${subject} into smaller pieces makes it less overwhelming. Repetition builds confidence.`,
+        tryThis: `Ask your child "What's the hardest part?" and focus only on that one thing for 10 minutes.`
+      },
+      childTip: {
+        headline: `Pick one small part to practice, not the whole thing`,
+        explanation: `You learn better by mastering small pieces first, then building up. This is how everyone learns.`,
+        tryThis: `Focus on just one idea or skill for today. Do it a few times. That's real progress.`
+      }
+    };
+  }
+  
+  // Customize based on struggle keywords
+  if (struggleLower.includes('remember') || struggleLower.includes('forget')) {
+    selectedTip.parentTip.tryThis = `Try a memory trick: acronym, rhyme, or story. Ask them to teach it back to you.`;
+    selectedTip.childTip.tryThis = `Make up a funny sentence or rhyme to remember the tricky part.`;
+  } else if (struggleLower.includes('confused') || struggleLower.includes('confusing')) {
+    selectedTip.parentTip.tryThis = `Draw it, act it out, or find a video. Sometimes another way of seeing it clicks.`;
+    selectedTip.childTip.tryThis = `Ask for an example or picture. Sometimes seeing it a different way makes it click.`;
+  } else if (struggleLower.includes('slow') || struggleLower.includes('speed')) {
+    selectedTip.parentTip.tryThis = `Practice the same type of problem a few times. Speed comes after understanding.`;
+    selectedTip.childTip.tryThis = `Do the same type of problem 3 times. You'll get faster as you practice.`;
+  } else if (struggleLower.includes('test') || struggleLower.includes('exam')) {
+    selectedTip.parentTip.tryThis = `Practice with old tests or sample questions under timed conditions.`;
+    selectedTip.childTip.tryThis = `Try some practice questions with a timer. That's how you get ready for the real thing.`;
+  }
+  
+  return selectedTip;
+}
+
+
+async function generateTip(){
+  const subjectInput = document.getElementById('tip-subject-input');
+  const subject = (subjectInput ? subjectInput.value : state.tipSubject).trim();
+  const struggle = (state.tipStruggle || '').trim();
+  if(!subject){ state.sheetError = 'Add a subject first.'; render(); return; }
+  if(!struggle){ state.sheetError = "Add a quick note on what's hard, even a rough guess helps."; render(); return; }
+
+  const childId = state.activeChildId;
+  const child = state.children.find(c=>c.id===childId);
+  state.sheetError = null; state.tipLoading = true; render();
+
+  try{
+    const tip = buildLocalTip(subject, struggle, child ? child.grade : '');
+    
+    const entry = {
+      id: uid(), date: new Date().toISOString(), subject, struggle,
+      parentTip: tip.parentTip || {headline:'',explanation:'',tryThis:''},
+      childTip: tip.childTip || {headline:'',explanation:'',tryThis:''},
+      _open: true,
+    };
+    const tips = state.tipsByChild[childId] || [];
+    tips.unshift(entry);
+    state.tipsByChild[childId] = tips;
+    await storeSet('tips:'+childId, stripOpen(tips));
+    awardPoints(childId, state.mode==='child'?'child':'parent', 4);
+    state.sheet = null;
+  }catch(e){
+    console.error(e);
+    state.sheetError = "Couldn't get a tip just now, try again in a moment.";
+  }
+  state.tipLoading = false;
+  render();
+}
+function toggleTipOpen(childId, id){
+  const t = (state.tipsByChild[childId]||[]).find(x=>x.id===id);
+  if(t) t._open = !t._open;
+  render();
+}
+function removeTip(childId, id){
+  if(state.mode!=='parent') return;
+  state.tipsByChild[childId] = (state.tipsByChild[childId]||[]).filter(t=>t.id!==id);
+  storeSet('tips:'+childId, stripOpen(state.tipsByChild[childId]));
+  render();
+}
+
+// ---------- summary + email ----------
+function parseNumeric(str){
+  if(!str) return null;
+  const m = String(str).match(/(\d+(?:\.\d+)?)/);
+  if(!m) return null;
+  const n = parseFloat(m[1]);
+  return isNaN(n) ? null : n;
+}
+function computeGapDisplay(current, target){
+  const c = parseNumeric(current), t = parseNumeric(target);
+  if(c===null || t===null) return null;
+  const diff = +(t - c).toFixed(1);
+  if(diff <= 0) return { text: 'Target met 🎉', cls:'gap-met' };
+  return { text: `${diff} pt${diff===1?'':'s'} to go`, cls:'gap-open' };
+}
+function formatAsPercent(raw){
+  const n = parseNumeric(raw);
+  if(n===null) return raw;
+  const capped = Math.min(100, n);
+  return (Number.isInteger(capped) ? capped : capped) + '%';
+}
+function getStudyTimeConflict(childId, rowId){
+  const row = (state.plansByChild[childId] || []).find(r => r.id === rowId);
+  if(!row || !row.studyTime) return null;
+  const conflicts = [];
+  (state.plansByChild[childId] || []).forEach(other => {
+    if(other.id === rowId || !other.studyTime) return;
+    const sharedDays = (row.studyDays || []).filter(day => (other.studyDays || []).includes(day));
+    if(sharedDays.length && other.studyTime === row.studyTime){
+      conflicts.push(other.subject || 'Another subject');
+    }
+  });
+  return conflicts.length ? conflicts : null;
+}
+function renderGapBlock(row){
+  const gap = computeGapDisplay(row.currentResult, row.targetResult);
+  return `
+    <div class="gap-row">
+      <div class="gap-metric"><div class="mini-label">Current</div><div class="gap-value">${escapeHtml(row.currentResult || '—')}</div></div>
+      <div class="gap-arrow">→</div>
+      <div class="gap-metric"><div class="mini-label">Target</div><div class="gap-value">${escapeHtml(row.targetResult || '—')}</div></div>
+      ${gap ? `<span class="gap-chip ${gap.cls}">${gap.text}</span>` : `<span class="gap-chip gap-unknown">Add numeric scores to see the gap</span>`}
+    </div>
+  `;
+}
+function buildSummaryText(childId){
+  const child = state.children.find(c=>c.id===childId);
+  const rows = state.plansByChild[childId] || [];
+  const upcoming = (state.sessionsByChild[childId]||[]).filter(s=>!s.done);
+  let text = `Margin summary for ${child.name}${child.grade ? ' ('+child.grade+')' : ''}\nGenerated ${new Date().toLocaleDateString()}\n\n`;
+  text += `SUBJECTS\n`;
+  if(rows.length){
+    rows.forEach(r=>{ text += `- ${r.subject||'Untitled'}: ${r.currentResult||'—'} -> target ${r.targetResult||'—'} [${ragLabel(r.rag)}]\n`; });
+  } else { text += `- Nothing tracked yet\n`; }
+  text += `\nUPCOMING SESSIONS\n`;
+  if(upcoming.length){
+    upcoming.forEach(s=>{ text += `- ${s.date ? fmtDate(s.date) : 'No date set'}: ${s.topic||'Untitled'}\n`; });
+  } else { text += `- None scheduled\n`; }
+  const cb = getBadge(child.childPoints||0), pb = getBadge(child.parentPoints||0);
+  text += `\nPROGRESS\n- ${child.name}: ${child.childPoints||0} pts (${cb.label})\n- Parent engagement: ${child.parentPoints||0} pts (${pb.label})\n`;
+  return text;
+}
+function openSummarySheet(){ state.sheet = 'summary'; render(); }
+async function copySummary(){
+  const box = document.getElementById('summary-text');
+  try{
+    await navigator.clipboard.writeText(box.value);
+    state.summaryCopied = true; render();
+    setTimeout(()=>{ state.summaryCopied=false; render(); }, 1500);
+  }catch(e){
+    box.select();
+  }
+}
+
+function fmtDate(iso){ const d = new Date(iso); return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}); }
+const RETENTION_DAYS = 30;
+function daysUntilExpiry(iso){
+  const ageMs = Date.now() - new Date(iso).getTime();
+  const daysLeft = RETENTION_DAYS - Math.floor(ageMs / (1000*60*60*24));
+  return Math.max(0, daysLeft);
+}
+async function pruneExpired(childId){
+  const cutoff = Date.now() - (RETENTION_DAYS * 1000*60*60*24);
+  const results = state.resultsByChild[childId] || [];
+  const keptResults = results.filter(e => new Date(e.date).getTime() >= cutoff);
+  if(keptResults.length !== results.length){
+    state.resultsByChild[childId] = keptResults;
+    await storeSet('results:'+childId, stripOpen(keptResults));
+  }
+  const tips = state.tipsByChild[childId] || [];
+  const keptTips = tips.filter(t => new Date(t.date).getTime() >= cutoff);
+  if(keptTips.length !== tips.length){
+    state.tipsByChild[childId] = keptTips;
+    await storeSet('tips:'+childId, stripOpen(keptTips));
+  }
+}
+function fmtDateTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' · ' + d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+}
+function assessLabel(a){
+  if(a==='strong') return 'Well done';
+  if(a==='needs_attention') return 'Critical';
+  return 'Needs attention';
+}
+
+function renderResultKeyLegend(){
+  return `
+    <div class="card" style="padding:12px 14px; margin-bottom:12px;">
+      <div class="section-eyebrow" style="margin:0 0 8px;">Results key</div>
+      <div class="chip-group" style="margin-top:0;">
+        <span class="chip-mini score-needs_attention active-mini">Red · Danger / very low</span>
+        <span class="chip-mini score-steady active-mini">Amber · Needs attention</span>
+        <span class="chip-mini score-strong active-mini">Green · Well done</span>
+      </div>
+    </div>
+  `;
+}
+function escapeHtml(str){
+  if(str===undefined || str===null) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+// ---------- trend line (goals, trajectory, performance) ----------
+function buildTrendSVG(childId, subjectName, targetResult){
+  const points = [];
+  (state.resultsByChild[childId]||[]).slice().reverse().forEach(e=>{
+    const subj = (e.subjects||[]).find(s=>s.name.trim().toLowerCase()===subjectName.trim().toLowerCase());
+    if(subj){ const val = parseNumeric(subj.score); if(val!==null) points.push({date:e.date, val}); }
+  });
+  if(points.length < 2){
+    return `<div class="sub-txt" style="padding:10px 0 2px;">Not enough numeric results yet to chart a trend. Scores like "78%" work best.</div>`;
+  }
+  const W=280,H=90,PAD=10;
+  const targetVal = parseNumeric(targetResult);
+  const allVals = targetVal!==null ? points.map(p=>p.val).concat([targetVal]) : points.map(p=>p.val);
+  const min = Math.max(0, Math.min(...allVals) - 10);
+  const max = Math.min(100, Math.max(...allVals) + 10) || 100;
+  const range = (max-min) || 1;
+  const stepX = points.length>1 ? (W - PAD*2) / (points.length - 1) : 0;
+  const toY = v => H - PAD - ((v - min)/range) * (H - PAD*2);
+  const coords = points.map((p,i)=> `${(PAD + i*stepX).toFixed(1)},${toY(p.val).toFixed(1)}`).join(' ');
+  const targetY = targetVal!==null ? toY(targetVal).toFixed(1) : null;
+  return `
+    <svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" style="display:block; margin-top:6px;">
+      ${targetY ? `<line x1="${PAD}" y1="${targetY}" x2="${W-PAD}" y2="${targetY}" style="stroke:var(--marigold); stroke-width:1.5; stroke-dasharray:4,3;"/>` : ''}
+      <polyline points="${coords}" fill="none" style="stroke:var(--sage); stroke-width:2.5;"/>
+      ${points.map((p,i)=>`<circle cx="${(PAD + i*stepX).toFixed(1)}" cy="${toY(p.val).toFixed(1)}" r="3.5" style="fill:var(--sage);"/>`).join('')}
+    </svg>
+    ${targetVal!==null ? `<div class="sub-txt">Dashed line: target (${escapeHtml(targetResult)})</div>` : ''}
+  `;
+}
+
+// ---------- sheets: manual entry state ----------
+function openManualSheet(){
+  state.manualSubjects = [{id:uid(), name:'', score:'', assessment:'steady'}];
+  state.manualNotes = ''; state.sheetError = null; state.sheet = 'manual';
+  render();
+}
+function addManualRow(){
+  if(state.manualSubjects.length >= 12){
+    state.sheetError = 'You can load up to 12 subjects on this app.';
+    render();
+    return;
+  }
+  state.manualSubjects.push({id:uid(), name:'', score:'', assessment:'steady'});
+  render();
+}
+function removeManualRow(id){
+  state.manualSubjects = state.manualSubjects.filter(r=>r.id!==id);
+  if(!state.manualSubjects.length) state.manualSubjects.push({id:uid(), name:'', score:'', assessment:'steady'});
+  render();
+}
+function setManualAssessment(id, val){
+  const r = state.manualSubjects.find(x=>x.id===id);
+  if(r) r.assessment = val;
+  render();
+}
+function openActionSheet(){ if(!state.activeChildId) return; state.sheet='action'; state.sheetError=null; render(); }
+function openAddChildSheet(){ state.avatarTemp.newChild = state.avatarTemp.newChild || {emoji:AVATAR_EMOJIS[2], color:AVATAR_COLORS[1]}; state.sheet='addChild'; state.sheetError=null; render(); }
+function closeSheet(){ state.sheet=null; state.sheetError=null; render(); }
+
+// ---------- AI call (shared schema for results) ----------
+const SCHEMA_SPEC = `Respond with ONLY a raw JSON object, no markdown fences, no preamble, in exactly this shape:
+{
+ "isAcademicResult": true or false,
+ "subjects": [{"name": string, "score": string, "assessment": "strong" or "steady" or "needs_attention"}],
+ "overallSummary": string (max 2 plain, warm sentences written directly to the parent),
+ "strengths": [string, string] (2-3 short specific phrases),
+ "growthAreas": [string, string] (2-3 short, constructive, never harsh phrases),
+ "coachingQuestions": [string, string, string, string, string] (5-6 open, curious questions the parent could ask their child tonight, never interrogating or shaming),
+ "encouragement": string (one short warm line the parent could say out loud to the child),
+ "subjectPlans": [{"name": string (must match a name in "subjects" above), "targetResult": string (a realistic, specific target for the rest of this term), "studySchedule": string (a short suggestion for when to study), "practiceTestSchedule": string (a short suggestion for when to do a practice test), "notes": string (one short useful note, or empty string)}],
+ "suggestedSession": {"topic": string (one specific thing for the parent and child to sit down and go through together this week)}
+}
+Keep every observation growth-oriented and age-appropriate. Never invent specifics that weren't given to you.`;
+
+async function runAnalysis({mode, file}){
+  state.analyzing = true; state.sheet = null; state.error = null; render();
+  try{
+    const child = state.children.find(c=>c.id===state.activeChildId);
+    let contentBlocks;
+
+    let compressedImage = null;
+    if(mode==='photo'){
+      compressedImage = await compressImageFile(file);
+      const prompt = `You are an experienced, warm academic coach helping a family understand a child's schoolwork result from a photo, so they can have a supportive, specific conversation and build a short study plan.
+
+The child is named ${child.name}${child.grade ? ', grade/level: ' + child.grade : ''}.
+
+Look closely at the attached photo of an academic result (test, quiz, report card, or assignment).
+${SCHEMA_SPEC}
+If the photo does not clearly show an academic result, set isAcademicResult to false, leave the arrays empty, and use overallSummary to explain what you saw instead.`;
+      contentBlocks = [
+        { type:"image", source:{ type:"base64", media_type: compressedImage.mediaType, data: compressedImage.base64 } },
+        { type:"text", text: prompt }
+      ];
+    } else {
+      const rows = state.manualSubjects.map(r=>({name:r.name.trim(), score:r.score.trim(), assessment:r.assessment})).filter(r=>r.name && r.score);
+      if(!rows.length){ state.sheetError = 'Add at least one subject with a name and score.'; state.analyzing = false; state.sheet = 'manual'; render(); return; }
+      const notes = state.manualNotes.trim();
+      const prompt = `You are an experienced, warm academic coach helping a family think through a child's schoolwork and build a short study plan.
+
+The child is named ${child.name}${child.grade ? ', grade/level: ' + child.grade : ''}.
+These result(s) were entered manually, which may only cover one or two subjects, not the child's full report:
+${JSON.stringify(rows)}
+${notes ? `Extra context: ${notes}` : ''}
+
+Base your response only on what's given above.
+${SCHEMA_SPEC}
+Set isAcademicResult to true. Echo the subjects back using exactly the names, scores and assessments given above.`;
+      contentBlocks = [{ type:"text", text: prompt }];
+    }
+
+    let parsed;
+    try{
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, messages: [{ role:"user", content: contentBlocks }] })
+      });
+      const data = await response.json();
+      const textBlock = (data.content || []).find(b=>b.type==='text');
+      if(!textBlock) throw new Error('no response');
+      let clean = textBlock.text.trim().replace(/^```json/,'').replace(/^```/,'').replace(/```$/,'').trim();
+      parsed = JSON.parse(clean);
+    } catch (apiError) {
+      console.warn('External AI unavailable, using local fallback analysis.', apiError);
+      const manualSubjects = mode === 'photo'
+        ? (state.manualSubjects || []).map(r=>({name:r.name.trim(), score:r.score.trim(), assessment:r.assessment})).filter(r=>r.name && r.score)
+        : [];
+      const fallbackSources = mode === 'photo'
+        ? (manualSubjects.length ? manualSubjects : [])
+        : state.manualSubjects.map(r=>({name:r.name.trim(), score:r.score.trim(), assessment:r.assessment})).filter(r=>r.name && r.score);
+      parsed = buildLocalAnalysis(mode === 'photo' ? (state.resultsByChild[state.activeChildId] || []).slice(0,1).flatMap(e => e.subjects || []) : fallbackSources, child ? child.name : 'your child', mode === 'manual' ? state.manualNotes : '');
+    }
+
+    if(mode==='photo' && parsed.isAcademicResult === false){
+      state.error = parsed.overallSummary || "That photo didn't look like an academic result, try another photo.";
+      state.analyzing = false; render(); return;
+    }
+
+    const subjectsFinal = mode==='photo'
+      ? (parsed.subjects || [])
+      : state.manualSubjects.map(r=>({name:r.name.trim(), score:r.score.trim(), assessment:r.assessment})).filter(r=>r.name && r.score);
+
+    const entry = {
+      id: uid(), date: new Date().toISOString(), source: mode, subjects: subjectsFinal,
+      overallSummary: parsed.overallSummary || '', strengths: parsed.strengths || [], growthAreas: parsed.growthAreas || [],
+      coachingQuestions: (parsed.coachingQuestions || []).map(q => ({ text:q, asked:false })),
+      encouragement: parsed.encouragement || '',
+      imageData: compressedImage ? compressedImage.base64 : null,
+      imageMediaType: compressedImage ? compressedImage.mediaType : null,
+      _open: true,
+    };
+    state.resultsByChild[state.activeChildId] = state.resultsByChild[state.activeChildId] || [];
+    state.resultsByChild[state.activeChildId].unshift(entry);
+    await storeSet('results:'+state.activeChildId, stripOpen(state.resultsByChild[state.activeChildId]));
+    mergePlanFromResult(state.activeChildId, subjectsFinal, parsed.subjectPlans || [], parsed.suggestedSession);
+    awardPoints(state.activeChildId, state.mode==='child'?'child':'parent', 8);
+  }catch(e){
+    console.error(e);
+    state.error = "Something went wrong putting this together. Try again in a moment.";
+  }
+  state.analyzing = false; render();
+}
+function compressImageFile(file, maxDim, quality){
+  maxDim = maxDim || 1024; quality = quality || 0.75;
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let { width, height } = img;
+        if(width > maxDim || height > maxDim){
+          if(width > height){ height = Math.round(height * (maxDim/width)); width = maxDim; }
+          else { width = Math.round(width * (maxDim/height)); height = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve({ base64: dataUrl.split(',')[1], mediaType: 'image/jpeg' });
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function localScoreToNumber(value){
+  const parsed = parseNumeric(value);
+  if(parsed !== null) return parsed;
+  const raw = String(value || '').replace(/[^0-9]/g, '');
+  if(!raw) return null;
+  return parseFloat(raw);
+}
+
+function buildDemoAnalysisSubjects(){
+  const scores = [33, 44, 54, 62, 68, 71, 80, 58];
+  return ['Subject A','Subject B','Subject C','Subject D','Subject E','Subject F','Subject G','Subject H'].map((name, index) => ({
+    name,
+    score: `${scores[index]}%`,
+    assessment: scores[index] >= 70 ? 'strong' : scores[index] >= 50 ? 'steady' : 'needs_attention'
+  }));
+}
+
+function createDemoResultForChild(childId, childName='your child'){
+  const subjects = buildDemoAnalysisSubjects();
+  const strongest = subjects.slice().sort((a,b)=>localScoreToNumber(b.score)-localScoreToNumber(a.score))[0];
+  const weakest = subjects.slice().sort((a,b)=>localScoreToNumber(a.score)-localScoreToNumber(b.score))[0];
+  const avg = subjects.reduce((sum, s) => sum + localScoreToNumber(s.score), 0) / subjects.length;
+
+  return {
+    id: uid(),
+    _open: true,
+    date: new Date().toISOString(),
+    source: 'manual',
+    overallSummary: `Overall, ${childName} is showing a steady mix of strengths. The strongest area is ${strongest.name} and the clearest focus is ${weakest.name}. The current pattern suggests a useful first coaching conversation around managing challenge without losing confidence.`,
+    overallSummaryChild: `Looking at your results, I can see that you're showing a really good mix of strengths. You're doing especially well in ${strongest.name}, and ${weakest.name} is the best place to focus our energy next. This is the kind of pattern where small, focused practice can make a big difference.`,
+    strengths: [
+      `${strongest.name} is currently the best-performing subject`,
+      'The overall trend is improving and workable',
+      'There is a clear next-step focus without the pressure of a crisis'
+    ],
+    strengthsChild: [
+      `You're doing especially well in ${strongest.name}`,
+      `I can see your progress is improving`,
+      `You have a clear area to focus on next`
+    ],
+    growthAreas: [
+      `Give ${weakest.name} more structured practice with short review sessions`,
+      'Break larger tasks into smaller steps to reduce drop-off',
+      'Keep conversations focused on one win and one next move each week'
+    ],
+    growthAreasChild: [
+      `${weakest.name} would benefit from regular short practice sessions`,
+      `Breaking down difficult tasks into smaller pieces can help you finish stronger`,
+      `Let's focus on one win each week so progress feels real`
+    ],
+    coachingQuestions: [
+      { text: 'Which subject felt most manageable this week?', asked: false },
+      { text: 'What part of the work felt most difficult to start?', asked: false },
+      { text: 'Which task can we make smaller and easier to finish?', asked: false },
+      { text: 'When is the best time to do a quick 15-minute review together?', asked: false },
+      { text: 'What did you find yourself understanding better this time around?', asked: false }
+    ],
+    coachingQuestionsChild: [
+      { text: `Which subject felt easiest or most fun for you this time?`, asked: false },
+      { text: `What part of ${weakest.name} felt hardest to get started on?`, asked: false },
+      { text: `If we broke ${weakest.name} into smaller chunks, where would you want to start?`, asked: false },
+      { text: `What time of day do you usually feel most focused for studying?`, asked: false },
+      { text: `What's one thing you learned that surprised you?`, asked: false }
+    ],
+    encouragement: 'This is a good first coaching step: realistic, specific, and encouraging rather than overwhelming.',
+    encouragementChild: `You're on the right track. These results show where you're already strong and exactly where a little extra focus can help you. Let's work on this together.`,
+    subjects,
+    suggestedSession: { topic: `Review ${weakest.name} together and set one small goal for the next study session` }
+  };
+}
+
+function ensureDemoResultForCurrentChild(){
+  const child = state.children.find(c => c.id === state.activeChildId);
+  if(!child) return;
+  const entries = state.resultsByChild[child.id] || [];
+  if(entries.length) return;
+
+  const demo = createDemoResultForChild(child.id, child.name);
+  state.resultsByChild[child.id] = [demo];
+  const demoPlan = demo.subjects.map((s) => ({
+    id: uid(),
+    subject: s.name,
+    currentResult: s.score,
+    targetResult: `${Math.min(80, Math.max(33, localScoreToNumber(s.score) + 8))}%`,
+    targetLocked: false,
+    studyDays: ['Mon', 'Wed', 'Fri'],
+    studyTime: '18:00',
+    studyScheduleHint: '15–20 minutes per session',
+    practiceTestOption: 'quick',
+    practiceTestDate: '',
+    practiceTestTime: '',
+    practiceTestSchedule: '',
+    notes: 'Start with the easiest questions and build confidence',
+    notesLog: [],
+    rag: localScoreToNumber(s.score) >= 70 ? 'green' : localScoreToNumber(s.score) >= 50 ? 'amber' : 'red',
+    lastUpdated: new Date().toISOString(),
+    _open: false,
+    notesDraft: ''
+  }));
+  state.plansByChild[child.id] = demoPlan;
+  persistPlan(child.id);
+  persistResults(child.id);
+}
+
+function createDemoChildIfNeeded(){
+  if(state.children.length) return;
+  const child = {
+    id: uid(),
+    name: 'Jordan',
+    grade: 'Grade 8',
+    avatarEmoji: '🦁',
+    avatarColor: AVATAR_COLORS[1],
+    childPoints: 0,
+    parentPoints: 0,
+    caregiver: null
+  };
+  state.children = [child];
+  state.activeChildId = child.id;
+  state.resultsByChild[child.id] = [];
+  state.plansByChild[child.id] = [];
+  state.sessionsByChild[child.id] = [];
+  state.tipsByChild[child.id] = [];
+  storeSet('children', state.children);
+  ensureDemoResultForCurrentChild();
+}
+
+function buildLocalAnalysis(subjects, childName, notes=''){
+  const loaded = (subjects || []).filter(s => s && String(s.name || '').trim()).map(s => ({
+    name: String(s.name || '').trim(),
+    score: String(s.score || '').trim(),
+    assessment: s.assessment || 'steady'
+  }));
+
+  if(!loaded.length){
+    return {
+      isAcademicResult: false,
+      subjects: [],
+      overallSummary: 'I could not clearly read an academic result in the image. Try uploading a clearer view of the marks or worksheet.',
+      strengths: [],
+      growthAreas: [],
+      coachingQuestions: ['What part felt easiest today?', 'Which task felt most confusing?', 'What could we make simpler together?', 'When is the best time to review this?', 'What do you want to try first this week?'],
+      encouragement: 'You are not behind; we can work from what we see and take the next step together.',
+      subjectPlans: [],
+      suggestedSession: { topic: 'Review the toughest subject together and choose one small win for this week' }
+    };
+  }
+
+  const scoreValues = loaded.map(s => ({...s, value: localScoreToNumber(s.score)}));
+  const validValues = scoreValues.filter(s => s.value !== null);
+  const avg = validValues.length ? (validValues.reduce((sum, s) => sum + s.value, 0) / validValues.length) : 0;
+  const best = validValues.slice().sort((a, b) => b.value - a.value)[0];
+  const weakest = validValues.slice().sort((a, b) => a.value - b.value)[0];
+
+  const strengths = [];
+  const growthAreas = [];
+  const subjectPlans = [];
+
+  if(avg >= 75){ strengths.push('Solid overall momentum'); }
+  else if(avg >= 60){ strengths.push('Steady progress'); }
+  else { strengths.push('A strong foundation is still there'); }
+
+  if(best){ strengths.push(`${best.name} is a good current strength`); }
+  if(weakest){ growthAreas.push(`Focus on ${weakest.name} to build confidence`); }
+  if(avg < 70){ growthAreas.push('Break tasks into smaller steps and check them as you go'); }
+  else { strengths.push('Reviewing the right mistakes is helping'); }
+
+  const coachingQuestions = [
+    `Which result felt most encouraging for ${childName || 'your child'} today?`,
+    'What part of the work felt hardest to finish?',
+    'What is one thing we can practise a little more this week?',
+    'When would be the easiest time to revisit this together?',
+    'How can we make the next task feel more manageable?'
+  ];
+
+  const encouragement = avg >= 70
+    ? 'You are doing better than it first looks. We can build on the strengths already showing up.'
+    : 'This is a useful snapshot, not a verdict. We can turn the rough spots into a small, clear plan.';
+
+  loaded.forEach(s => {
+    const value = localScoreToNumber(s.score);
+    const target = value === null ? '75%' : `${Math.min(100, Math.max(value + 10, 70))}%`;
+    const isPracticeTestMock = value !== null && value < 50;
+    subjectPlans.push({
+      name: s.name,
+      targetResult: target,
+      studySchedule: '15–20 minutes on two evenings this week',
+      practiceTestOption: isPracticeTestMock ? 'mock' : 'quick',
+      notes: value !== null && value < 70 ? 'Start with the easiest questions and build up from there.' : 'Keep a short review routine and check progress after each session.'
+    });
+  });
+
+  const suggestedSubject = weakest && weakest.name ? weakest.name : (loaded[0] && loaded[0].name ? loaded[0].name : 'Core learning');
+
+  return {
+    isAcademicResult: true,
+    subjects: loaded,
+    overallSummary: notes && notes.trim()
+      ? `Overall, the work shows a few areas to keep building on, with ${suggestedSubject} being the clearest place to focus. ${notes.trim()}`
+      : `Overall, the result shows a mix of strengths and a few places to strengthen. The most useful move is to focus on ${suggestedSubject} with a short, steady review plan.`,
+    strengths: strengths.slice(0, 3),
+    growthAreas: growthAreas.slice(0, 3),
+    coachingQuestions,
+    encouragement,
+    subjectPlans,
+    suggestedSession: { topic: `Review ${suggestedSubject} together and turn one tricky area into a small practice routine this week` }
+  };
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render(){
+  const app = document.getElementById('app');
+  if(!state.authenticated){
+    app.innerHTML = renderLoginScreen();
+    attachHandlers();
+    return;
+  }
+  if(!state.parentProfile){ app.innerHTML = renderParentSetup(); attachHandlers(); return; }
+
+  app.innerHTML = `
+    <header class="topbar">
+      <div class="logo"><span class="mmark">M</span><span class="mark">Powered by X-Capital Resources</span></div>
+      <div class="top-login" id="login-toggle">
+        <span class="login-pill">${state.parentProfile ? 'Logged in' : 'Login'}</span>
+        <div class="login-meta">${escapeHtml(state.parentProfile ? state.parentProfile.name : 'Coach Portal')}<br>Access & insights</div>
+      </div>
+    </header>
+    ${state.authenticated ? '' : renderCoachIntro()}
+    ${state.showWelcomeBack ? renderWelcomeBack() : ''}
+    ${renderProfileBar()}
+    ${state.children.length ? renderModeSwitch() : ''}
+    ${state.children.length ? renderChildAreaWrapper() : (state.mode==='parent' ? renderOnboarding() : '<div class="card empty-state"><div class="ico">👋</div><div class="t1">Nothing set up yet</div><div class="sub-txt">Ask the parent to add a profile first.</div></div>')}
+    <div class="privacy-note">Photos and advice are saved on this device so you can look back on them, and are automatically deleted after 30 days.</div>
+    ${(state.children.length && state.mode!=='caregiver') ? `<button class="fab" id="fab-add">${state.view==='tips' ? '💡' : '+'}</button>` : ''}
+    ${renderSheet()}
+  `;
+  attachHandlers();
+}
+
+function renderLoginScreen(){
+  return `
+    <div class="shell">
+      <header class="topbar">
+        <div class="logo"><span class="mmark">M</span><span class="mark">Powered by X-Capital Resources</span></div>
+        <div class="top-login" id="login-toggle">
+          <span class="login-pill">Login</span>
+          <div class="login-meta">Coach Portal<br>Access & insights</div>
+        </div>
+      </header>
+      ${renderCoachIntro()}
+      <div class="card onboard">
+        <div class="mark-big">🔐</div>
+        <h1 class="display">Coach login</h1>
+        <p>Sign in to access the platform and begin reviewing results, plans, and coaching feedback.</p>
+        <div class="field-stack">
+          <input type="email" id="login-email" placeholder="Email address" value="${escapeHtml(state.loginEmail)}">
+          <input type="password" id="login-password" placeholder="Password" value="${escapeHtml(state.loginPassword)}" autocomplete="current-password">
+          ${state.loginError ? `<div class="sheet-err" style="text-align:center;">${escapeHtml(state.loginError)}</div>` : ''}
+          <button class="btn btn-primary btn-block" id="login-submit">Sign in</button>
+          <button class="btn btn-ghost btn-block" type="button" id="forgot-password-link" style="margin-top:8px;">Forgotten Password?</button>
+          <div class="sub-txt" style="margin-top:8px;">Demo access: coach@xcapital.com / XCapital123!</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCoachIntro(){
+  return `
+    <div class="card coach-hero">
+      <h2>Coaching that turns results into action.</h2>
+      <p>Great coaching helps families understand the story behind a result, celebrate progress, and create a clear plan for the next step. It brings focus, confidence, and accountability into everyday learning.</p>
+      <div class="benefit-grid">
+        <div class="benefit-tile">
+          <div class="icon">🎯</div>
+          <h3>Clear direction</h3>
+          <p>Results become actionable goals instead of vague concerns.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="icon">💬</div>
+          <h3>Better conversations</h3>
+          <p>Parents and children talk with purpose, not pressure.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="icon">🌱</div>
+          <h3>Confidence builder</h3>
+          <p>Wins are noticed, effort is encouraged, and momentum grows.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="icon">📈</div>
+          <h3>Measurable progress</h3>
+          <p>Each step is tracked so improvement is visible and motivating.</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWelcomeBack(){
+  return `
+    <div class="card welcome-back">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <div>
+          <div style="font-weight:700; font-size:14.5px; margin-bottom:2px;">Welcome back 👋</div>
+          <div class="sub-txt">It's been a few months, a good moment for parent and child to check in on the plan together.</div>
+        </div>
+        <button class="icon-btn" id="dismiss-welcome">✕</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAvatarPicker(prefix){
+  const cur = state.avatarTemp[prefix] || {emoji:AVATAR_EMOJIS[0], color:AVATAR_COLORS[0]};
+  return `
+    <div class="mini-label" style="text-align:center;">Avatar</div>
+    <div class="avatar-picker-preview" style="background:${cur.color}">${cur.emoji}</div>
+    <div class="emoji-grid" style="justify-content:center;">
+      ${AVATAR_EMOJIS.map(e=>`<span class="emoji-opt ${e===cur.emoji?'emoji-active':''}" data-avatar-emoji="${prefix}|${e}">${e}</span>`).join('')}
+    </div>
+    <div class="color-grid" style="justify-content:center;">
+      ${AVATAR_COLORS.map(c=>`<span class="color-opt ${c===cur.color?'color-active':''}" style="background:${c}" data-avatar-color="${prefix}|${c}"></span>`).join('')}
+    </div>
+  `;
+}
+
+function renderParentSetup(){
+  return `
+    <div class="shell">
+      <header class="topbar">
+        <div class="logo"><span class="mmark">M</span><span class="mark">Powered by X-Capital Resources</span></div>
+        <div class="top-login">
+          <span class="login-pill">Login</span>
+          <div class="login-meta">Coach Portal<br>Access & insights</div>
+        </div>
+      </header>
+      ${renderCoachIntro()}
+      <div class="card onboard">
+        <div class="mark-big">👋</div>
+        <h1 class="display">Set up your Main Coach profile</h1>
+        <p>This keeps coach-only notes separate from what your child sees and gives a guarded view for the other parent or guardian.</p>
+        <div class="field-stack">
+          <input type="text" id="pp-name" placeholder="Your name">
+          <input type="text" id="pp-email" placeholder="Your email (for summaries, optional)">
+          ${renderAvatarPicker('pp')}
+          <input type="text" id="pp-pin" inputmode="numeric" maxlength="4" placeholder="4-digit PIN to protect Main Coach mode (optional)">
+          ${state.setupError ? `<div class="sheet-err" style="text-align:center;">${escapeHtml(state.setupError)}</div>` : ''}
+          <button class="btn btn-primary btn-block" id="save-parent-profile">Continue</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderProfileBar(){
+  if(state.mode==='parent'){
+    const p = state.parentProfile;
+    return `<div class="profile-bar" data-open-profile="parent">
+      <span class="avatar-circle" style="background:${p.avatarColor}">${p.avatarEmoji}</span>
+      <div class="profile-info"><div class="profile-name">${escapeHtml(p.name)}</div><div class="sub-txt">Main Coach view · tap to edit</div></div>
+    </div>`;
+  }
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  if(!child) return '';
+  if(state.mode==='child'){
+    const badge = getBadge(child.childPoints||0);
+    return `<div class="profile-bar" data-open-profile="child">
+      <span class="avatar-circle" style="background:${child.avatarColor||AVATAR_COLORS[1]}">${child.avatarEmoji||'🙂'}</span>
+      <div class="profile-info"><div class="profile-name">${escapeHtml(child.name)}</div><div class="sub-txt">${badge.icon} ${escapeHtml(badge.label)} · ${child.childPoints||0} pts · tap to edit avatar</div></div>
+    </div>`;
+  }
+  return `<div class="profile-bar static">
+    <span class="avatar-circle" style="background:var(--chalk);">👀</span>
+    <div class="profile-info"><div class="profile-name">${escapeHtml(child.name)}</div><div class="sub-txt">Guardian view, read-only</div></div>
+  </div>`;
+}
+
+function renderModeSwitch(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  const hasCaregiver = child && child.caregiver;
+  return `
+    <div class="mode-row">
+      <button class="mode-pill ${state.mode==='parent'?'active-mode':''}" data-switch-mode="parent">Main Coach</button>
+      <button class="mode-pill ${state.mode==='child'?'active-mode':''}" data-switch-mode="child">Child</button>
+      <button class="mode-pill ${state.mode==='caregiver'?'active-mode':''}" data-switch-mode="caregiver" ${hasCaregiver?'':'disabled'}>Guardian</button>
+    </div>
+  `;
+}
+
+function renderChildAreaWrapper(){
+  return `
+    ${state.mode!=='child' ? renderChildRow() : ''}
+    ${state.mode==='parent' ? renderCaregiverLink() : ''}
+    ${renderMain()}
+  `;
+}
+function renderCaregiverLink(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  if(!child) return '';
+  return `<button class="btn btn-ghost btn-block" id="open-caregiver-sheet" style="margin-bottom:10px;">👀 ${child.caregiver ? 'Manage guardian: '+escapeHtml(child.caregiver.name) : '+ Add a guardian (read-only)'}</button>`;
+}
+
+function renderOnboarding(){
+  return `
+    <div class="card onboard">
+      <div class="mark-big">📝</div>
+      <h1 class="display">Let's set up a profile</h1>
+      <p>Add your child, then log their next result by photo or by hand. Margin turns it into real questions to ask and a short plan to try.</p>
+      <div class="field-stack">
+        <input type="text" id="new-child-name" placeholder="Child's name">
+        <input type="text" id="new-child-grade" placeholder="Grade (optional)">
+        ${renderAvatarPicker('newChild')}
+        <button class="btn btn-primary btn-block" id="add-child-btn">Add child</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderChildRow(){
+  return `
+    <div class="child-row">
+      ${state.children.map(c=>`
+        <div class="chip ${c.id===state.activeChildId?'active':''}" data-select="${c.id}">
+          <span style="font-size:15px;">${c.avatarEmoji||'🙂'}</span>
+          ${escapeHtml(c.name)}${c.grade ? ' · '+escapeHtml(c.grade) : ''}
+          <span class="x" data-remove="${c.id}">${isConfirming('child|'+c.id) ? 'Tap to confirm' : '✕'}</span>
+        </div>
+      `).join('')}
+      <div class="chip add" id="show-add-child">+ Child</div>
+    </div>
+  `;
+}
+
+function renderMain(){
+  const childId = state.activeChildId;
+  const child = state.children.find(c=>c.id===childId);
+  return `
+    ${renderTabs()}
+    ${state.view==='plan' ? renderPlanTab(childId, child) : state.view==='tips' ? renderTipsTab(childId, child) : renderResultsTab(childId, child)}
+  `;
+}
+function renderTabs(){
+  return `
+    <div class="tab-row">
+      <button class="tab-btn ${state.view==='results'?'active-tab':''}" data-view="results">Results</button>
+      <button class="tab-btn ${state.view==='plan'?'active-tab':''}" data-view="plan">Study Plan</button>
+      <button class="tab-btn ${state.view==='tips'?'active-tab':''}" data-view="tips">Tips</button>
+    </div>
+  `;
+}
+
+function renderResultsTab(childId, child){
+  const entries = state.resultsByChild[childId] || [];
+  return `
+    ${state.error ? `<div class="err-banner">${escapeHtml(state.error)}</div>` : ''}
+    ${state.analyzing ? `<div class="card"><div class="analyzing"><div class="spinner"></div><div class="analyzing-txt">Reading the results and drafting a plan worth trying…</div></div></div>` : ''}
+    ${entries.length ? `
+      ${renderResultKeyLegend()}
+      <div class="section-eyebrow">History</div>
+      ${entries.map(e => e._open ? renderExpandedEntry(childId,e) : renderCollapsedEntry(childId,e)).join('')}
+    ` : (!state.analyzing ? `
+      <div class="card empty-state">
+        <div class="ico">📚</div>
+        <div class="t1">No results yet for ${escapeHtml(child.name)}</div>
+        <div class="sub-txt">Tap the + button to add a photo, or type one in by hand.</div>
+      </div>
+    ` : '')}
+  `;
+}
+
+function renderCollapsedEntry(childId, e){
+  return `
+    <div class="tl-row" data-expand="${e.id}">
+      <div class="tl-date">${fmtDate(e.date)}</div>
+      <div class="tl-badges">${e.subjects.slice(0,4).map(s=>`<span class="tl-badge score-${s.assessment}">${escapeHtml(s.name)}</span>`).join('')}</div>
+      <div class="tl-chev">▾</div>
+    </div>
+  `;
+}
+
+function renderExpandedEntry(childId, e){
+  const isChild = state.mode === 'child';
+  const showQuestions = (isChild || state.mode === 'parent') && e.coachingQuestions && e.coachingQuestions.length;
+  const daysLeft = daysUntilExpiry(e.date);
+  const questionsToShow = isChild && e.coachingQuestionsChild ? e.coachingQuestionsChild : e.coachingQuestions;
+  const strengthsToShow = isChild && e.strengthsChild ? e.strengthsChild : e.strengths;
+  const growthToShow = isChild && e.growthAreasChild ? e.growthAreasChild : e.growthAreas;
+  const summaryToShow = isChild && e.overallSummaryChild ? e.overallSummaryChild : e.overallSummary;
+  const encouragementToShow = isChild && e.encouragementChild ? e.encouragementChild : e.encouragement;
+  
+  return `
+    <div class="card">
+      <div class="result-head">
+        <div>
+          <div class="result-date" data-expand="${e.id}" style="cursor:pointer;">${new Date(e.date).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})} ▴</div>
+          <div class="src-tag">${e.source==='manual' ? '✍️ Entered by hand' : '📷 From a photo'} · auto-deletes in ${daysLeft}d</div>
+        </div>
+        ${state.mode==='parent' ? `<button class="icon-btn ${isConfirming('entry|'+childId+'|'+e.id)?'confirm-pending':''}" data-remove-entry="${childId}|${e.id}" title="Remove">${isConfirming('entry|'+childId+'|'+e.id) ? 'Confirm 🗑' : '🗑'}</button>` : ''}
+      </div>
+      ${e.imageData ? `<img class="entry-photo" src="data:${e.imageMediaType};base64,${e.imageData}" alt="Uploaded result">` : ''}
+      ${e.subjects.map(s=>`
+        <div class="subject-row">
+          <div class="subject-name">${escapeHtml(s.name)}</div>
+          <div class="subject-score score-${s.assessment}">${escapeHtml(s.score)} · ${assessLabel(s.assessment)}</div>
+        </div>
+      `).join('')}
+      <div class="twocol">
+        ${strengthsToShow && strengthsToShow.length ? `<div><div class="section-eyebrow" style="margin-top:0;">${isChild ? 'What I\'m doing well' : 'Going well'}</div><ul class="pill-list strength">${strengthsToShow.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul></div>` : ''}
+        ${growthToShow && growthToShow.length ? `<div><div class="section-eyebrow" style="margin-top:0;">${isChild ? 'Where I can improve' : 'Worth attention'}</div><ul class="pill-list growth">${growthToShow.map(s=>`<li>${escapeHtml(s)}</li>`).join('')}</ul></div>` : ''}
+      </div>
+      ${showQuestions ? `
+        <div class="questions-block">
+          <div class="section-eyebrow" style="margin-top:0;">${isChild ? 'Let\'s talk about it' : 'Ask tonight'}</div>
+          ${questionsToShow.map((q,i)=>{
+            const qText = typeof q === 'string' ? q : (q.text || '');
+            const qAsked = typeof q === 'string' ? false : (q.asked || false);
+            return `
+              <div class="q-item ${qAsked?'asked':''}">
+                <input type="checkbox" id="q-${e.id}-${i}" data-toggle-q="${childId}|${e.id}|${i}" ${qAsked?'checked':''} ${state.mode==='caregiver'?'disabled':''}>
+                <label for="q-${e.id}-${i}">${escapeHtml(qText)}</label>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      ` : ''}
+      <div class="card" style="margin-top:12px; background:var(--paper-dim); border:1px solid var(--line); padding:14px 16px;">
+        <div class="section-eyebrow" style="margin-top:0; margin-bottom:8px;">${isChild ? 'Your coaching note' : 'Analysis feedback'}</div>
+        <p class="summary-txt" style="margin-bottom:0;">${escapeHtml(summaryToShow || 'The current results suggest small, focused coaching steps will help the most.')}</p>
+        ${encouragementToShow ? `<div class="encourage" style="margin-top:12px;">"${escapeHtml(encouragementToShow)}"</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+// ---------- Study Plan tab ----------
+function renderPlanTab(childId, child){
+  const rows = state.plansByChild[childId] || [];
+  const sessions = state.sessionsByChild[childId] || [];
+  const counts = {green:0, amber:0, red:0, none:0};
+  rows.forEach(r => counts[r.rag || 'none']++);
+  const RO = state.mode==='caregiver';
+
+  return `
+    <div class="card">
+      <div class="section-eyebrow" style="margin-top:0;">${rows.length} subject${rows.length==1?'':'s'} tracked</div>
+      ${state.mode!=='child' ? `
+        <div class="plan-summary-row2">
+          <span class="rag-chip rag-green">On track · ${counts.green}</span>
+          <span class="rag-chip rag-amber">Slipping · ${counts.amber}</span>
+          <span class="rag-chip rag-red">Off track · ${counts.red}</span>
+          ${counts.none ? `<span class="rag-chip rag-none">Not rated · ${counts.none}</span>` : ''}
+        </div>
+      ` : ''}
+      ${state.mode==='parent' ? `<button class="btn btn-ghost btn-block" id="open-summary-sheet" style="margin-top:12px;">📄 Generate a summary to email</button>` : ''}
+    </div>
+
+    <div class="section-eyebrow">Subjects</div>
+    ${!RO ? `<button class="btn btn-ghost btn-block" id="add-plan-row" style="margin-bottom:12px;">+ Add a subject to track</button>` : ''}
+    ${rows.length ? rows.map(r => renderPlanRow(childId, r)).join('') : `
+      <div class="card empty-state">
+        <div class="ico">🎯</div>
+        <div class="t1">No subjects tracked yet for ${escapeHtml(child.name)}</div>
+        <div class="sub-txt">Log a result, or add a subject above, to start a plan.</div>
+      </div>
+    `}
+
+    <div class="section-eyebrow">Parent-child sessions</div>
+    ${!RO ? `<button class="btn btn-ghost btn-block" id="add-session" style="margin-bottom:12px;">+ Add a session</button>` : ''}
+    ${sessions.length ? sessions.map(s => renderSessionRow(childId, s)).join('') : `
+      <div class="card empty-state">
+        <div class="ico">🗓</div>
+        <div class="t1">No sessions planned</div>
+        <div class="sub-txt">Time set aside to go through the plan together, add one anytime.</div>
+      </div>
+    `}
+  `;
+}
+
+function renderPlanRow(childId, row){ return row._open ? renderPlanRowOpen(childId, row) : renderPlanRowClosed(childId, row); }
+
+function renderPlanRowClosed(childId, row){
+  const gap = computeGapDisplay(row.currentResult, row.targetResult);
+  const range = (row.currentResult || row.targetResult) ? `${escapeHtml(row.currentResult||'—')} → ${escapeHtml(row.targetResult||'—')}` : '';
+  return `
+    <div class="fold-row" data-toggle-plan-row="${childId}|${row.id}">
+      <span class="fold-title">${escapeHtml(row.subject || 'Untitled subject')}</span>
+      ${gap ? `<span class="gap-chip ${gap.cls}" style="margin-left:0;">${gap.text}</span>` : (range ? `<span class="sub-txt" style="flex:none;">${range}</span>` : '')}
+      ${state.mode!=='child' ? `<span class="rag-chip rag-${row.rag||'none'}" style="pointer-events:none;">${ragLabel(row.rag)}</span>` : ''}
+      <span class="fold-chev">▾</span>
+    </div>
+  `;
+}
+
+function renderPlanRowOpen(childId, row){
+  const RO = state.mode==='caregiver';
+  const isChild = state.mode==='child';
+  const trend = row.subject ? buildTrendSVG(childId, row.subject, row.targetResult) : '';
+  const resultSubjects = getResultSubjects(childId);
+  const days = row.studyDays || [];
+  const studyConflict = getStudyTimeConflict(childId, row.id);
+  const practiceOption = row.practiceTestOption || 'none';
+  return `
+    <div class="card">
+      <div class="plan-row-head">
+        <select class="plan-subject-input" data-plan-subject-select="${childId}|${row.id}" ${RO||isChild?'disabled':''}>
+          <option value="" ${!row.subject?'selected':''}>${resultSubjects.length ? 'Select a subject…' : 'No subjects yet, log a result first'}</option>
+          ${resultSubjects.map(s=>`<option value="${escapeHtml(s)}" ${row.subject.toLowerCase()===s.toLowerCase()?'selected':''}>${escapeHtml(s)}</option>`).join('')}
+          ${row.subject && !resultSubjects.some(s=>s.toLowerCase()===row.subject.toLowerCase()) ? `<option value="${escapeHtml(row.subject)}" selected>${escapeHtml(row.subject)} (custom)</option>` : ''}
+        </select>
+        ${!isChild ? `<span class="rag-chip rag-${row.rag || 'none'}" ${!RO?`data-cycle-rag="${childId}|${row.id}"`:''} style="${RO?'pointer-events:none;':''}">${ragLabel(row.rag)}</span>` : ''}
+        <button class="icon-btn" data-toggle-plan-row="${childId}|${row.id}" title="Fold">▴</button>
+      </div>
+      ${renderGapBlock(row)}
+      <div class="plan-grid">
+        <div><div class="mini-label">Current result</div><input type="text" data-plan-field="${childId}|${row.id}|currentResult" value="${escapeHtml(row.currentResult)}" placeholder="e.g. 68%" ${RO||isChild?'disabled':''}></div>
+        <div>
+          <div class="mini-label" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Target this term</span>
+            ${state.mode==='parent' ? `<span class="lock-toggle" data-toggle-lock="${childId}|${row.id}">${row.targetLocked?'🔒 Locked':'🔓 Lock'}</span>` : (row.targetLocked ? `<span class="lock-toggle static">🔒 Locked</span>` : '')}
+          </div>
+          <input type="text" inputmode="decimal" data-plan-field="${childId}|${row.id}|targetResult" value="${escapeHtml(row.targetResult)}" placeholder="e.g. 80%" ${RO||row.targetLocked?'disabled':''}>
+        </div>
+      </div>
+      <div class="mini-label">When to study — days</div>
+      <div class="day-picker">
+        ${DAYS.map(d=>`<span class="day-chip ${days.includes(d)?'day-active':''}" ${!RO?`data-toggle-day="${childId}|${row.id}|${d}"`:''}>${d}</span>`).join('')}
+      </div>
+      <div class="mini-label">When to study — time</div>
+      <input type="time" data-plan-field="${childId}|${row.id}|studyTime" value="${row.studyTime||''}" ${RO?'disabled':''} style="max-width:160px;">
+      ${studyConflict ? `<div class="sheet-err" style="margin-top:8px;">Time clashes with ${escapeHtml(studyConflict.slice(0,2).join(', '))}${studyConflict.length > 2 ? ' and more' : ''}.</div>` : ''}
+      ${row.studyScheduleHint ? `<div class="sub-txt" style="margin-top:6px;">💡 Suggested: ${escapeHtml(row.studyScheduleHint)}</div>` : ''}
+      <div class="mini-label" style="margin-top:14px;">Practice tests</div>
+      <select data-plan-field="${childId}|${row.id}|practiceTestOption" ${RO?'disabled':''} style="margin-bottom:10px;">
+        <option value="none" ${practiceOption==='none'?'selected':''}>No practice test</option>
+        <option value="quick" ${practiceOption==='quick'?'selected':''}>Quick check</option>
+        <option value="mock" ${practiceOption==='mock'?'selected':''}>Formal mock test</option>
+      </select>
+      ${practiceOption !== 'none' ? `
+        <div class="plan-grid" style="margin-top:8px;">
+          <div>
+            <div class="mini-label">Date</div>
+            <input type="date" data-plan-field="${childId}|${row.id}|practiceTestDate" value="${escapeHtml(row.practiceTestDate || '')}" ${RO?'disabled':''}>
+          </div>
+          <div>
+            <div class="mini-label">Time</div>
+            <input type="time" data-plan-field="${childId}|${row.id}|practiceTestTime" value="${escapeHtml(row.practiceTestTime || '')}" ${RO?'disabled':''}>
+          </div>
+        </div>
+      ` : ''}
+      ${trend}
+      ${!isChild ? `
+        <div class="mini-label" style="margin-top:10px;">Notes</div>
+        <textarea data-note-draft="${childId}|${row.id}" rows="2" placeholder="Type a note, press Enter to log it..." ${RO?'disabled':''}>${escapeHtml(row.notesDraft||'')}</textarea>
+        ${!RO ? `<div class="note-save-row"><button class="btn-save-note ${state.savedNoteFlash===row.id?'saved':''}" data-save-note="${childId}|${row.id}">${state.savedNoteFlash===row.id ? 'Saved ✓' : 'Enter ↵'}</button></div>` : ''}
+        ${renderNotesLog(row)}
+      ` : ''}
+      <div class="plan-row-foot">
+        <span class="sub-txt">${row.lastUpdated ? 'Updated ' + fmtDate(row.lastUpdated) : 'Not linked to a result yet'}</span>
+        ${state.mode==='parent' ? `<button class="icon-btn ${isConfirming('planrow|'+childId+'|'+row.id)?'confirm-pending':''}" data-remove-plan-row="${childId}|${row.id}" title="Remove">${isConfirming('planrow|'+childId+'|'+row.id) ? 'Confirm 🗑' : '🗑'}</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderSessionRow(childId, s){ return s._open ? renderSessionRowOpen(childId, s) : renderSessionRowClosed(childId, s); }
+
+function renderSessionRowClosed(childId, s){
+  return `
+    <div class="fold-row" data-toggle-session-row="${childId}|${s.id}">
+      <span class="fold-title">${escapeHtml(s.topic || 'Untitled session')}</span>
+      <span class="sub-txt" style="flex:none;">${s.date ? fmtDate(s.date) : 'No date'}${s.done ? ' · Done' : ''}</span>
+      <span class="fold-chev">▾</span>
+    </div>
+  `;
+}
+function renderSessionRowOpen(childId, s){
+  const RO = state.mode==='caregiver';
+  return `
+    <div class="card">
+      <div class="session-top">
+        <input type="date" data-session-field="${childId}|${s.id}|date" value="${s.date||''}" ${RO?'disabled':''}>
+        <label class="session-done-label">
+          <input type="checkbox" data-toggle-session="${childId}|${s.id}" ${s.done?'checked':''} ${RO?'disabled':''}>
+          Done
+        </label>
+        <button class="icon-btn" data-toggle-session-row="${childId}|${s.id}" title="Fold" style="margin-left:auto;">▴</button>
+        ${state.mode==='parent' ? `<button class="icon-btn ${isConfirming('session|'+childId+'|'+s.id)?'confirm-pending':''}" data-remove-session="${childId}|${s.id}" title="Remove">${isConfirming('session|'+childId+'|'+s.id) ? 'Confirm 🗑' : '🗑'}</button>` : ''}
+      </div>
+      <input type="text" data-session-field="${childId}|${s.id}|topic" value="${escapeHtml(s.topic)}" placeholder="What to go through together" style="margin-top:8px;" ${RO?'disabled':''}>
+      ${s.suggested ? `<div class="suggested-tag">💡 Suggested after a recent result</div>` : ''}
+      <div class="note-save-row">
+        <button class="btn-cal" data-cal="${childId}|${s.id}" ${s.date?'':'disabled'}>📅 Add to calendar</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---------- Tips tab ----------
+function renderTipsTab(childId, child){
+  const tips = state.tipsByChild[childId] || [];
+  const subjects = getTrackedSubjects(childId);
+  const RO = state.mode==='caregiver';
+  return `
+    <div class="card">
+      <div class="section-eyebrow" style="margin-top:0;">Get a tip for ${escapeHtml(child.name)}</div>
+      <div class="sub-txt" style="margin-bottom:12px;">Pick a subject, say what's tricky, and get one specific tip back.</div>
+      ${!RO ? `<button class="btn btn-primary btn-block" id="open-tip-sheet">💡 Get a tip</button>` : ''}
+      ${(!RO && subjects.length) ? `<div class="chip-group" style="margin-top:12px;">${subjects.map(s=>`<span class="chip-mini score-steady active-mini" data-quick-tip="${escapeHtml(s)}">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
+    </div>
+    ${tips.length ? `
+      <div class="section-eyebrow">Past tips</div>
+      ${tips.map(t => renderTipCard(childId, t)).join('')}
+    ` : `<div class="card empty-state"><div class="ico">💡</div><div class="t1">No tips yet</div><div class="sub-txt">Ask about whatever your child is currently stuck on.</div></div>`}
+  `;
+}
+
+function renderTipCard(childId, t){ return t._open ? renderTipCardOpen(childId, t) : renderTipCardClosed(childId, t); }
+function renderTipCardClosed(childId, t){
+  return `
+    <div class="fold-row" data-toggle-tip="${childId}|${t.id}">
+      <span class="fold-title">${escapeHtml(t.subject)}</span>
+      <span class="sub-txt" style="flex:none; max-width:45%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escapeHtml(t.struggle)}</span>
+      <span class="fold-chev">▾</span>
+    </div>
+  `;
+}
+function renderTipCardOpen(childId, t){
+  const view = state.mode==='child' ? (t.childTip || {}) : (t.parentTip || {});
+  return `
+    <div class="card">
+      <div class="result-head">
+        <div><div class="result-date">${fmtDate(t.date)}</div><div class="src-tag">${escapeHtml(t.subject)} · auto-deletes in ${daysUntilExpiry(t.date)}d</div></div>
+        <div style="display:flex; gap:4px;">
+          <button class="icon-btn" data-toggle-tip="${childId}|${t.id}" title="Fold">▴</button>
+          ${state.mode==='parent' ? `<button class="icon-btn ${isConfirming('tip|'+childId+'|'+t.id)?'confirm-pending':''}" data-remove-tip="${childId}|${t.id}" title="Remove">${isConfirming('tip|'+childId+'|'+t.id) ? 'Confirm 🗑' : '🗑'}</button>` : ''}
+        </div>
+      </div>
+      <div class="sub-txt" style="margin-bottom:10px; font-style:italic;">"${escapeHtml(t.struggle)}"</div>
+      <div class="plan-goal">${escapeHtml(view.headline||'')}</div>
+      ${view.explanation ? `<p class="summary-txt">${escapeHtml(view.explanation)}</p>` : ''}
+      ${view.tryThis ? `<div class="encourage">Try this: ${escapeHtml(view.tryThis)}</div>` : ''}
+    </div>
+  `;
+}
+
+// ---------- sheets ----------
+function renderSheet(){
+  if(!state.sheet) return '';
+  let inner = '';
+  if(state.sheet==='addChild') inner = addChildSheetHtml();
+  if(state.sheet==='action') inner = actionSheetHtml();
+  if(state.sheet==='manual') inner = manualSheetHtml();
+  if(state.sheet==='tip') inner = tipSheetHtml();
+  if(state.sheet==='pinGate') inner = pinGateSheetHtml();
+  if(state.sheet==='caregiver') inner = caregiverSheetHtml();
+  if(state.sheet==='parentProfileEdit') inner = parentProfileEditSheetHtml();
+  if(state.sheet==='childProfileEdit') inner = childProfileEditSheetHtml();
+  if(state.sheet==='summary') inner = summarySheetHtml();
+  return `
+    <div class="sheet-overlay" id="sheet-overlay"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <button class="icon-btn sheet-close" id="sheet-close">✕</button>
+      ${inner}
+    </div>
+  `;
+}
+
+function addChildSheetHtml(){
+  return `
+    <div class="sheet-title">Add a child</div>
+    <div class="field-stack">
+      <input type="text" id="sheet-child-name" placeholder="Child's name">
+      <input type="text" id="sheet-child-grade" placeholder="Grade (optional)">
+      ${renderAvatarPicker('newChild')}
+      <button class="btn btn-primary btn-block" id="sheet-add-child-btn">Add child</button>
+    </div>
+  `;
+}
+function actionSheetHtml(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  return `
+    <div class="sheet-title">New result for ${escapeHtml(child ? child.name : '')}</div>
+    <div class="field-stack">
+      <button class="action-btn-big" id="action-photo"><span class="em">📷</span><span>Take or upload a photo</span></button>
+      <button class="action-btn-big" id="action-manual"><span class="em">✍️</span><span>Enter it by hand</span></button>
+    </div>
+  `;
+}
+function manualSheetHtml(){
+  return `
+    <div class="sheet-title">Enter results by hand</div>
+    <div class="sub-txt" style="margin-bottom:10px;">Add just the subjects you want to track, one or several, doesn't need to be everything. Up to 12 subjects can be loaded.</div>
+    ${state.manualSubjects.map(row => `
+      <div class="manual-row" data-row="${row.id}">
+        <div class="manual-inputs">
+          <input type="text" class="m-name" data-field="name|${row.id}" placeholder="Subject" value="${escapeHtml(row.name)}">
+          <input type="text" class="m-score" data-field="score|${row.id}" placeholder="Score, e.g. 82%" value="${escapeHtml(row.score)}">
+          ${state.manualSubjects.length>1 ? `<button class="icon-btn" data-remove-row="${row.id}">✕</button>` : ''}
+        </div>
+        <div class="chip-group">
+          ${['strong','steady','needs_attention'].map(v=>`<span class="chip-mini score-${v} ${row.assessment===v?'active-mini':''}" data-set-assess="${row.id}|${v}">${assessLabel(v)}</span>`).join('')}
+        </div>
+      </div>
+    `).join('')}
+    <button class="btn btn-ghost btn-block" id="add-manual-row" style="margin-top:8px;" ${state.manualSubjects.length >= 12 ? 'disabled' : ''}>+ Add another subject</button>
+    <div style="margin-top:14px;"><textarea id="manual-notes" placeholder="Anything you noticed? (optional)" rows="2">${escapeHtml(state.manualNotes)}</textarea></div>
+    ${state.sheetError ? `<div class="sheet-err">${escapeHtml(state.sheetError)}</div>` : ''}
+    <button class="btn btn-primary btn-block" id="submit-manual" style="margin-top:14px;">Generate coaching plan</button>
+  `;
+}
+function tipSheetHtml(){
+  const subjects = getTrackedSubjects(state.activeChildId);
+  return `
+    <div class="sheet-title">Get a study tip</div>
+    <div class="mini-label">Subject</div>
+    <input type="text" id="tip-subject-input" placeholder="e.g. Math" value="${escapeHtml(state.tipSubject)}" style="margin-bottom:10px;">
+    ${subjects.length ? `<div class="chip-group" style="margin-bottom:14px;">${subjects.map(s=>`<span class="chip-mini score-steady ${state.tipSubject.toLowerCase()===s.toLowerCase()?'active-mini':''}" data-select-tip-subject="${escapeHtml(s)}">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
+    <div class="mini-label">What's finding hard?</div>
+    <textarea id="tip-struggle-input" rows="3" placeholder="e.g. Mixing up when to carry the one">${escapeHtml(state.tipStruggle)}</textarea>
+    ${state.sheetError ? `<div class="sheet-err">${escapeHtml(state.sheetError)}</div>` : ''}
+    <button class="btn btn-primary btn-block" id="submit-tip" style="margin-top:14px;" ${state.tipLoading?'disabled':''}>${state.tipLoading ? 'Thinking…' : 'Get a tip'}</button>
+  `;
+}
+function pinGateSheetHtml(){
+  return `
+    <div class="sheet-title">Enter Main Coach PIN</div>
+    <input type="password" inputmode="numeric" maxlength="4" id="pin-input" placeholder="••••" style="text-align:center; font-size:22px; letter-spacing:8px;" autocomplete="one-time-code">
+    ${state.sheetError ? `<div class="sheet-err">${escapeHtml(state.sheetError)}</div>` : ''}
+    <button class="btn btn-primary btn-block" id="submit-pin" style="margin-top:14px;">Unlock</button>
+    <button class="btn btn-ghost btn-block" type="button" id="forgot-pin-link" style="margin-top:8px;">Forgotten Password?</button>
+  `;
+}
+function caregiverSheetHtml(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  const cg = child.caregiver;
+  return `
+    <div class="sheet-title">Guardian access for ${escapeHtml(child.name)}</div>
+    <div class="sub-txt" style="margin-bottom:12px;">One additional guardian can view everything for ${escapeHtml(child.name)}, but can't edit, comment, or check anything off.</div>
+    <div class="mini-label">Name</div>
+    <input type="text" id="cg-name" value="${cg?escapeHtml(cg.name):''}" placeholder="e.g. Co-parent, Grandparent" style="margin-bottom:10px;">
+    <div class="mini-label">Email (optional)</div>
+    <input type="text" id="cg-email" value="${cg?escapeHtml(cg.email):''}" placeholder="email@example.com">
+    ${state.sheetError ? `<div class="sheet-err">${escapeHtml(state.sheetError)}</div>` : ''}
+    <button class="btn btn-primary btn-block" id="save-caregiver" style="margin-top:14px;">Save guardian</button>
+    ${cg ? `<button class="btn btn-ghost btn-block" id="remove-caregiver" style="margin-top:8px;">Remove guardian</button>` : ''}
+    <div class="cg-note">Only one additional guardian is allowed per child. To actually see this, they'd switch to Guardian mode on this device. That gives a read-only view rather than a separate secure login. Real per-user accounts would need a backend beyond this prototype.</div>
+  `;
+}
+function parentProfileEditSheetHtml(){
+  const p = state.parentProfile;
+  return `
+    <div class="sheet-title">Edit parent profile</div>
+    <div class="field-stack">
+      <input type="text" id="ppe-name" value="${escapeHtml(p.name)}" placeholder="Your name">
+      <input type="text" id="ppe-email" value="${escapeHtml(p.email||'')}" placeholder="Your email (optional)">
+      ${renderAvatarPicker('parentEdit')}
+      <input type="text" id="ppe-pin" inputmode="numeric" maxlength="4" value="${escapeHtml(p.pin||'')}" placeholder="4-digit PIN (optional)">
+      ${state.sheetError ? `<div class="sheet-err">${escapeHtml(state.sheetError)}</div>` : ''}
+      <button class="btn btn-primary btn-block" id="save-parent-profile-edit">Save</button>
+    </div>
+  `;
+}
+function childProfileEditSheetHtml(){
+  const child = state.children.find(c=>c.id===state.activeChildId);
+  const badge = getBadge(child.childPoints||0);
+  return `
+    <div class="sheet-title">Edit your avatar</div>
+    <div class="sub-txt" style="text-align:center; margin-bottom:6px;">${badge.icon} ${escapeHtml(badge.label)} · ${child.childPoints||0} points</div>
+    ${renderAvatarPicker('childEdit')}
+    <button class="btn btn-primary btn-block" id="save-child-profile-edit" style="margin-top:10px;">Save</button>
+  `;
+}
+function summarySheetHtml(){
+  const text = buildSummaryText(state.activeChildId);
+  const email = state.parentProfile.email;
+  const mailHref = email ? `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent('Margin summary')}&body=${encodeURIComponent(text)}` : null;
+  return `
+    <div class="sheet-title">Summary</div>
+    <textarea class="summary-box" id="summary-text" readonly>${escapeHtml(text)}</textarea>
+    <div class="field-stack" style="margin-top:12px;">
+      <button class="btn btn-ghost btn-block" id="copy-summary">${state.summaryCopied ? 'Copied ✓' : 'Copy summary'}</button>
+      ${mailHref ? `<a class="btn btn-primary btn-block" style="text-align:center; display:block;" href="${mailHref}" target="_blank" rel="noopener">📧 Email to ${escapeHtml(email)}</a>` : `<div class="sub-txt">Add your email in your parent profile to enable one-tap emailing.</div>`}
+    </div>
+    <div class="cg-note">This opens your own mail app with the summary pre-filled, Margin doesn't send email on its own. If the button doesn't open anything, copy the text above and paste it into an email yourself.</div>
+  `;
+}
+
+// ---------- event wiring ----------
+function attemptLogin(){
+  const email = (document.getElementById('login-email')?.value || state.loginEmail || '').trim();
+  const password = (document.getElementById('login-password')?.value || state.loginPassword || '').trim();
+
+  state.loginEmail = email;
+  state.loginPassword = password;
+
+  if(!email || !password){
+    state.loginError = 'Please enter both your email and password.';
+    render();
+    return;
+  }
+
+  const validEmail = /[a-z0-9._%+-]+@(?:[a-z0-9-]+\.)+[a-z]{2,}$/i.test(email);
+  const validPassword = password.length >= 6;
+  const acceptedUsers = {
+    'coach@xcapital.com': 'XCapital123!',
+    'admin@xcapitalresources.com': 'XCapital123!'
+  };
+
+  const validUser = validEmail && acceptedUsers[email.toLowerCase()] === password;
+
+  if(!validUser || !validPassword){
+    state.loginError = 'Incorrect email or password. Use the demo credential shown below.';
+    render();
+    return;
+  }
+
+  state.loginError = '';
+  state.authenticated = true;
+  state.parentProfile = state.parentProfile || {
+    name: email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase()),
+    email,
+    avatarEmoji: '🙂',
+    avatarColor: AVATAR_COLORS[0],
+    pin: '1234'
+  };
+  storeSet('parentProfile', state.parentProfile);
+  createDemoChildIfNeeded();
+  if(state.activeChildId) ensureDemoResultForCurrentChild();
+  render();
+}
+
+function handleForgotPassword(){
+  const message = 'Forgotten Password? Use the demo password: XCapital123! or contact the X-Capital Resources support desk for the Main Coach login.';
+  state.loginError = message;
+  state.sheetError = message;
+  render();
+}
+
+function attachHandlers(){
+  const loginToggle = document.getElementById('login-toggle');
+  if(loginToggle){
+    loginToggle.onclick = () => {
+      if(state.authenticated){
+        state.authenticated = false;
+        state.loginError = '';
+        state.loginEmail = '';
+        state.loginPassword = '';
+        render();
+      } else {
+        state.loginError = '';
+        render();
+      }
+    };
+  }
+
+  const loginSubmit = document.getElementById('login-submit');
+  if(loginSubmit) loginSubmit.onclick = attemptLogin;
+
+  const forgotPassword = document.getElementById('forgot-password-link');
+  if(forgotPassword) forgotPassword.onclick = handleForgotPassword;
+
+  const forgotPin = document.getElementById('forgot-pin-link');
+  if(forgotPin) forgotPin.onclick = handleForgotPassword;
+
+  const loginEmailInput = document.getElementById('login-email');
+  if(loginEmailInput) loginEmailInput.addEventListener('input', () => { state.loginEmail = loginEmailInput.value; });
+
+  const loginPasswordInput = document.getElementById('login-password');
+  if(loginPasswordInput) loginPasswordInput.addEventListener('input', () => { state.loginPassword = loginPasswordInput.value; });
+
+  const savePP = document.getElementById('save-parent-profile');
+  if(savePP) savePP.onclick = saveParentProfile;
+
+  const dismissWelcome = document.getElementById('dismiss-welcome');
+  if(dismissWelcome) dismissWelcome.onclick = ()=>{ state.showWelcomeBack=false; render(); };
+
+  const openProfile = document.querySelector('[data-open-profile]');
+  if(openProfile) openProfile.onclick = ()=>{
+    const which = openProfile.getAttribute('data-open-profile');
+    if(which==='parent') openParentProfileEdit(); else openChildProfileEdit();
+  };
+
+  document.querySelectorAll('[data-switch-mode]').forEach(el=>{
+    el.addEventListener('click', ()=> switchMode(el.getAttribute('data-switch-mode')));
+  });
+
+  document.querySelectorAll('[data-avatar-emoji]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [prefix, emoji] = el.getAttribute('data-avatar-emoji').split('|');
+      state.avatarTemp[prefix] = state.avatarTemp[prefix] || {emoji:AVATAR_EMOJIS[0], color:AVATAR_COLORS[0]};
+      state.avatarTemp[prefix].emoji = emoji;
+      render();
+    });
+  });
+  document.querySelectorAll('[data-avatar-color]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [prefix, color] = el.getAttribute('data-avatar-color').split('|');
+      state.avatarTemp[prefix] = state.avatarTemp[prefix] || {emoji:AVATAR_EMOJIS[0], color:AVATAR_COLORS[0]};
+      state.avatarTemp[prefix].color = color;
+      render();
+    });
+  });
+
+  const addBtn = document.getElementById('add-child-btn');
+  if(addBtn) addBtn.onclick = ()=> addChild(document.getElementById('new-child-name').value, document.getElementById('new-child-grade').value);
+  const showAdd = document.getElementById('show-add-child');
+  if(showAdd) showAdd.onclick = openAddChildSheet;
+
+  document.querySelectorAll('[data-select]').forEach(el=>{
+    el.addEventListener('click', (ev)=>{ if(ev.target.closest('[data-remove]')) return; selectChild(el.getAttribute('data-select')); });
+  });
+  document.querySelectorAll('[data-remove]').forEach(el=>{
+    el.addEventListener('click', (ev)=>{ ev.stopPropagation(); const id = el.getAttribute('data-remove'); requestConfirm('child|'+id, ()=> removeChild(id)); });
+  });
+  document.querySelectorAll('[data-expand]').forEach(el=>{ el.addEventListener('click', ()=> toggleExpand(el.getAttribute('data-expand'))); });
+  document.querySelectorAll('[data-remove-entry]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, entryId] = el.getAttribute('data-remove-entry').split('|'); requestConfirm('entry|'+childId+'|'+entryId, ()=> removeEntry(childId, entryId)); });
+  });
+  document.querySelectorAll('[data-toggle-q]').forEach(el=>{
+    el.addEventListener('change', ()=>{ const [childId, entryId, idx] = el.getAttribute('data-toggle-q').split('|'); toggleQuestion(childId, entryId, parseInt(idx,10)); });
+  });
+
+  document.querySelectorAll('[data-plan-field]').forEach(el=>{
+    const updateRow = () => {
+      const [childId, rowId, field] = el.getAttribute('data-plan-field').split('|');
+      const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+      if(!row) return;
+      row[field] = el.value;
+      if(field === 'practiceTestOption' && el.value === 'none') {
+        row.practiceTestDate = '';
+        row.practiceTestTime = '';
+      }
+      if(field === 'studyTime' && row.studyTime){
+        const conflicts = getStudyTimeConflict(childId, rowId);
+        if(conflicts) {
+          row.studyTime = row.studyTime;
+        }
+      }
+    };
+    el.addEventListener('input', updateRow);
+    el.addEventListener('change', updateRow);
+    el.addEventListener('blur', ()=>{
+      const [childId, rowId, field] = el.getAttribute('data-plan-field').split('|');
+      const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+      if(row && (field==='targetResult' || field==='currentResult')){
+        if(row[field] && (!row.targetLocked || field==='currentResult')) {
+          row[field] = formatAsPercent(row[field]);
+        }
+      }
+      persistPlan(childId);
+      render();
+    });
+  });
+  document.querySelectorAll('[data-toggle-lock]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, rowId] = el.getAttribute('data-toggle-lock').split('|'); toggleTargetLock(childId, rowId); });
+  });
+  document.querySelectorAll('[data-plan-subject-select]').forEach(el=>{
+    el.addEventListener('change', ()=>{
+      const [childId, rowId] = el.getAttribute('data-plan-subject-select').split('|');
+      selectPlanSubject(childId, rowId, el.value);
+    });
+  });
+  document.querySelectorAll('[data-toggle-day]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [childId, rowId, day] = el.getAttribute('data-toggle-day').split('|');
+      toggleStudyDay(childId, rowId, day);
+    });
+  });
+  document.querySelectorAll('[data-cycle-rag]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, rowId] = el.getAttribute('data-cycle-rag').split('|'); cycleRag(childId, rowId); });
+  });
+  document.querySelectorAll('[data-toggle-plan-row]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, rowId] = el.getAttribute('data-toggle-plan-row').split('|'); togglePlanRowOpen(childId, rowId); });
+  });
+  document.querySelectorAll('[data-remove-plan-row]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, rowId] = el.getAttribute('data-remove-plan-row').split('|'); requestConfirm('planrow|'+childId+'|'+rowId, ()=> removePlanRow(childId, rowId)); });
+  });
+  const addPlanRowBtn = document.getElementById('add-plan-row');
+  if(addPlanRowBtn) addPlanRowBtn.onclick = ()=> addPlanRow(state.activeChildId);
+
+  document.querySelectorAll('[data-note-draft]').forEach(el=>{
+    el.addEventListener('input', ()=>{
+      const [childId, rowId] = el.getAttribute('data-note-draft').split('|');
+      const row = (state.plansByChild[childId]||[]).find(r=>r.id===rowId);
+      if(row) row.notesDraft = el.value;
+    });
+    el.addEventListener('keydown', (ev)=>{
+      if(ev.key==='Enter' && !ev.shiftKey){
+        ev.preventDefault();
+        const [childId, rowId] = el.getAttribute('data-note-draft').split('|');
+        saveNoteEntry(childId, rowId, el.value);
+      }
+    });
+  });
+  document.querySelectorAll('[data-save-note]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [childId, rowId] = el.getAttribute('data-save-note').split('|');
+      const ta = document.querySelector(`[data-note-draft="${childId}|${rowId}"]`);
+      saveNoteEntry(childId, rowId, ta ? ta.value : undefined);
+    });
+  });
+
+  document.querySelectorAll('[data-session-field]').forEach(el=>{
+    el.addEventListener('input', ()=>{
+      const [childId, id, field] = el.getAttribute('data-session-field').split('|');
+      const s = (state.sessionsByChild[childId]||[]).find(x=>x.id===id);
+      if(s) s[field] = el.value;
+    });
+    el.addEventListener('change', ()=>{ const [childId] = el.getAttribute('data-session-field').split('|'); persistSessions(childId); });
+    el.addEventListener('blur', ()=>{ const [childId] = el.getAttribute('data-session-field').split('|'); persistSessions(childId); });
+  });
+  document.querySelectorAll('[data-toggle-session-row]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, id] = el.getAttribute('data-toggle-session-row').split('|'); toggleSessionOpen(childId, id); });
+  });
+  document.querySelectorAll('[data-toggle-session]').forEach(el=>{
+    el.addEventListener('change', ()=>{ const [childId, id] = el.getAttribute('data-toggle-session').split('|'); toggleSessionDone(childId, id); });
+  });
+  document.querySelectorAll('[data-remove-session]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, id] = el.getAttribute('data-remove-session').split('|'); requestConfirm('session|'+childId+'|'+id, ()=> removeSession(childId, id)); });
+  });
+  document.querySelectorAll('[data-cal]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const [childId, id] = el.getAttribute('data-cal').split('|');
+      const s = (state.sessionsByChild[childId]||[]).find(x=>x.id===id);
+      if(s) downloadICS(s.topic || 'Study session', 'Margin: parent-child session', s.date);
+    });
+  });
+  const addSessionBtn = document.getElementById('add-session');
+  if(addSessionBtn) addSessionBtn.onclick = ()=> addSession(state.activeChildId);
+
+  document.querySelectorAll('[data-view]').forEach(el=>{ el.addEventListener('click', ()=>{ state.view = el.getAttribute('data-view'); render(); }); });
+
+  const fab = document.getElementById('fab-add');
+  if(fab) fab.onclick = ()=> state.view==='tips' ? openTipSheet() : openActionSheet();
+
+  const overlay = document.getElementById('sheet-overlay');
+  if(overlay) overlay.onclick = closeSheet;
+  const sheetClose = document.getElementById('sheet-close');
+  if(sheetClose) sheetClose.onclick = closeSheet;
+
+  const sheetAddChildBtn = document.getElementById('sheet-add-child-btn');
+  if(sheetAddChildBtn) sheetAddChildBtn.onclick = ()=> addChild(document.getElementById('sheet-child-name').value, document.getElementById('sheet-child-grade').value);
+
+  const actionPhoto = document.getElementById('action-photo');
+  if(actionPhoto) actionPhoto.onclick = ()=>{ state.sheet = null; render(); setTimeout(()=>{ const gfi = document.getElementById('global-file-input'); if(gfi) gfi.click(); }, 50); };
+  const actionManual = document.getElementById('action-manual');
+  if(actionManual) actionManual.onclick = openManualSheet;
+
+  document.querySelectorAll('.m-name, .m-score').forEach(el=>{
+    el.addEventListener('input', ()=>{
+      const [field, id] = el.getAttribute('data-field').split('|');
+      const row = state.manualSubjects.find(r=>r.id===id);
+      if(row) row[field] = el.value;
+    });
+  });
+  const notesEl = document.getElementById('manual-notes');
+  if(notesEl) notesEl.addEventListener('input', ()=> state.manualNotes = notesEl.value);
+  document.querySelectorAll('[data-remove-row]').forEach(el=>{ el.addEventListener('click', ()=> removeManualRow(el.getAttribute('data-remove-row'))); });
+  document.querySelectorAll('[data-set-assess]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [id, val] = el.getAttribute('data-set-assess').split('|'); setManualAssessment(id, val); });
+  });
+  const addRowBtn = document.getElementById('add-manual-row');
+  if(addRowBtn) addRowBtn.onclick = addManualRow;
+  const submitManualBtn = document.getElementById('submit-manual');
+  if(submitManualBtn) submitManualBtn.onclick = ()=> runAnalysis({mode:'manual'});
+
+  const openTipBtn = document.getElementById('open-tip-sheet');
+  if(openTipBtn) openTipBtn.onclick = openTipSheet;
+  document.querySelectorAll('[data-quick-tip]').forEach(el=>{
+    el.addEventListener('click', ()=>{ openTipSheet(); state.tipSubject = el.getAttribute('data-quick-tip'); render(); });
+  });
+  document.querySelectorAll('[data-toggle-tip]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, id] = el.getAttribute('data-toggle-tip').split('|'); toggleTipOpen(childId, id); });
+  });
+  document.querySelectorAll('[data-remove-tip]').forEach(el=>{
+    el.addEventListener('click', ()=>{ const [childId, id] = el.getAttribute('data-remove-tip').split('|'); requestConfirm('tip|'+childId+'|'+id, ()=> removeTip(childId, id)); });
+  });
+  const tipSubjectInput = document.getElementById('tip-subject-input');
+  if(tipSubjectInput) tipSubjectInput.addEventListener('input', ()=> state.tipSubject = tipSubjectInput.value);
+  const tipStruggleInput = document.getElementById('tip-struggle-input');
+  if(tipStruggleInput) tipStruggleInput.addEventListener('input', ()=> state.tipStruggle = tipStruggleInput.value);
+  document.querySelectorAll('[data-select-tip-subject]').forEach(el=>{ el.addEventListener('click', ()=> selectTipSubject(el.getAttribute('data-select-tip-subject'))); });
+  const submitTipBtn = document.getElementById('submit-tip');
+  if(submitTipBtn) submitTipBtn.onclick = generateTip;
+
+  const pinInput = document.getElementById('pin-input');
+  if(pinInput) pinInput.addEventListener('input', ()=> state.pinInput = pinInput.value);
+  const submitPin = document.getElementById('submit-pin');
+  if(submitPin) submitPin.onclick = checkPin;
+
+  const openCg = document.getElementById('open-caregiver-sheet');
+  if(openCg) openCg.onclick = openCaregiverSheet;
+  const saveCg = document.getElementById('save-caregiver');
+  if(saveCg) saveCg.onclick = saveCaregiver;
+  const removeCg = document.getElementById('remove-caregiver');
+  if(removeCg) removeCg.onclick = removeCaregiver;
+
+  const savePPE = document.getElementById('save-parent-profile-edit');
+  if(savePPE) savePPE.onclick = saveParentProfileEdit;
+  const saveCPE = document.getElementById('save-child-profile-edit');
+  if(saveCPE) saveCPE.onclick = saveChildProfileEdit;
+
+  const openSummary = document.getElementById('open-summary-sheet');
+  if(openSummary) openSummary.onclick = openSummarySheet;
+  const copySummaryBtn = document.getElementById('copy-summary');
+  if(copySummaryBtn) copySummaryBtn.onclick = copySummary;
+
+  const gfi = document.getElementById('global-file-input');
+  if(gfi) gfi.onchange = ()=>{ if(gfi.files[0]) runAnalysis({mode:'photo', file:gfi.files[0]}); gfi.value = ''; };
+}
+
+init();
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{ /* not supported in this context, app still works as a normal page */ });
+  });
+}
+</script>
+</body>
+</html>

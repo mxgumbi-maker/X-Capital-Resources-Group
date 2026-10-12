@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X-Capital Resources Group</title>
+<meta name="description" content="X-Capital Resources Group: one holding company that owns eleven operating companies.">
+<meta name="theme-color" content="#14161A">
+<link rel="icon" type="image/png" href="assets/logos/corp_icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  :root{--c:#C9A24B}
+  .ghero{background:#14161A; color:#F7F7F5; position:relative; overflow:hidden; padding:80px 0 0}
+  .ghero::before{content:""; position:absolute; inset:0; background:radial-gradient(900px 420px at 80% 0%, rgba(201,162,75,.22), transparent 65%)}
+  .ghero .wrap{position:relative}
+  .ghero-top{display:grid; grid-template-columns:1.5fr 1fr; gap:40px; align-items:center}
+  .ghero h1{font-size:clamp(40px,6.4vw,76px); line-height:1.02; margin:14px 0 20px}
+  .ghero h1 em{font-style:italic; color:#C9A24B; font-weight:500}
+  .ghero .lead{font-size:clamp(17px,2vw,20px); color:#C9CBD1; max-width:56ch; margin:0 0 28px}
+  .ghero .eyebrow{color:#C9A24B}
+  .big-mark{justify-self:center; width:min(300px,80%); color:#F7F7F5}
+  .big-mark .mk{width:100%; height:auto}
+  .ghero .cta{display:flex; flex-wrap:wrap; gap:10px}
+  .btn-gold{display:inline-block; background:#C9A24B; color:#14161A; padding:13px 22px; border-radius:999px; font-weight:700; text-decoration:none}
+  .btn-line{display:inline-block; border:1px solid rgba(247,247,245,.35); padding:12px 22px; border-radius:999px; font-weight:600; text-decoration:none}
+  .gstats{display:grid; grid-template-columns:repeat(6,1fr); margin-top:64px; border-top:1px solid rgba(247,247,245,.14)}
+  .gstats div{padding:26px 18px 30px; border-right:1px solid rgba(247,247,245,.10)}
+  .gstats div:last-child{border-right:0}
+  .gstats b{display:block; font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,3vw,38px); line-height:1; color:#F7F7F5; font-variant-numeric:tabular-nums}
+  .gstats b small{font-size:.55em; color:#C9A24B; margin-left:2px}
+  .gstats > div > span{display:block; margin-top:8px; font-size:13px; color:#A9ADB6; line-height:1.35}
+
+  /* Organogram */
+  .org{background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:40px 28px 36px; box-shadow:var(--shadow)}
+  .org-parent{max-width:560px; margin:0 auto; text-align:center; background:#C9A24B; color:#14161A; border-radius:16px; padding:22px 24px; border:2px solid #14161A; display:flex; align-items:center; gap:16px; justify-content:center}
+  .org-parent .mk{width:62px; height:62px; flex:none}
+  .org-parent b{display:block; font-size:clamp(17px,2.2vw,22px); letter-spacing:.03em}
+  .org-parent span{font-size:14px}
+  .org-stem{width:2px; height:30px; background:#14161A; margin:0 auto}
+  :root[data-theme="dark"] .org-stem, :root[data-theme="dark"] .org-cols::before, :root[data-theme="dark"] .phase::before{background:var(--line-strong)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .org-stem, :root:not([data-theme="light"]) .org-cols::before, :root:not([data-theme="light"]) .phase::before{background:var(--line-strong)}}
+  .org-cols{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; position:relative; padding-top:30px}
+  .org-cols::before{content:""; position:absolute; top:0; left:12.5%; right:12.5%; height:2px; background:#14161A}
+  .phase{position:relative; text-align:center}
+  .phase::before{content:""; position:absolute; top:-30px; left:50%; width:2px; height:30px; background:#14161A; transform:translateX(-1px)}
+  .phase h3{margin:0; font-size:13px; letter-spacing:.1em; text-transform:uppercase}
+  .phase .yrs{font-size:13px; color:var(--text-faint); font-style:italic; margin:2px 0 12px}
+  .co{display:block; text-decoration:none; border-radius:12px; padding:14px 12px; margin-bottom:12px; border:1.5px solid #14161A; transition:transform .15s, box-shadow .15s}
+  .co:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(20,22,26,.18)}
+  .co b{display:block; font-size:15px}
+  .co span{display:block; font-size:12px; opacity:.85; margin-top:3px}
+  .co .own{display:inline-block; margin-top:8px; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:999px; background:rgba(20,22,26,.14)}
+  .product{position:relative; margin:-4px 0 14px 22px; text-align:left}
+  .product::before{content:""; position:absolute; left:-14px; top:-10px; width:12px; height:32px; border-left:2px solid var(--line-strong); border-bottom:2px solid var(--line-strong); border-bottom-left-radius:8px}
+  .product a{display:flex; align-items:center; gap:10px; text-decoration:none; background:#1F2A3C; color:#FBF8F2; border-radius:10px; padding:8px 12px; font-size:13px; border:1.5px solid #1E8F6D}
+  .product img{width:28px; height:28px; border-radius:7px}
+  .product small{display:block; font-size:11px; opacity:.75}
+  .org-key{display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-top:22px; font-size:13px; color:var(--text-dim)}
+  .org-key i{display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px}
+
+  /* Register */
+  .register{width:100%; border-collapse:collapse; background:var(--surface); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); font-size:14.5px}
+  .register th{background:#14161A; color:#F7F7F5; text-align:left; font-size:12px; letter-spacing:.08em; text-transform:uppercase; padding:12px 14px}
+  .register td{padding:12px 14px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums}
+  .register td.r, .register th.r{text-align:right}
+  .register tr:hover td{background:var(--surface-2)}
+  .register a{text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:10px}
+  .register .sw{width:12px; height:12px; border-radius:3px; flex:none}
+  .register .ownr{display:inline-flex; align-items:center; gap:6px; color:var(--text-dim)}
+  .register .ownr .mk{width:20px; height:20px; color:var(--text)}
+  .reg-wrap{overflow-x:auto; border-radius:16px}
+
+  /* Company grid */
+  .cogrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px}
+  .cocard{position:relative; display:flex; flex-direction:column; text-decoration:none; background:var(--surface); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); transition:transform .18s, box-shadow .18s}
+  .cocard:hover{transform:translateY(-4px); box-shadow:0 18px 40px rgba(20,22,26,.16)}
+  .cocard .top{padding:20px 20px 18px; position:relative; overflow:hidden}
+  .cocard .top .mk{width:54px; height:54px; background:#F7F7F5; border-radius:14px; padding:4px; color:#14161A}
+  .cocard .top .ph{position:absolute; top:16px; right:16px; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; background:rgba(255,255,255,.25); padding:4px 9px; border-radius:999px}
+  .cocard h3{margin:14px 0 2px; font-size:21px}
+  .cocard .sec{font-size:12.5px; opacity:.85}
+  .cocard .body{padding:16px 20px 20px; display:flex; flex-direction:column; gap:14px; flex:1}
+  .cocard .tag{margin:0; font-family:'Fraunces',serif; font-style:italic; font-size:16px; line-height:1.35; color:var(--text)}
+  .cocard .nums{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:auto}
+  .cocard .nums div{background:var(--surface-2); border-radius:10px; padding:8px 10px}
+  .cocard .nums b{display:block; font-size:16px; font-variant-numeric:tabular-nums}
+  .cocard .nums span{font-size:11px; color:var(--text-faint); line-height:1.2; display:block}
+
+  /* Roadmap */
+  .road{display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative}
+  .road .step{padding:0 16px 0 0; position:relative}
+  .road .step::before{content:""; display:block; height:6px; border-radius:6px; background:linear-gradient(90deg, #C9A24B, #E0C788); margin-bottom:18px; margin-right:-16px}
+  .road .step:last-child::before{margin-right:0}
+  .road .n{font-family:'Fraunces',serif; font-size:44px; line-height:1; color:#C9A24B}
+  .road h3{margin:6px 0 2px; font-size:18px}
+  .road .yrs{font-size:13px; color:var(--text-faint); margin-bottom:12px}
+  .road .chipset{display:flex; flex-wrap:wrap; gap:6px}
+  .road .chipset a{font-size:12.5px; font-weight:700; padding:5px 10px; border-radius:999px; text-decoration:none}
+
+  /* Holding role */
+  .hold{display:grid; grid-template-columns:1fr 1fr; gap:28px; background:#14161A; color:#F7F7F5; border-radius:24px; padding:40px; position:relative; overflow:hidden}
+  .hold h2{margin:10px 0 14px; font-size:clamp(26px,3.4vw,38px)}
+  .hold p{color:#C9CBD1; margin:0}
+  .svc{display:flex; flex-wrap:wrap; gap:8px; align-content:center}
+  .svc span{padding:10px 14px; border-radius:12px; background:rgba(201,162,75,.12); border:1px solid rgba(201,162,75,.35); font-size:14px; font-weight:600}
+
+  @media (max-width:960px){
+    .ghero-top,.hold{grid-template-columns:1fr}
+    .big-mark{display:none}
+    .gstats{grid-template-columns:repeat(3,1fr)}
+    .gstats div:nth-child(3){border-right:0}
+    .org-cols{grid-template-columns:1fr 1fr; row-gap:32px}
+    .org-cols::before{display:none}
+    .phase::before{display:none}
+    .road{grid-template-columns:1fr 1fr; row-gap:28px}
+  }
+  @media (max-width:560px){
+    .gstats{grid-template-columns:1fr 1fr}
+    .gstats div:nth-child(3){border-right:1px solid rgba(247,247,245,.10)}
+    .gstats div:nth-child(2n){border-right:0}
+    .org{padding:28px 16px}
+    .org-parent{flex-direction:column; gap:8px}
+    .org-cols{grid-template-columns:1fr}
+    .road{grid-template-columns:1fr}
+    .hold{padding:28px 20px}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>window.PAGE = { slug: "corp", base: "" };</script>
+<script src="assets/data.js"></script>
+<script src="assets/brand.js"></script>
+<script>
+(function(){
+  const B = window.Brand, { XCR, esc, fmtInt, fmtRand, mark, href } = B;
+  const page = window.PAGE, corp = XCR.corp;
+  const y10Head = B.groupHeadcount[9], y10Rev = B.groupRevenue[9];
+  const cnt = (n, dec = 0) => `<span data-count="${n}" data-dec="${dec}">${dec ? n.toFixed(dec) : fmtInt(n)}</span>`;
+  const coName = s => XCR[s].name;
+
+  const orgCo = s => {
+    const c = XCR[s], on = B.onColor(c.color);
+    const card = `<a class="co" href="${href(s, '')}" style="background:${c.color}; color:${on}"><b>${esc(c.name)}</b><span>${esc(c.sector.charAt(0) + c.sector.slice(1).toLowerCase())}</span><em class="own" style="font-style:normal">Owned · ${c.launchYear}</em></a>`;
+    const product = s !== 'edu' ? '' : `<div class="product"><a href="margin/landing.html"><img src="margin/icon-192.png" alt=""><span><b>Margin</b><small>Study coaching app · an Education product</small></span></a></div>`;
+    return card + product;
+  };
+
+  const html = `
+  ${B.header(page)}
+  <main id="top">
+    <div class="ghero">
+      <div class="wrap">
+        <div class="ghero-top">
+          <div>
+            <div class="eyebrow">X-Capital Resources Group · Holding &amp; Corporate Office</div>
+            <h1 class="serif">Building Wealth. Building People. <em>Building a Legacy.</em></h1>
+            <p class="lead">One holding company that owns eleven operating companies, from staffing and marketing to schools, farms and renewable power. Each launches in sequence on a ten-year plan that starts in South Africa in 2027.</p>
+            <div class="cta"><a class="btn-gold" href="#structure">See the group structure</a><a class="btn-line" href="#companies">Meet the companies</a></div>
+          </div>
+          <div class="big-mark">${mark(corp.color, '#F7F7F5')}</div>
+        </div>
+        <div class="gstats">
+          <div><b>${cnt(12)}</b><span>companies in the group</span></div>
+          <div><b>${cnt(11)}</b><span>operating companies owned by the holding company</span></div>
+          <div><b>${cnt(y10Head)}</b><span>jobs targeted by 2036</span></div>
+          <div><b>R${cnt(y10Rev / 1000, 2)}<small>bn</small></b><span>group revenue target, 2036</span></div>
+          <div><b>${cnt(4)}</b><span>launch phases over ten years</span></div>
+          <div><b>${cnt(6)}</b><span>founding partners</span></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="structure">
+      <div class="wrap">
+        <div class="sec-head"><div class="eyebrow">Group structure</div>
+          <h2 class="serif">X-Capital Resources Group owns every company in the group</h2>
+          <p>The holding and corporate office sits at the top and owns all eleven operating companies below it. Each column shows the phase in which a company launches. Select any company to visit its page.</p></div>
+        <div class="org" role="figure" aria-label="Organogram: X-Capital Resources Group owns eleven subsidiaries across four phases">
+          <div class="org-parent"><span style="background:#14161A; border-radius:14px; padding:4px; display:block">${mark(corp.color, '#F7F7F5')}</span><div><b>X-CAPITAL RESOURCES GROUP</b><span>Holding &amp; Corporate Office · owns all 11 subsidiaries below</span></div></div>
+          <div class="org-stem"></div>
+          <div class="org-cols">
+            ${B.PHASES.map(p => `<div class="phase"><h3>Phase ${p.n} · ${esc(p.name)}</h3><div class="yrs">${p.years}</div>${p.ids.map(orgCo).join('')}</div>`).join('')}
+          </div>
+          <div class="org-key">
+            <span><i style="background:#C9A24B; border:1.5px solid #14161A"></i>Holding company (owner)</span>
+            <span><i style="background:#2F6FED"></i>Operating company, owned by the group</span>
+            <span><i style="background:#1F2A3C; border:1.5px solid #1E8F6D"></i>Product of a subsidiary</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="register" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head"><div class="eyebrow">Ownership register</div>
+          <h2 class="serif">Who owns what</h2>
+          <p>Every operating company has the same owner: X-Capital Resources Group.</p></div>
+        <div class="reg-wrap"><table class="register">
+          <thead><tr><th>Company</th><th>Owner</th><th>Phase</th><th class="r">Launch</th><th class="r">Jobs, 2036</th><th class="r">Revenue, 2036</th></tr></thead>
+          <tbody>${B.ORDER.map(s => { const c = XCR[s], p = B.phaseOf(s); return `<tr>
+            <td><a href="${href(s, '')}"><i class="sw" style="background:${c.color}"></i>X-Capital Resources: ${esc(c.name)}</a>${s === 'edu' ? '<div style="font-size:12.5px; color:var(--text-faint); margin:4px 0 0 22px">Includes Margin, the study-coaching app</div>' : ''}</td>
+            <td><span class="ownr">${mark(corp.color)}X-Capital Resources Group</span></td>
+            <td>${p.n} · ${esc(p.name)}</td><td class="r">${c.launchYear}</td><td class="r">${fmtInt(c.headcount[9])}</td><td class="r">${fmtRand(c.revenue[9])}</td></tr>`; }).join('')}
+          </tbody></table></div>
+      </div>
+    </section>
+
+    <section id="companies" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head"><div class="eyebrow">Our companies</div>
+          <h2 class="serif">Eleven companies, one owner</h2>
+          <p>Each company has its own brand colour and its own page, and the same X-Capital mark.</p></div>
+        <div class="cogrid">
+          ${B.ORDER.map(s => { const c = XCR[s], on = B.onColor(c.color), p = B.phaseOf(s); return `<a class="cocard" href="${href(s, '')}">
+            <div class="top" style="background:${c.color}; color:${on}">${mark(c.color, '#14161A')}<span class="ph">Phase ${p.n}</span><h3 class="serif">${esc(c.name)}</h3><div class="sec">${esc(c.sector.charAt(0) + c.sector.slice(1).toLowerCase())}</div></div>
+            <div class="body"><p class="tag">“${esc(c.tagline)}”</p>
+              <div class="nums"><div><b>${fmtInt(c.headcount[9])}</b><span>jobs by 2036</span></div><div><b>${fmtRand(c.revenue[9])}</b><span>revenue, 2036</span></div><div><b>${c.launchYear}</b><span>launch</span></div></div>
+            </div></a>`; }).join('')}
+        </div>
+      </div>
+    </section>
+
+    <section id="growth" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head"><div class="eyebrow">Growth</div>
+          <h2 class="serif">From six founders to ${fmtInt(y10Head)} jobs</h2>
+          <p>Group targets across all twelve companies from the ten-year plan, 2027 to 2036.</p></div>
+        <div class="charts">
+          <div id="chRev"></div>
+          <div id="chHead"></div>
+        </div>
+        <div id="chJobs" style="margin-top:18px"></div>
+      </div>
+    </section>
+
+    <section id="roadmap" style="padding-top:0">
+      <div class="wrap">
+        <div class="sec-head"><div class="eyebrow">Four-phase roadmap</div>
+          <h2 class="serif">Launched in sequence, not all at once</h2>
+          <p>Early companies generate cash and track record. That funds the next phase, so a small founding team only builds a few companies at a time.</p></div>
+        <div class="road">
+          ${B.PHASES.map(p => `<div class="step"><div class="n">0${p.n}</div><h3>${esc(p.name)}</h3><div class="yrs">${p.years}</div>
+            <div class="chipset">${p.ids.map(s => `<a href="${href(s, '')}" style="background:${XCR[s].color}; color:${B.onColor(XCR[s].color)}">${esc(coName(s))}</a>`).join('')}</div></div>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="hold">
+          <div>
+            <div class="eyebrow" style="color:#C9A24B">The holding company</div>
+            <h2 class="serif">“${esc(corp.tagline)}”</h2>
+            <p>${esc(corp.focus)}</p>
+          </div>
+          <div class="svc">
+            ${['Treasury & banking','Group legal & contracts','Company secretarial & CIPC compliance','HR policy & payroll systems','IT & cybersecurity','Procurement','B-BBEE & governance reporting','Capital allocation','M&A'].map(s => `<span>${esc(s)}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  ${B.footer(page)}`;
+
+  document.getElementById('app').innerHTML = html;
+
+  const labels = B.YEARS.map(String);
+  B.columnChart(document.getElementById('chRev'), {
+    title: 'Group revenue target', sub: 'All twelve companies, R per year, 2027–2036', unit: 'Revenue',
+    labels, values: B.groupRevenue, color: corp.color,
+    fmt: (v, axis) => axis ? (v >= 1000 ? 'R' + (v / 1000) + 'bn' : 'R' + Math.round(v) + 'm') : fmtRand(v)
+  });
+  B.columnChart(document.getElementById('chHead'), {
+    title: 'Group headcount target', sub: 'People employed across the group, 2027–2036', unit: 'Headcount',
+    labels, values: B.groupHeadcount, color: corp.color, fmt: v => fmtInt(v)
+  });
+  B.barList(document.getElementById('chJobs'), {
+    title: 'Jobs by company, 2036', sub: "Each company's share of the group's 15 000-job target",
+    color: corp.color, fmt: v => fmtInt(v),
+    rows: ['corp', ...B.ORDER].map(s => ({ label: s === 'corp' ? 'Holding & Corporate' : XCR[s].name, value: XCR[s].headcount[9], note: (XCR[s].headcount[9] / y10Head * 100).toFixed(1) + '% of jobs' }))
+      .sort((a, b) => b.value - a.value)
+  });
+  B.countUp(document);
+})();
+</script>
+</body>
+</html>

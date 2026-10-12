@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260">
+  <rect x="0" y="0" width="1000" height="260" fill="#14161A"/>
+  
+  <g transform="translate(30,30) scale(2.0)">
+    <g fill="#F7F7F5">
+      <text x="50" y="78" font-family="EB Garamond" font-weight="bold" font-size="86" text-anchor="middle">X</text>
+    </g>
+    <g fill="#7B4FE0">
+      <polygon points="64.00,92.00 73.00,92.00 73.00,79.00 68.50,73.00 64.00,79.00"/>
+      <polygon points="76.00,92.00 85.00,92.00 85.00,71.00 80.50,65.00 76.00,71.00"/>
+      <polygon points="88.00,92.00 97.00,92.00 97.00,61.00 92.50,55.00 88.00,61.00"/>
+    </g>
+  </g>
+  <text x="260" y="118" font-family="Liberation Sans" font-size="50" font-weight="700" letter-spacing="1" fill="#F7F7F5" xml:space="preserve">X-CAPITAL RESOURCES</text>
+  <text x="262" y="166" font-family="Liberation Sans" font-size="26" font-weight="500" letter-spacing="3" fill="#7B4FE0" xml:space="preserve">RESEARCH &amp; DEVELOPMENT</text>
+</svg>

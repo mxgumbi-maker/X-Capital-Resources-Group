@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d17">
+<title>Margin — turn a grade into a plan</title>
+<meta name="description" content="Margin turns a report card into a real conversation, a study plan, and a habit worth keeping.">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0c16; --bg-2:#12142a; --bg-3:#181b38;
+    --ink:#f5f6fb; --ink-dim:#aeb3cf; --ink-faint:#7c81a3;
+    --lime:#c8ff4d; --lime-deep:#9fd928;
+    --violet:#8b6bf0; --violet-deep:#5a3fc0; --violet-bg:#241a4a;
+    --teal:#2fd9c8; --teal-bg:#0f2f3a;
+    --green-bg:#12331f; --green:#5fe07f;
+    --magenta-bg:#331a3d; --magenta:#e05fd0;
+    --amber:#ffb545; --red:#ff6b6b;
+    --line: rgba(245,246,251,0.10); --line-soft: rgba(245,246,251,0.06);
+    --shadow: 0 20px 60px rgba(0,0,0,0.45);
+    --radius: 20px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:'Inter',-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.5;
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;} }
+
+  .display{font-family:'Poppins',-apple-system,sans-serif; font-weight:800; letter-spacing:-0.02em; text-wrap:balance;}
+  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  ::selection{background:var(--lime); color:#0a0c16;}
+
+  /* ---------- ambient background ---------- */
+  .field{position:fixed; inset:0; z-index:-1; overflow:hidden;}
+  .field::before{content:''; position:absolute; inset:0; background:
+    radial-gradient(700px 500px at 82% -8%, rgba(139,107,240,0.28), transparent 60%),
+    radial-gradient(600px 480px at -6% 18%, rgba(47,217,200,0.16), transparent 60%),
+    radial-gradient(900px 700px at 50% 120%, rgba(200,255,77,0.06), transparent 60%);}
+  .star{position:absolute; color:var(--lime); opacity:.55; animation:twinkle 3.6s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.15; transform:scale(.85);} 50%{opacity:.7; transform:scale(1);}}
+
+  /* ---------- header ---------- */
+  header{position:sticky; top:0; z-index:50; backdrop-filter:blur(14px); background:rgba(10,12,22,0.72); border-bottom:1px solid var(--line-soft);}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 24px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Poppins',sans-serif; font-weight:800; font-size:19px;}
+  .brand .m{width:36px; height:36px; border-radius:11px; display:flex; align-items:center; justify-content:center; flex:none;
+    background:linear-gradient(135deg, var(--teal), var(--violet)); color:#0a0c16; font-family:'Poppins',sans-serif; font-weight:800; font-size:18px;
+    box-shadow:0 6px 18px rgba(139,107,240,0.35);}
+  .navlinks{display:flex; gap:30px; font-size:14.5px; font-weight:600; color:var(--ink-dim);}
+  .navlinks a{transition:color .15s ease;}
+  .navlinks a:hover{color:var(--ink);}
+  .navcta{display:flex; align-items:center; gap:10px;}
+  .navtoggle{display:none; background:none; border:1.5px solid var(--line); color:var(--ink); border-radius:9px; width:38px; height:38px; cursor:pointer; font-size:16px;}
+
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px;
+    padding:12px 22px; border-radius:999px; border:1.5px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+  .btn:active{transform:scale(0.97);}
+  .btn-lime{background:var(--lime); color:#0a0c16; box-shadow:0 8px 24px rgba(200,255,77,0.22);}
+  .btn-lime:hover{background:#d6ff70; box-shadow:0 10px 30px rgba(200,255,77,0.32);}
+  .btn-outline{background:transparent; color:var(--ink); border-color:var(--line);}
+  .btn-outline:hover{border-color:var(--ink-dim);}
+  .btn-block{width:100%;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 40px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 1fr; gap:56px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:7px; padding:7px 15px; border-radius:999px; border:1.5px solid var(--violet); color:var(--violet);
+    background:rgba(139,107,240,0.10); font-size:11.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; margin-bottom:22px;}
+  .hero h1{font-size:clamp(34px, 4.6vw, 54px); line-height:1.06; margin-bottom:6px;}
+  .hero h1 .accent{color:var(--lime);}
+  .hero .lede{color:var(--ink-dim); font-size:16.5px; line-height:1.65; max-width:46ch; margin:20px 0 28px;}
+  .hero-ctas{display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-bottom:18px;}
+  .install-chip{display:inline-flex; align-items:center; gap:9px; padding:10px 16px 10px 12px; border-radius:14px; border:1.5px solid var(--line); background:var(--bg-2);}
+  .install-chip .ico{width:26px; height:26px; border-radius:7px; background:var(--bg-3); display:flex; align-items:center; justify-content:center; flex:none;}
+  .install-chip .t1{font-size:12px; font-weight:700; color:var(--ink);}
+  .install-chip .t2{font-size:10.5px; color:var(--ink-faint);}
+  .trust{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-faint); font-weight:600;}
+
+  /* ---------- hero visual: illustrated, phone mockups ---------- */
+  .hero-visual{position:relative; height:480px;}
+  .blob{position:absolute; border-radius:44% 56% 58% 42% / 46% 42% 58% 54%; filter:blur(2px); opacity:.9;}
+  .blob1{width:340px; height:340px; top:10px; right:10px; background:linear-gradient(140deg, var(--violet-deep), var(--violet)); animation:float1 9s ease-in-out infinite;}
+  .blob2{width:180px; height:180px; bottom:0; left:0; background:linear-gradient(140deg, var(--teal-bg), var(--teal)); opacity:.55; animation:float2 7s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-14px) rotate(4deg);}}
+  @keyframes float2{0%,100%{transform:translateY(0);} 50%{transform:translateY(12px);}}
+  .sparkle{position:absolute; color:var(--lime);}
+
+  .phone{position:absolute; width:216px; border-radius:30px; background:#0e1024; border:5px solid #1c1f3d; box-shadow:var(--shadow); overflow:hidden;}
+  .phone .screen{padding:16px 14px; height:100%;}
+  .phone .notch{position:absolute; top:0; left:50%; transform:translateX(-50%); width:70px; height:18px; background:#1c1f3d; border-radius:0 0 12px 12px; z-index:2;}
+  .phone-a{right:38px; top:6px; height:392px; animation:driftA 6.5s ease-in-out infinite;}
+  .phone-b{left:-6px; bottom:8px; height:352px; z-index:2; animation:driftB 7.5s ease-in-out infinite;}
+  @keyframes driftA{0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-10px) rotate(-1deg);}}
+  @keyframes driftB{0%,100%{transform:translateY(0) rotate(3deg);} 50%{transform:translateY(-8px) rotate(5deg);}}
+
+  .ph-greet{font-size:11px; color:var(--ink-faint); font-weight:600; margin:14px 0 10px;}
+  .ph-row{display:flex; gap:6px; margin-bottom:12px;}
+  .ph-chip{flex:1; border-radius:11px; padding:9px 8px; text-align:center;}
+  .ph-chip .pct{font-family:'Poppins',sans-serif; font-weight:700; font-size:13px;}
+  .ph-chip .lbl{font-size:8.5px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.03em; margin-top:2px;}
+  .ph-chip.g{background:rgba(95,224,127,0.14); color:var(--green);}
+  .ph-chip.a{background:rgba(255,181,69,0.14); color:var(--amber);}
+  .ph-chip.r{background:rgba(255,107,107,0.14); color:var(--red);}
+  .ph-plan{background:var(--bg-3); border-radius:12px; padding:11px 12px; margin-bottom:10px;}
+  .ph-plan .k{font-size:9px; color:var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:.04em;}
+  .ph-plan .v{font-size:12.5px; font-weight:700; margin-top:3px;}
+  .ph-btn{background:var(--lime); color:#0a0c16; text-align:center; border-radius:10px; padding:9px; font-size:11.5px; font-weight:800;}
+  .ph-q{background:var(--bg-3); border-radius:11px; padding:9px 11px; font-size:10.5px; line-height:1.4; color:var(--ink-dim); margin-bottom:8px;}
+  .ph-title{font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; margin-bottom:10px;}
+
+  /* ---------- powered-by strip ---------- */
+  .powered{border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); padding:18px 0; background:var(--bg-2);}
+  .powered-row{display:flex; align-items:center; gap:12px; font-size:13px; color:var(--ink-faint);}
+  .powered-mark{display:flex; align-items:center; gap:9px;}
+  .powered-x{width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--teal), var(--violet)); display:flex; align-items:center; justify-content:center; color:#0a0c16; font-weight:800; font-family:'Poppins',sans-serif; font-size:14px;}
+  .powered-name{font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:var(--ink);}
+  .powered-sub{font-size:9.5px; letter-spacing:.12em; color:var(--ink-faint); font-weight:700;}
+
+  /* ---------- section shell ---------- */
+  section{padding:88px 0;}
+  .eyebrow-2{font-size:11.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--lime); margin-bottom:12px;}
+  .section-head{max-width:640px; margin-bottom:48px;}
+  .section-head h2{font-size:clamp(26px, 3.2vw, 36px); line-height:1.15;}
+  .section-head p{color:var(--ink-dim); font-size:15.5px; margin-top:12px; max-width:56ch;}
+
+  /* ---------- how it works ---------- */
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .step{position:relative; padding:26px 18px 22px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-2);}
+  .step-num{position:absolute; top:16px; right:18px; font-family:'Poppins',sans-serif; font-weight:800; font-size:11px; color:var(--ink-faint);}
+  .step-ico{width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .step:nth-child(1) .step-ico{background:rgba(200,255,77,0.14); color:var(--lime);}
+  .step:nth-child(2) .step-ico{background:rgba(139,107,240,0.16); color:var(--violet);}
+  .step:nth-child(3) .step-ico{background:rgba(47,217,200,0.16); color:var(--teal);}
+  .step:nth-child(4) .step-ico{background:rgba(224,95,208,0.16); color:var(--magenta);}
+  .step h3{font-family:'Poppins',sans-serif; font-weight:700; font-size:15.5px; margin-bottom:6px;}
+  .step p{font-size:13px; color:var(--ink-dim); line-height:1.5;}
+
+  /* ---------- feature grid ---------- */
+  .feat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .feat-card{border-radius:var(--radius); padding:24px 22px 26px; display:flex; flex-direction:column; min-height:420px; border:1px solid var(--line-soft);}
+  .feat-card.c1{background:linear-gradient(165deg, var(--violet-bg), #1a1240);}
+  .feat-card.c2{background:linear-gradient(165deg, var(--teal-bg), #0a2027);}
+  .feat-card.c3{background:linear-gradient(165deg, var(--green-bg), #0b2416);}
+  .feat-card.c4{background:linear-gradient(165deg, var(--magenta-bg), #24102b);}
+  .feat-kicker{font-size:10.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; opacity:.85;}
+  .c1 .feat-kicker{color:var(--violet);} .c2 .feat-kicker{color:var(--teal);} .c3 .feat-kicker{color:var(--green);} .c4 .feat-kicker{color:var(--magenta);}
+  .feat-card h3{font-family:'Poppins',sans-serif; font-weight:700; font-size:17.5px; line-height:1.25; margin-bottom:22px;}
+  .feat-mock{margin-top:auto; background:rgba(10,12,22,0.55); border:1px solid rgba(245,246,251,0.08); border-radius:14px; padding:14px;}
+
+  .ask-q{font-size:11.5px; line-height:1.45; color:var(--ink-dim); padding:8px 0; border-top:1px dashed rgba(245,246,251,0.12);}
+  .ask-q:first-child{border-top:none; padding-top:0;}
+  .plan-days{display:flex; gap:5px; margin:8px 0 10px;}
+  .plan-day{width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:700;}
+  .plan-day.on{background:var(--teal); color:#06232a;}
+  .plan-day.off{background:rgba(245,246,251,0.08); color:var(--ink-faint);}
+  .plan-target{display:flex; justify-content:space-between; font-size:11.5px; color:var(--ink-dim); margin-bottom:6px;}
+  .plan-target b{color:var(--ink); font-family:'Poppins',sans-serif;}
+  .badge-row{display:flex; gap:8px; margin-bottom:12px;}
+  .badge-pip{flex:1; text-align:center; font-size:9px; font-weight:700; color:var(--ink-faint); padding:6px 0; border-radius:8px; background:rgba(245,246,251,0.05);}
+  .badge-pip.on{background:rgba(95,224,127,0.18); color:var(--green);}
+  .pts-row{display:flex; align-items:baseline; justify-content:space-between;}
+  .pts-row .n{font-family:'Poppins',sans-serif; font-weight:800; font-size:20px;}
+  .pts-row .lbl{font-size:10.5px; color:var(--ink-faint);}
+  .voice{display:flex; gap:8px; align-items:flex-start; margin-bottom:10px;}
+  .voice:last-child{margin-bottom:0;}
+  .voice .who{width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex:none;}
+  .voice .bubble{background:rgba(245,246,251,0.07); border-radius:10px 10px 10px 2px; padding:8px 10px; font-size:11px; line-height:1.4; color:var(--ink-dim);}
+
+  /* ---------- privacy / platform rows ---------- */
+  .pill-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:22px;}
+  .pill-item{border:1px solid var(--line); border-radius:16px; padding:20px 18px; background:var(--bg-2);}
+  .pill-item .ico{width:38px; height:38px; border-radius:10px; background:var(--bg-3); display:flex; align-items:center; justify-content:center; color:var(--lime); margin-bottom:14px;}
+  .pill-item h4{font-family:'Poppins',sans-serif; font-weight:700; font-size:14.5px; margin-bottom:5px;}
+  .pill-item p{font-size:12.5px; color:var(--ink-dim); line-height:1.5;}
+  .caveat{border:1px dashed var(--line); border-radius:14px; padding:16px 18px; font-size:12.5px; color:var(--ink-faint); line-height:1.6;}
+  .caveat b{color:var(--ink-dim);}
+
+  /* ---------- FAQ ---------- */
+  .faq{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--bg-2);}
+  .faq-item{border-top:1px solid var(--line);}
+  .faq-item:first-child{border-top:none;}
+  .faq-item summary{cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:18px 22px; font-family:'Poppins',sans-serif; font-weight:600; font-size:14.5px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .plus{color:var(--lime); font-size:20px; font-weight:400; transition:transform .2s ease;}
+  .faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-item .a{padding:0 22px 20px; font-size:13.5px; color:var(--ink-dim); line-height:1.6; max-width:70ch;}
+
+  /* ---------- final CTA ---------- */
+  .cta-panel{border-radius:28px; padding:64px 48px; background:linear-gradient(135deg, var(--violet-deep) 0%, #201250 55%, #0a0c16 100%); position:relative; overflow:hidden; border:1px solid var(--line);}
+  .cta-panel::before{content:''; position:absolute; inset:0; background:radial-gradient(500px 300px at 85% 10%, rgba(200,255,77,0.14), transparent 60%);}
+  .cta-inner{position:relative; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .cta-inner h2{font-size:clamp(26px,3.4vw,38px); max-width:16ch;}
+  .cta-inner .accent{color:var(--lime);}
+  .cta-sub{color:var(--ink-dim); margin:14px 0 26px; font-size:15px; max-width:44ch;}
+  .cta-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .avatars{display:flex; align-items:center; gap:-8px;}
+  .avatar{width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; border:3px solid var(--bg); margin-left:-14px; box-shadow:0 6px 16px rgba(0,0,0,0.4);}
+  .avatar:first-child{margin-left:0;}
+  .avatar-note{font-size:11.5px; color:var(--ink-faint); margin-top:10px; max-width:190px; text-align:center;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line-soft); padding:40px 0 60px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;}
+  .foot-links{display:flex; gap:22px; font-size:13px; color:var(--ink-faint); font-weight:600;}
+  .foot-links a:hover{color:var(--ink-dim);}
+  .foot-copy{font-size:12px; color:var(--ink-faint); margin-top:18px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (max-width:980px){
+    .navlinks{display:none;}
+    .navtoggle{display:flex; align-items:center; justify-content:center;}
+    .hero-grid{grid-template-columns:1fr; gap:44px;}
+    .hero-visual{height:380px; max-width:420px; margin:0 auto;}
+    .steps, .feat-grid, .pill-row{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:620px){
+    .steps, .feat-grid, .pill-row{grid-template-columns:1fr;}
+    .cta-inner{flex-direction:column; align-items:flex-start;}
+    .foot-row{flex-direction:column; align-items:flex-start;}
+    .phone-a{right:8px;}
+  }
+</style>
+</head>
+<body>
+<div class="field" aria-hidden="true">
+  <svg class="star" style="top:14%;left:8%;width:16px;height:16px;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>
+  <svg class="star" style="top:60%;left:3%;width:10px;height:10px;animation-delay:1.2s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>
+  <svg class="star" style="top:8%;left:44%;width:9px;height:9px;animation-delay:2s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>
+</div>
+
+<header>
+  <nav class="nav wrap">
+    <div class="brand"><span class="m">M</span>Margin</div>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#families">For Families</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="navcta">
+      <a class="btn btn-outline" href="margin.html">Log in</a>
+      <a class="btn btn-lime" href="margin.html">Get Margin</a>
+      <button class="navtoggle" aria-label="Menu" id="navtoggle">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal in">
+        <div class="eyebrow">The conversation after the grade</div>
+        <h1 class="display">Your grade is<br>just the start.<br><span class="accent">Let's build what's next.</span></h1>
+        <p class="lede">Margin turns a report card into a real conversation, a study plan, and a habit worth keeping — a photo or a few typed scores, and you're already talking about the right things tonight.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-lime" href="margin.html">Get Margin — it's free</a>
+          <div class="install-chip">
+            <span class="ico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c8ff4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span>
+            <span><span class="t1">Add to Home Screen</span><br><span class="t2">No store, no download</span></span>
+          </div>
+        </div>
+        <div class="trust">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aeb3cf" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+          Private. On-device. Auto-deletes after 30 days.
+        </div>
+      </div>
+
+      <div class="hero-visual reveal in" aria-hidden="true">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <svg class="sparkle" style="top:8px;left:40%;width:22px;height:22px;" viewBox="0 0 24 24" fill="#c8ff4d"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>
+        <svg class="sparkle" style="bottom:40px;right:0;width:16px;height:16px;" viewBox="0 0 24 24" fill="#2fd9c8"><circle cx="12" cy="12" r="10"/></svg>
+
+        <div class="phone phone-a">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="ph-title">This week</div>
+            <div class="ph-row">
+              <div class="ph-chip g"><div class="pct">●</div><div class="lbl">Math</div></div>
+              <div class="ph-chip a"><div class="pct">●</div><div class="lbl">English</div></div>
+              <div class="ph-chip r"><div class="pct">●</div><div class="lbl">Science</div></div>
+            </div>
+            <div class="ph-plan">
+              <div class="k">Today's plan</div>
+              <div class="v">Math — Fractions, 20 min</div>
+            </div>
+            <div class="ph-btn">Start session</div>
+          </div>
+        </div>
+
+        <div class="phone phone-b">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="ph-title">Ask tonight</div>
+            <div class="ph-q">What part of the fractions section felt trickiest?</div>
+            <div class="ph-q">If you could redo one question, which one and why?</div>
+            <div class="ph-q" style="border-top:1px dashed rgba(245,246,251,0.12); padding-top:8px; color:var(--ink);">"I noticed you kept trying even when it got hard, that matters." 💚</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="powered">
+    <div class="wrap powered-row">
+      <span>Powered by</span>
+      <div class="powered-mark">
+        <span class="powered-x">X</span>
+        <span><span class="powered-name">X-Capital Resources</span><br><span class="powered-sub">GROUP</span></span>
+      </div>
+    </div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">How it works</div>
+        <h2 class="display">From photo to plan in under a minute.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="step-num">01</span>
+          <div class="step-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+          <h3>Capture</h3><p>A photo of the result, or type in the score by hand.</p>
+        </div>
+        <div class="step reveal"><span class="step-num">02</span>
+          <div class="step-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg></div>
+          <h3>Read &amp; coach</h3><p>Claude reads it and drafts strengths, growth areas, and a plan.</p>
+        </div>
+        <div class="step reveal"><span class="step-num">03</span>
+          <div class="step-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+          <h3>Talk &amp; track</h3><p>Real questions to ask tonight, and a target to hit.</p>
+        </div>
+        <div class="step reveal"><span class="step-num">04</span>
+          <div class="step-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <h3>Follow through</h3><p>RAG status on the plan itself, tracked separately from the grade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">Features</div>
+        <h2 class="display">Everything a report card doesn't tell you.</h2>
+        <p>Four things Margin adds on top of the number, built for how a family actually talks after the grade arrives.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card c1 reveal">
+          <div class="feat-kicker">Conversations that help</div>
+          <h3>Real questions to start the right conversation.</h3>
+          <div class="feat-mock">
+            <div class="ask-q">What part of the fractions section felt trickiest?</div>
+            <div class="ask-q">If you could redo one question, which one and why?</div>
+            <div class="ask-q">What would help most before the next quiz?</div>
+          </div>
+        </div>
+        <div class="feat-card c2 reveal">
+          <div class="feat-kicker">Smart study plans</div>
+          <h3>Set targets, choose study days, stay on track.</h3>
+          <div class="feat-mock">
+            <div class="plan-target">Fractions <b>62% → 78%</b></div>
+            <div class="plan-days">
+              <div class="plan-day on">M</div><div class="plan-day on">W</div><div class="plan-day on">F</div>
+              <div class="plan-day off">T</div><div class="plan-day off">T</div><div class="plan-day off">S</div><div class="plan-day off">S</div>
+            </div>
+            <div class="ph-btn" style="background:var(--teal); color:#06232a;">Save plan</div>
+          </div>
+        </div>
+        <div class="feat-card c3 reveal">
+          <div class="feat-kicker">Progress that motivates</div>
+          <h3>Both sides of the household earn points for real actions.</h3>
+          <div class="feat-mock">
+            <div class="badge-row">
+              <div class="badge-pip">🌱 Starting</div>
+              <div class="badge-pip on">🥉 Bronze</div>
+              <div class="badge-pip">🥈 Silver</div>
+              <div class="badge-pip">🏆 Gold</div>
+            </div>
+            <div class="pts-row"><span class="n">32</span><span class="lbl">pts this month</span></div>
+          </div>
+        </div>
+        <div class="feat-card c4 reveal">
+          <div class="feat-kicker">Two tips, two voices</div>
+          <h3>One struggle, phrased for whoever's reading it.</h3>
+          <div class="feat-mock">
+            <div class="voice"><span class="who" style="background:rgba(224,95,208,0.25);">🧑‍🏫</span><div class="bubble">"Sit with them and draw the fraction before solving it."</div></div>
+            <div class="voice"><span class="who" style="background:rgba(200,255,77,0.2);">🙂</span><div class="bubble">"Draw it before you solve it."</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="families">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">For families</div>
+        <h2 class="display">Parent, child, and one extra caregiver — each see what they need.</h2>
+        <p>One PIN keeps a curious kid from switching back into Parent Mode. It's a household guard, not encryption.</p>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item reveal"><div class="ico">👤</div><h4>Parent</h4><p>Full plan editing, private coaching notes, PIN-protected.</p></div>
+        <div class="pill-item reveal"><div class="ico">🧒</div><h4>Child</h4><p>Own view of results and plan, spoken to directly — no private notes.</p></div>
+        <div class="pill-item reveal"><div class="ico">🤝</div><h4>Caregiver (+1)</h4><p>One additional viewer, read-only, shared on the same device.</p></div>
+        <div class="pill-item reveal"><div class="ico">🔒</div><h4>Household guard</h4><p>A PIN, not encryption. Real per-person accounts need a backend beyond this prototype.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">Data &amp; privacy</div>
+        <h2 class="display">What's stored, and for how long.</h2>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item reveal"><div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h4>30 days</h4><p>Photos, results, and tips auto-delete after 30 days.</p></div>
+        <div class="pill-item reveal"><div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14a1 1 0 01-1-1V6a1 1 0 011-1h13.5L20 8v5a1 1 0 01-1 1z"/><circle cx="16.5" cy="17.5" r="2.5"/><circle cx="6.5" cy="17.5" r="2.5"/></svg></div><h4>Compressed on-device</h4><p>Photos are resized before they're ever stored or sent.</p></div>
+        <div class="pill-item reveal"><div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h4>PIN-gated</h4><p>Parent Mode locks behind a PIN the child doesn't see.</p></div>
+        <div class="pill-item reveal"><div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div><h4>Family-safe by design</h4><p>Nothing leaves the device except the model call needed to read a result.</p></div>
+      </div>
+      <div class="caveat reveal"><b>Honest caveat:</b> this is a working prototype. The PIN and read-only Caregiver mode are household-level safeguards, not encryption or authentication. A public launch needs real accounts, encryption at rest, and a FERPA/COPPA review.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">Works everywhere</div>
+        <h2 class="display">One codebase, every screen.</h2>
+        <p>Built as a Progressive Web App: installable on a phone's home screen, and a normal website everywhere else — no app store required.</p>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item reveal"><div class="ico">📱</div><h4>iOS</h4><p>Add to Home Screen, opens full-screen, no browser chrome.</p></div>
+        <div class="pill-item reveal"><div class="ico">🤖</div><h4>Android</h4><p>Installable via the browser prompt, works offline for the app shell.</p></div>
+        <div class="pill-item reveal"><div class="ico">💻</div><h4>Web</h4><p>Same app, same data, in any modern browser.</p></div>
+        <div class="pill-item reveal"><div class="ico">📦</div><h4>What's next</h4><p>Native App Store &amp; Play Store builds on top of the same core.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow-2">FAQ</div>
+        <h2 class="display">Good questions, honestly answered.</h2>
+      </div>
+      <div class="faq reveal">
+        <details class="faq-item" open>
+          <summary>Does Margin actually read the photo with AI, or is it a template?<span class="plus">+</span></summary>
+          <div class="a">A photo or typed scores are sent to Claude to draft the summary, strengths, growth areas, and plan. If that call can't complete, Margin falls back to a local, clearly-labeled placeholder so the app never dead-ends.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is the PIN real security?<span class="plus">+</span></summary>
+          <div class="a">No — it's a household guard that stops a curious kid from switching back into Parent Mode on the same device. It is not encryption or authentication. Treat it accordingly.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How long is our data kept?<span class="plus">+</span></summary>
+          <div class="a">30 days. Photos, results, and tips older than that are pruned automatically, on-device.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need to download anything from an app store?<span class="plus">+</span></summary>
+          <div class="a">No. Margin is a Progressive Web App — add it to your home screen straight from the browser. Native App Store and Play Store builds are on the roadmap, not required today.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta-panel reveal">
+        <div class="cta-inner">
+          <div>
+            <h2 class="display">Better conversations. <span class="accent">Stronger plans.</span></h2>
+            <p class="cta-sub">Start your journey with Margin today — one photo, one honest conversation, one small plan at a time.</p>
+            <div class="cta-actions">
+              <a class="btn btn-lime" href="margin.html">Get Margin — it's free</a>
+              <a class="btn btn-outline" href="#how">See how it works</a>
+            </div>
+          </div>
+          <div style="text-align:center;">
+            <div class="avatars">
+              <span class="avatar" style="background:#DC9A3C;">🦁</span>
+              <span class="avatar" style="background:#5F8A68;">🦊</span>
+              <span class="avatar" style="background:#6C8EBF;">🐼</span>
+              <span class="avatar" style="background:#9B6FB0;">🐸</span>
+            </div>
+            <div class="avatar-note">Emoji + color — no photo upload needed to feel personal.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="brand" style="font-size:16px;"><span class="m" style="width:30px;height:30px;font-size:15px;">M</span>Margin</div>
+      <div class="foot-links">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+        <a href="margin.html">Log in</a>
+      </div>
+    </div>
+    <div class="foot-copy">Powered by X-Capital Resources Group. Margin is a working prototype — see the Privacy section above for what that means for your data.</div>
+  </div>
+</footer>
+
+<script>
+  var toggle = document.getElementById('navtoggle');
+  if(toggle){
+    toggle.addEventListener('click', function(){
+      var links = document.querySelector('.navlinks');
+      var visible = links.style.display === 'flex';
+      links.style.cssText = visible ? '' : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:#0a0c16;padding:20px 24px;border-bottom:1px solid rgba(245,246,251,0.1);gap:16px;';
+    });
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>

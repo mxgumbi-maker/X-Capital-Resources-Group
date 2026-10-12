@@ -1,0 +1,139 @@
+/* X-Capital Resources Group — shared styles for the group site and every company page. */
+:root{
+  --ink:#14161A; --paper:#F7F7F5;
+  --gold:#C9A24B; --gold-deep:#9C7A2E;
+  --bg:#F7F7F5; --surface:#FFFFFF; --surface-2:#EFEEE9;
+  --text:#14161A; --text-dim:#4B4F5A; --text-faint:#7A7E89;
+  --line:rgba(20,22,26,.12); --line-strong:rgba(20,22,26,.26);
+  --shadow:0 1px 2px rgba(20,22,26,.06), 0 10px 30px rgba(20,22,26,.07);
+  --radius:16px;
+  --c:var(--gold); /* the current company's brand colour; set per page */
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1114; --surface:#181B20; --surface-2:#20242B;
+    --text:#F2F2EF; --text-dim:#B9BCC4; --text-faint:#8A8E98;
+    --line:rgba(242,242,239,.12); --line-strong:rgba(242,242,239,.28);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1114; --surface:#181B20; --surface-2:#20242B;
+  --text:#F2F2EF; --text-dim:#B9BCC4; --text-faint:#8A8E98;
+  --line:rgba(242,242,239,.12); --line-strong:rgba(242,242,239,.28);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--text); font:16px/1.6 'Inter',system-ui,-apple-system,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+a{color:inherit}
+img,svg{display:block}
+.wrap{max-width:1180px; margin:0 auto; padding:0 24px}
+.serif{font-family:'Fraunces',Georgia,serif; font-weight:600; letter-spacing:-.015em}
+.eyebrow{font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase}
+.muted{color:var(--text-dim)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- Colour rail: one segment per company, links across the group ---------- */
+.rail{display:flex; height:8px}
+.rail a{flex:1; display:block; transition:flex .25s ease}
+.rail a:hover,.rail a.on{flex:2.4}
+
+/* ---------- Header ---------- */
+header.top{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.nav{display:flex; align-items:center; justify-content:space-between; gap:16px; height:72px}
+.lockup{display:flex; align-items:center; gap:12px; text-decoration:none; min-width:0}
+.lockup .mk{width:44px; height:44px; flex:none}
+.lockup .wm{display:flex; flex-direction:column; line-height:1.1; min-width:0}
+.lockup .wm b{font-weight:800; letter-spacing:.04em; font-size:15px; white-space:nowrap}
+.lockup .wm span{font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.navlinks{display:flex; align-items:center; gap:26px; font-size:14px; font-weight:600; color:var(--text-dim)}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--text)}
+.pill{display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; background:var(--ink); color:var(--paper)!important; text-decoration:none; font-weight:600; font-size:14px}
+:root[data-theme="dark"] .pill{background:var(--paper); color:var(--ink)!important}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pill{background:var(--paper); color:var(--ink)!important}}
+
+/* ---------- Sections ---------- */
+section{padding:80px 0; scroll-margin-top:80px}
+.sec-head{max-width:720px; margin-bottom:40px}
+.sec-head h2{font-size:clamp(28px,4vw,44px); line-height:1.1; margin:10px 0 14px}
+.sec-head p{margin:0; color:var(--text-dim); font-size:17px}
+.sec-head .eyebrow{color:var(--c)}
+
+/* ---------- Stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:16px}
+.stat{position:relative; overflow:hidden; border-radius:var(--radius); padding:22px 22px 20px; background:color-mix(in srgb, var(--tile, var(--c)) 13%, var(--surface)); border:1px solid color-mix(in srgb, var(--tile, var(--c)) 30%, transparent)}
+.stat::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--tile, var(--c))}
+.stat .v{font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:clamp(30px,3.6vw,42px); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.stat .v small{font-size:.5em; font-weight:600; margin-left:2px}
+.stat .k{margin-top:10px; font-size:13.5px; font-weight:600; color:var(--text-dim); line-height:1.35}
+.stat .bar{margin-top:14px; height:6px; border-radius:6px; background:color-mix(in srgb, var(--text) 10%, transparent); overflow:hidden}
+.stat .bar i{display:block; height:100%; border-radius:6px; background:var(--tile, var(--c))}
+
+/* ---------- Cards ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow)}
+.card h3{margin:0 0 8px; font-size:20px}
+.card p{margin:0; color:var(--text-dim); font-size:15px}
+
+/* ---------- Charts ---------- */
+.charts{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.chart{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px 22px 14px; box-shadow:var(--shadow); position:relative}
+.chart h3{margin:0; font-size:16px; font-weight:700}
+.chart .sub{font-size:13px; color:var(--text-faint); margin:2px 0 12px}
+.chart svg{width:100%; height:auto; overflow:visible}
+.chart .grid line{stroke:var(--line)}
+.chart .axis text{fill:var(--text-faint); font-size:11px; font-family:'Inter',sans-serif}
+.chart .lbl{fill:var(--text); font-size:11.5px; font-weight:600; font-family:'Inter',sans-serif}
+.chart .hit{fill:transparent; cursor:default}
+.chart .mark{transition:opacity .15s}
+.chart.hovering .mark{opacity:.35}
+.chart.hovering .mark.on{opacity:1}
+.hbars{display:flex; flex-direction:column; gap:2px; margin-top:6px}
+.hb{position:relative; display:grid; grid-template-columns:minmax(120px,220px) 1fr; align-items:center; gap:14px; padding:4px 0}
+.hb-l{font-size:13.5px; color:var(--text-dim); text-align:right; line-height:1.2}
+.hb-t{display:flex; align-items:center; gap:10px; min-width:0}
+.hb-t i{display:block; height:16px; border-radius:0 4px 4px 0; flex:none; max-width:calc(100% - 64px)}
+.hb-t b{font-size:13px; font-variant-numeric:tabular-nums; white-space:nowrap}
+.hb .hit{position:absolute; inset:0}
+.tip{position:absolute; pointer-events:none; background:var(--ink); color:var(--paper); font-size:12.5px; line-height:1.35; padding:8px 10px; border-radius:8px; white-space:nowrap; transform:translate(-50%,-110%); opacity:0; transition:opacity .12s; z-index:5}
+.tip b{display:block; font-size:14px}
+.chart details{margin-top:8px; font-size:13px; color:var(--text-dim)}
+.chart summary{cursor:pointer; font-weight:600}
+.chart table{width:100%; border-collapse:collapse; margin-top:8px; font-variant-numeric:tabular-nums}
+.chart td,.chart th{padding:4px 6px; border-bottom:1px solid var(--line); text-align:right}
+.chart td:first-child,.chart th:first-child{text-align:left}
+
+/* ---------- Ownership badge ---------- */
+.owned{display:inline-flex; align-items:center; gap:10px; padding:8px 14px 8px 8px; border-radius:999px; background:var(--ink); color:var(--paper); font-size:13px; font-weight:600; text-decoration:none}
+.owned .mk{width:28px; height:28px; background:var(--paper); border-radius:50%; padding:3px}
+
+/* ---------- Footer ---------- */
+footer.site{background:var(--ink); color:#C9CBD1; padding:56px 0 40px; margin-top:40px}
+footer.site h4{color:var(--paper); margin:0 0 14px; font-size:13px; letter-spacing:.14em; text-transform:uppercase}
+.foot-grid{display:grid; grid-template-columns:1.2fr 2fr; gap:40px}
+.foot-cos{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:8px 18px}
+.foot-cos a{display:flex; align-items:center; gap:10px; text-decoration:none; font-size:14px; padding:4px 0}
+.foot-cos a i{width:10px; height:10px; border-radius:3px; flex:none}
+.foot-cos a:hover{color:var(--paper)}
+.foot-note{border-top:1px solid rgba(255,255,255,.12); margin-top:36px; padding-top:20px; font-size:12.5px; color:#8F939C; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px}
+
+@media (max-width:860px){
+  .navlinks .hide-sm{display:none}
+  .foot-grid{grid-template-columns:1fr}
+  section{padding:60px 0}
+}
+@media (max-width:480px){
+  .wrap{padding:0 16px}
+  .lockup .wm b{font-size:13px}
+  .lockup .mk{width:38px; height:38px}
+  .charts{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important; animation:none!important; scroll-behavior:auto!important}
+}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+@media (max-width:860px){ .stats.four{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:380px){ .stats.four{grid-template-columns:1fr} }
