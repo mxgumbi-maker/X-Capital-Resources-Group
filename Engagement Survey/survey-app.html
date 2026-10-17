@@ -1,4 +1,4 @@
-<title>Pulse SA Engagement Survey</title>
+<title>X-Capital Engagement Survey</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -134,17 +134,22 @@ td.cell { text-align: center; font-family: var(--mono); background: color-mix(in
 details.sec { border-top: 1px solid var(--line); padding-top: 10px }
 details.sec summary { cursor: pointer; font-weight: 700; display: flex; justify-content: space-between; gap: 10px }
 .empty { text-align: center; padding: 36px 20px; display: grid; gap: 12px; justify-items: center }
+.foot { padding-block: 0 40px; text-align: center }
+.orgbox { display: grid; gap: 6px; border: 1px dashed var(--line); border-radius: var(--radius); padding: 14px 16px }
+.orgbox .blank { font-family: var(--display); font-size: 1.3rem; border-bottom: 2px solid var(--ink); min-height: 1.8rem }
+.orgbox .blank.empty { color: var(--muted); font-size: 1rem; font-family: var(--body) }
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--surface); padding: 10px 18px; border-radius: 8px; font-weight: 600; z-index: 20 }
 @media (max-width: 600px) { .bar-row { grid-template-columns: minmax(0, 1fr) 48px } .bar-row .split { grid-column: 1 / -1; grid-row: 2 } }
 </style>
 
 <header class="topbar">
   <div class="wrap">
-    <div class="brand"><b>Pulse SA</b><span id="orgline">Employee Engagement Survey</span></div>
+    <div class="brand"><b>X-Capital Resources: People</b><span id="orgline">Employee Engagement Survey</span></div>
     <nav class="tabs" id="tabs" role="tablist"></nav>
   </div>
 </header>
 <main class="wrap" id="app"></main>
+<footer class="wrap foot small muted">Employee Engagement Survey © X-Capital Resources: People. Administered and owned by X-Capital Resources: People.</footer>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -207,32 +212,54 @@ const SECTIONS = [
     ["H5", "The organisation supports formal qualifications, learnerships, bursaries or SETA-funded training."],
     ["H6", "Promotion and development opportunities are given fairly and transparently."],
     ["H7", "I am given the chance to use and stretch my skills in new or challenging work."]] },
-  { id: "I", name: "Recognition, Pay and Benefits", short: "Reward", blurb: "How your contribution is recognised and rewarded.", items: [
+  { id: "I", name: "Recognition and Performance", short: "Recognition", blurb: "How your contribution is noticed and managed.", items: [
     ["I1", "In the past month I have received recognition or praise for doing good work."],
-    ["I2", "I am paid fairly for the work I do compared with similar jobs elsewhere."],
-    ["I3", "I understand how my pay, increases and any bonuses are decided."],
-    ["I4", "The benefits offered (such as medical aid, retirement fund, leave or allowances) meet my needs."],
-    ["I5", "Good performance is rewarded here, and poor performance is addressed."]] },
-  { id: "J", name: "Communication and Employee Voice", short: "Voice", blurb: "Whether information flows and you are heard.", items: [
-    ["J1", "I receive the information I need to do my job in good time."],
-    ["J2", "Important information is shared in a language and format that everyone can understand."],
-    ["J3", "My ideas and suggestions are listened to and taken seriously."],
-    ["J4", "I believe positive action will be taken as a result of this survey."],
-    ["J5", "I feel comfortable reporting unethical behaviour without fear of victimisation."]] },
-  { id: "K", name: "Role Clarity, Purpose and Teamwork", short: "Teamwork", blurb: "How clear and meaningful your work is.", items: [
-    ["K1", "I know exactly what my job requires me to do."],
-    ["K2", "The work I do is meaningful and makes a difference to our customers or community."],
-    ["K3", "My colleagues are committed to doing quality work."],
-    ["K4", "Different teams or departments cooperate well to get work done."],
-    ["K5", "I have enough authority to make decisions about how I do my work."]] }
+    ["I2", "Good performance is rewarded here, and poor performance is addressed."],
+    ["I3", "Performance reviews are fair and based on clear, agreed goals."],
+    ["I4", "Recognition is given fairly, not only to a favoured few."]] },
+  { id: "J", name: "Remuneration Standards and Policies", short: "Pay", blurb: "How fair and clear pay, benefits and pay policies are.", items: [
+    ["J1", "I am paid fairly for the work I do compared with similar jobs at other organisations."],
+    ["J2", "My pay is fair compared with colleagues here who do similar work."],
+    ["J3", "I understand how my pay, increases and any bonuses are decided."],
+    ["J4", "The organisation has a clear remuneration policy that employees can access and understand."],
+    ["J5", "Pay decisions are applied consistently, without favouritism or discrimination, in line with equal pay for work of equal value."],
+    ["J6", "Annual increases are reasonable given the cost of living."],
+    ["J7", "The benefits offered (such as medical aid, retirement fund, leave or allowances) meet my needs."],
+    ["J8", "I am paid correctly and on time, and my payslip deductions are clearly explained."],
+    ["J9", "I understand the full value of my package, including benefits and contributions the organisation pays for me."]] },
+  { id: "K", name: "Communication and Employee Voice", short: "Comms", blurb: "Whether information reaches you and you are heard.", items: [
+    ["K1", "I receive the information I need to do my job in good time."],
+    ["K2", "Important information is shared in a language and format that everyone can understand."],
+    ["K3", "Leaders communicate regularly through channels that reach everyone, including staff without email (meetings, WhatsApp, notice boards)."],
+    ["K4", "I hear about important news from the organisation before I hear it through rumours."],
+    ["K5", "I have regular opportunities to ask leaders questions and get honest answers."],
+    ["K6", "My ideas and suggestions are listened to and taken seriously."],
+    ["K7", "I feel comfortable reporting unethical behaviour without fear of victimisation."],
+    ["K8", "I believe positive action will be taken as a result of this survey."]] },
+  { id: "L", name: "Change Management", short: "Change", blurb: "How changes in the organisation are explained, planned and supported.", items: [
+    ["L1", "When changes are made here, the reasons for them are clearly explained."],
+    ["L2", "Employees are consulted before changes that affect them are made."],
+    ["L3", "I get enough training and support to adapt to new systems, processes or structures."],
+    ["L4", "Changes in this organisation are well planned and well implemented."],
+    ["L5", "Leaders follow through on the changes they announce."],
+    ["L6", "My manager keeps me informed about how changes will affect me and my team."],
+    ["L7", "The pace of change is managed so that it does not overwhelm people."],
+    ["L8", "I feel positive about the changes happening in this organisation."]] },
+  { id: "M", name: "Role Clarity, Purpose and Teamwork", short: "Teamwork", blurb: "How clear and meaningful your work is.", items: [
+    ["M1", "I know exactly what my job requires me to do."],
+    ["M2", "The work I do is meaningful and makes a difference to our customers or community."],
+    ["M3", "My colleagues are committed to doing quality work."],
+    ["M4", "Different teams or departments cooperate well to get work done."],
+    ["M5", "I have enough authority to make decisions about how I do my work."]] }
 ];
 const ITEMS = SECTIONS.flatMap(s => s.items.map(([id, text]) => ({ id, text, sec: s.id })));
 const ITEM = Object.fromEntries(ITEMS.map(i => [i.id, i]));
 const OPEN = [
-  ["M1", "What is the one thing this organisation does well that you would not want to change?"],
-  ["M2", "What is the one thing that would most improve your experience of working here?"],
-  ["M3", "What support would help you most when work or life becomes challenging?"],
-  ["M4", "What skills or training would you like to develop over the next 12 months?"]
+  ["O1", "What is the one thing this organisation does well that you would not want to change?"],
+  ["O2", "What is the one thing that would most improve your experience of working here?"],
+  ["O3", "What support would help you most when work or life becomes challenging?"],
+  ["O4", "What skills or training would you like to develop over the next 12 months?"],
+  ["O5", "What would help you most during changes in the organisation, or what concerns you about current changes?"]
 ];
 const SCALE = ["Strongly disagree", "Disagree", "Neither agree nor disagree", "Agree", "Strongly agree"];
 const PNTS = "Prefer not to say";
@@ -247,14 +274,15 @@ const DEMO = [
   ["disability", "Do you have a disability?", ["Yes", "No"]]
 ];
 const DEFAULT_CFG = {
-  orgName: "Your organisation", cycle: "2026 Annual Survey", closes: "", headcount: 0, minGroup: 5,
+  orgName: "", cycle: "2026 Annual Survey", closes: "", headcount: 0, minGroup: 5,
   departments: ["Operations", "Sales and Customer Service", "Finance and Administration", "Management"]
 };
+const orgName = () => S.client || S.cfg.orgName || "your organisation";
 const STEPS = ["intro", ...SECTIONS.map(s => s.id), "voice", "about", "review"];
 
 /* ---------- State ---------- */
 const S = {
-  cfg: { ...DEFAULT_CFG }, db: null, dl: null, owner: false, admin: false, canWrite: null, uid: null,
+  cfg: { ...DEFAULT_CFG }, client: "", db: null, dl: null, owner: false, admin: false, canWrite: null, uid: null,
   ready: false, tab: "survey", step: 0, consent: false, submitted: false, submitting: false,
   draft: { answers: {}, enps: null, open: {}, demo: {} },
   responses: null, report: null, example: false, dim: "dept", includeComments: true, writeRefused: false
@@ -278,7 +306,7 @@ function tabsFor() {
   return t;
 }
 function renderTabs() {
-  $("#orgline").textContent = S.cfg.orgName + " · " + S.cfg.cycle;
+  $("#orgline").textContent = "Employee Engagement Survey" + (S.client || S.cfg.orgName ? " · " + orgName() : "") + " · " + S.cfg.cycle;
   $("#tabs").innerHTML = tabsFor().map(([id, l]) => `<button class="tab" role="tab" id="tab-${id}" data-tab="${id}" aria-selected="${S.tab === id}">${l}</button>`).join("");
 }
 $("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) { S.tab = b.dataset.tab; render(); window.scrollTo(0, 0) } });
@@ -296,7 +324,7 @@ function render() {
 function submitBlocker() {
   if (!S.ready) return "Connecting to the survey store…";
   if (!S.db || !S.uid) return "Sign in to claude.ai with the account this survey was shared with to submit your answers.";
-  if (S.canWrite === false || S.writeRefused) return "Your access to this page is view-only. Ask the survey administrator for Contributor access so you can submit.";
+  if (S.canWrite === false || S.writeRefused) return "Your access to this page is view-only. Ask X-Capital Resources: People for Contributor access so you can submit.";
   return "";
 }
 function answeredCount() { return ITEMS.filter(i => S.draft.answers[i.id] != null).length }
@@ -312,34 +340,45 @@ function renderSurvey() {
     <li>You hear back on what changed because of your feedback.</li></ol></section>`;
   const step = STEPS[S.step];
   const pct = Math.round(S.step / (STEPS.length - 1) * 100);
-  const head = `<div class="row small muted"><span>Step ${S.step + 1} of ${STEPS.length}</span><span class="spacer num">${answeredCount()}/64 rated</span></div><div class="progress" aria-hidden="true"><i style="width:${pct}%"></i></div>`;
+  const head = `<div class="row small muted"><span>Step ${S.step + 1} of ${STEPS.length}</span><span class="spacer num">${answeredCount()}/83 rated</span></div><div class="progress" aria-hidden="true"><i style="width:${pct}%"></i></div>`;
   const blocker = submitBlocker();
   const nav = (nextLabel = "Next", nextDisabled = false) => `<div class="row">${S.step > 0 ? `<button class="btn" data-act="back">Back</button>` : ""}<button class="btn primary spacer" data-act="next" ${nextDisabled ? "disabled" : ""}>${nextLabel}</button></div>`;
 
   if (step === "intro") return `${blocker && S.ready ? `<div class="banner">${esc(blocker)} You can still read the questions.</div>` : ""}
     <section class="panel">
-      <p class="eyebrow">${esc(S.cfg.orgName)}</p>
+      <p class="eyebrow">A product of X-Capital Resources: People</p>
       <h1>${esc(S.cfg.cycle)}</h1>
-      <p>This survey asks how you experience working here: your state of mind, your manager and leaders, your working environment, the support you get when things are hard, and your opportunities to grow. It takes about 15 to 20 minutes.</p>
+      <div class="orgbox">
+        <span class="eyebrow">Organisation</span>
+        ${S.client || S.cfg.orgName ? `<span class="blank">${esc(orgName())}</span>` : `<span class="blank empty">Organisation name to be completed by the requesting organisation</span>`}
+        ${S.admin && !S.owner ? `<div class="row"><input type="text" id="client-name" placeholder="Type your organisation's name" value="${esc(S.client)}" style="flex:1;min-width:0"><button class="btn" data-act="save-client">Save name</button></div>` : ""}
+      </div>
+      <div class="notice">
+        <b>About this survey</b>
+        <p>This survey is a product of <b>X-Capital Resources: People</b>. It is administered and owned by X-Capital Resources: People on behalf of ${esc(orgName())}, which requested it.</p>
+        <p>Results will be given to the leaders of ${esc(orgName())} in combined form only, for groups of <b>${S.cfg.minGroup} or more people</b>. Your individual answers are never shared with your organisation.</p>
+      </div>
+      <p>This survey asks how you experience working here: your state of mind, your manager and leaders, your working environment, pay and pay policies, communication, how change is managed, the support you get when things are hard, and your opportunities to grow. It takes about 20 to 25 minutes.</p>
       <div class="grid2 small">
-        <div><b>69 questions</b><br><span class="muted">64 statements, 1 rating, 4 open questions</span></div>
+        <div><b>89 questions</b><br><span class="muted">83 statements, 1 rating, 5 open questions</span></div>
         <div><b>Last 6 months</b><br><span class="muted">Answer based on your recent experience</span></div>
         <div><b>${S.cfg.closes ? esc(fmtDate(S.cfg.closes)) : "Open now"}</b><br><span class="muted">${S.cfg.closes ? "Closing date" : "No closing date set"}</span></div>
       </div>
       <div class="notice">
         <b>Your privacy (POPIA notice)</b>
-        <p>Taking part is voluntary. Your answers are used only to understand and improve the employee experience at ${esc(S.cfg.orgName)}.</p>
-        <p>Raw responses are held by the survey administrator only. Managers and leaders see combined results for groups of <b>${S.cfg.minGroup} or more people</b>, never individual answers. Your name is not shown with your answers anywhere in this survey.</p>
-        <p>Comments you write may be shared word for word, without your name, so leave out anything that could identify you or others. All "About you" questions are optional and include "Prefer not to say".</p>
+        <p>Taking part is voluntary. Your answers are used only to understand and improve the employee experience at ${esc(orgName())}, and in fully anonymised, combined form to build benchmarks.</p>
+        <p>X-Capital Resources: People holds the raw responses. Your sign-in is used only to make sure each person responds once and is never shown with your answers. Leaders see combined results only, never individual answers, and results are never used for performance, disciplinary or selection decisions.</p>
+        <p>Comments may be shared word for word without your name, after X-Capital removes identifying details. All "About you" questions are optional. Population group and disability are special personal information under POPIA; by answering them you consent to their use for Employment Equity and fairness analysis only.</p>
+        <p>Raw responses are kept for up to 24 months and then deleted or permanently de-identified. You may contact X-Capital Resources: People's Information Officer about your rights.</p>
       </div>
       <label class="check"><input type="checkbox" id="consent" ${S.consent ? "checked" : ""}><span>I have read the privacy notice and agree to take part.</span></label>
       ${nav("Start the survey", !S.consent)}
     </section>`;
 
   if (step === "voice") return `<section class="panel">${head}
-    <div class="sec-head"><p class="eyebrow">Sections L and M</p><h2>Your overall view</h2></div>
-    <fieldset class="q"><legend><span class="qid">L1</span>On a scale of 0 to 10, how likely are you to recommend this organisation as a place to work?</legend>
-      <div class="scale nps">${Array.from({ length: 11 }, (_, v) => `<label class="opt"><input type="radio" name="L1" value="${v}" ${S.draft.enps === v ? "checked" : ""}><span><b>${v}</b></span></label>`).join("")}</div>
+    <div class="sec-head"><p class="eyebrow">Sections N and O</p><h2>Your overall view</h2></div>
+    <fieldset class="q"><legend><span class="qid">N1</span>On a scale of 0 to 10, how likely are you to recommend this organisation as a place to work?</legend>
+      <div class="scale nps">${Array.from({ length: 11 }, (_, v) => `<label class="opt"><input type="radio" name="N1" value="${v}" ${S.draft.enps === v ? "checked" : ""}><span><b>${v}</b></span></label>`).join("")}</div>
       <div class="nps-ends"><span>0 Not at all likely</span><span>10 Extremely likely</span></div>
     </fieldset>
     ${OPEN.map(([id, q]) => `<div class="field"><label for="open-${id}"><span class="qid">${id}</span>${q}</label><textarea id="open-${id}" data-open="${id}" maxlength="1500">${esc(S.draft.open[id] || "")}</textarea></div>`).join("")}
@@ -354,8 +393,8 @@ function renderSurvey() {
     const rows = SECTIONS.map((s, i) => { const miss = s.items.filter(([id]) => S.draft.answers[id] == null).length; return `<li><button data-jump="${i + 1}"><span>${s.id}. ${s.name}</span>${miss ? `<span class="pill warn">${miss} unanswered</span>` : `<span class="pill good">Complete</span>`}</button></li>` }).join("");
     return `<section class="panel">${head}
       <div class="sec-head"><p class="eyebrow">Last step</p><h2>Review and submit</h2>
-      <p class="muted">You rated ${answeredCount()} of 64 statements${S.draft.enps == null ? " and skipped the 0 to 10 rating" : ""}. You can submit with gaps, but complete answers give a clearer picture.</p></div>
-      <ul class="review-list">${rows}<li><button data-jump="${STEPS.indexOf("voice")}"><span>L and M. Your overall view</span>${S.draft.enps == null ? `<span class="pill warn">Rating skipped</span>` : `<span class="pill good">Rated ${S.draft.enps}</span>`}</button></li></ul>
+      <p class="muted">You rated ${answeredCount()} of 83 statements${S.draft.enps == null ? " and skipped the 0 to 10 rating" : ""}. You can submit with gaps, but complete answers give a clearer picture.</p></div>
+      <ul class="review-list">${rows}<li><button data-jump="${STEPS.indexOf("voice")}"><span>N and O. Your overall view</span>${S.draft.enps == null ? `<span class="pill warn">Rating skipped</span>` : `<span class="pill good">Rated ${S.draft.enps}</span>`}</button></li></ul>
       ${blocker ? `<div class="banner">${esc(blocker)}</div>` : ""}
       <div class="row"><button class="btn" data-act="back">Back</button><button class="btn primary spacer" data-act="submit" ${blocker || S.submitting || answeredCount() === 0 ? "disabled" : ""}>${S.submitting ? "Submitting…" : "Submit my response"}</button></div>
     </section>`;
@@ -363,7 +402,7 @@ function renderSurvey() {
 
   const sec = SECTIONS.find(s => s.id === step);
   return `<section class="panel">${head}
-    <div class="sec-head"><p class="eyebrow">Section ${sec.id} of K</p><h2>${sec.name}</h2><p class="muted">${sec.blurb} How much do you agree with each statement?</p></div>
+    <div class="sec-head"><p class="eyebrow">Section ${sec.id} of M</p><h2>${sec.name}</h2><p class="muted">${sec.blurb} How much do you agree with each statement?</p></div>
     <div class="legend-row"><span>1 Strongly disagree</span><span>5 Strongly agree</span></div>
     ${sec.items.map(([id, text]) => `<fieldset class="q"><legend><span class="qid">${id}</span>${esc(text)}</legend><div class="scale">
       ${SCALE.map((l, i) => `<label class="opt"><input type="radio" name="${id}" value="${i + 1}" ${S.draft.answers[id] === i + 1 ? "checked" : ""}><span><b>${i + 1}</b><small>${l}</small></span></label>`).join("")}
@@ -376,8 +415,8 @@ const app = $("#app");
 app.addEventListener("change", e => {
   const t = e.target;
   if (t.id === "consent") { S.consent = t.checked; saveDraft(); render(); return }
-  if (t.type === "radio" && t.name === "L1") { S.draft.enps = +t.value; saveDraft(); return }
-  if (t.type === "radio" && ITEM[t.name]) { S.draft.answers[t.name] = +t.value; saveDraft(); const c = document.querySelector(".row .num"); if (c) c.textContent = answeredCount() + "/64 rated"; return }
+  if (t.type === "radio" && t.name === "N1") { S.draft.enps = +t.value; saveDraft(); return }
+  if (t.type === "radio" && ITEM[t.name]) { S.draft.answers[t.name] = +t.value; saveDraft(); const c = document.querySelector(".row .num"); if (c) c.textContent = answeredCount() + "/83 rated"; return }
   if (t.dataset.demo) { S.draft.demo[t.dataset.demo] = t.value; saveDraft(); return }
   if (t.id === "dim") { S.dim = t.value; render(); return }
   if (t.id === "inc-comments") { S.includeComments = t.checked; return }
@@ -394,6 +433,7 @@ app.addEventListener("click", e => {
   else if (act === "publish") publishReport();
   else if (act === "csv") exportCsv();
   else if (act === "save-settings") saveSettings();
+  else if (act === "save-client") saveClient();
   else if (act === "goto-survey") { S.tab = "survey"; render() }
 });
 
@@ -413,7 +453,7 @@ async function submit() {
     S.submitted = true; clearDraft(); toast("Response submitted");
   } catch (err) {
     if (err && err.code === "invalid_argument") { S.writeRefused = true; toast("Your access does not allow submitting") }
-    else if (err && err.code === "quota_exceeded") toast("The survey store is full. Tell the survey administrator.");
+    else if (err && err.code === "quota_exceeded") toast("The survey store is full. Tell X-Capital Resources: People.");
     else toast("Could not submit. Check your connection and try again.");
   }
   S.submitting = false; render(); window.scrollTo(0, 0);
@@ -438,7 +478,7 @@ function engOf(r) { return mean(["A1", "A2", "A3", "A4", "A5", "A6"].map(id => r
 
 function summarize(resps, min, withComments = true) {
   const n = resps.length;
-  const out = { cycle: S.cfg.cycle, orgName: S.cfg.orgName, generatedOn: new Date().toISOString().slice(0, 10), n, min, headcount: S.cfg.headcount || 0 };
+  const out = { cycle: S.cfg.cycle, orgName: orgName(), generatedOn: new Date().toISOString().slice(0, 10), n, min, headcount: S.cfg.headcount || 0 };
   if (n < min) return out;
   out.items = {}; for (const it of ITEMS) out.items[it.id] = itemStats(resps, it.id);
   out.sections = SECTIONS.map(s => { const st = s.items.map(([id]) => out.items[id]).filter(x => x.k); return { id: s.id, fav: mean(st.map(x => x.fav)), neu: mean(st.map(x => x.neu)), unf: mean(st.map(x => x.unf)) } });
@@ -460,13 +500,18 @@ function summarize(resps, min, withComments = true) {
   for (const [k] of DEMO) {
     const groups = {};
     for (const r of resps) { const g = r.demo?.[k] || "Not answered"; (groups[g] = groups[g] || []).push(r) }
+    const kmin = k === "pop" || k === "disability" ? Math.max(10, min) : min;
     const rows = [], small = [];
-    for (const [g, rs] of Object.entries(groups)) (rs.length >= min ? rows : small).push([g, rs]);
+    for (const [g, rs] of Object.entries(groups)) (rs.length >= kmin ? rows : small).push([g, rs]);
+    rows.sort((a, b) => a[1].length - b[1].length);
+    // A hidden group must not be recoverable by subtracting the shown groups from the total
+    while (small.length && small.reduce((t, [, rs]) => t + rs.length, 0) < kmin && rows.length) small.push(rows.shift());
+    rows.sort((a, b) => b[1].length - a[1].length);
     const merged = small.flatMap(([, rs]) => rs);
-    if (merged.length >= min && rows.length) rows.push(["Smaller groups combined", merged]);
+    if (merged.length >= kmin && rows.length) rows.push(["Smaller groups combined", merged]);
     out.breakdowns[k] = rows.map(([g, rs]) => ({ group: g, n: rs.length, cats: Object.fromEntries(SECTIONS.map(s => [s.id, sectionFav(rs, s.id)])) }));
   }
-  if (withComments) {
+  if (withComments && n >= Math.max(10, min)) {
     out.comments = {};
     for (const [id] of OPEN) out.comments[id] = shuffle(resps.map(r => r.open?.[id]).filter(Boolean));
   }
@@ -479,13 +524,14 @@ function exampleResponses() {
   let s = 20261017; const rnd = () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296 };
   const gauss = () => Math.sqrt(-2 * Math.log(rnd() + 1e-9)) * Math.cos(2 * Math.PI * rnd());
   const pick = a => a[Math.floor(rnd() * a.length)];
-  const offset = { A: .15, B: -.15, C: .45, D: .05, E: -.1, F: .25, G: -.35, H: -.25, I: -.6, J: -.05, K: .5 };
-  const itemOff = { E4: -.6, I2: -.3, G3: -.5, H4: -.4, B3: -.3, C3: .3 };
+  const offset = { A: .15, B: -.15, C: .45, D: .05, E: -.1, F: .25, G: -.35, H: -.25, I: -.3, J: -.65, K: -.1, L: -.3, M: .5 };
+  const itemOff = { E4: -.6, J1: -.3, J6: -.3, G3: -.5, H4: -.4, B3: -.3, C3: .3, L2: -.3, J8: .5 };
   const ex = {
-    M1: ["The way the team pulls together when things get tough.", "Management is approachable and the owner knows everyone by name.", "We are paid on time every month, even in difficult months.", "The family feeling. People help each other here.", "Flexible hours when I need to take my child to the clinic.", "Our customers trust us and that makes me proud."],
-    M2: ["Clearer communication about how salary increases are decided.", "A backup power plan so we are not standing idle during load shedding.", "Transport money or a safe lift for people working late shifts.", "More feedback from supervisors, not only when something goes wrong.", "Better tools. Our laptops are very slow.", "Explain the company plans to everyone, not only managers."],
-    M3: ["Someone confidential to talk to about debt and money stress.", "Understanding when my children are sick.", "Knowing who to call if something happens at home.", "An advance on salary in a real emergency.", "Time off to deal with a family funeral without losing pay."],
-    M4: ["Excel and reporting skills.", "Supervisory and people management training.", "Forklift licence.", "Code 10 driver's licence.", "Customer service and handling complaints.", "Finishing my NQF 5 qualification through the SETA."]
+    O1: ["The way the team pulls together when things get tough.", "Management is approachable and the owner knows everyone by name.", "We are paid on time every month, even in difficult months.", "The family feeling. People help each other here.", "Flexible hours when I need to take my child to the clinic.", "Our customers trust us and that makes me proud."],
+    O2: ["Clearer communication about how salary increases are decided.", "A backup power plan so we are not standing idle during load shedding.", "Transport money or a safe lift for people working late shifts.", "More feedback from supervisors, not only when something goes wrong.", "Better tools. Our laptops are very slow.", "Explain the company plans to everyone, not only managers."],
+    O3: ["Someone confidential to talk to about debt and money stress.", "Understanding when my children are sick.", "Knowing who to call if something happens at home.", "An advance on salary in a real emergency.", "Time off to deal with a family funeral without losing pay."],
+    O4: ["Excel and reporting skills.", "Supervisory and people management training.", "Forklift licence.", "Code 10 driver's licence.", "Customer service and handling complaints.", "Finishing my NQF 5 qualification through the SETA."],
+    O5: ["Tell us earlier when something is going to change.", "Training before the new system goes live, not after.", "Too many changes at once. Finish one thing first.", "Ask the people who do the work before deciding.", "Regular updates from our supervisor about what the changes mean for us."]
   };
   const depts = S.cfg.departments.length ? S.cfg.departments : DEFAULT_CFG.departments;
   return Array.from({ length: 46 }, () => {
@@ -524,9 +570,9 @@ function renderResults() {
   const tools = live ? `<div class="row"><label class="check small"><input type="checkbox" id="inc-comments" ${S.includeComments ? "checked" : ""}><span>Include comments in the management report</span></label><span class="spacer"></span><button class="btn" data-act="csv">Export CSV</button><button class="btn primary" data-act="publish">Share results with management</button></div>` : "";
   const top = `<div class="row"><div><p class="eyebrow">${source === "example" ? "Example data" : source === "report" ? "Management report" : "Live results"}</p><h1>${esc(S.cfg.cycle)}</h1></div><span class="spacer"></span>${exampleBtn}</div>
     ${source === "example" ? `<div class="banner">These are 46 made-up responses that show how the dashboard reads. They are generated in your browser and never saved.</div>` : ""}
-    ${source === "report" && sum ? `<div class="banner info">Shared by the survey administrator on ${esc(fmtDate(sum.generatedOn))}. Groups smaller than ${sum.min} people are combined or hidden to protect anonymity.</div>` : ""}`;
+    ${source === "report" && sum ? `<div class="banner info">Shared by X-Capital Resources: People on ${esc(fmtDate(sum.generatedOn))}. Groups smaller than ${sum.min} people are combined or hidden to protect anonymity.</div>` : ""}`;
 
-  if (source === "report" && !sum) return `${top}<section class="panel empty"><h2>No results shared yet</h2><p class="muted">The survey administrator shares results here once the survey closes and enough people have responded.</p></section>`;
+  if (source === "report" && !sum) return `${top}<section class="panel empty"><h2>No results shared yet</h2><p class="muted">X-Capital Resources: People shares results here once the survey closes and enough people have responded.</p></section>`;
   if (sum.n < sum.min) return `${top}${tools}<section class="panel empty"><h2>${sum.n} ${sum.n === 1 ? "response" : "responses"} so far</h2>
     <p class="muted">Results unlock at ${sum.min} responses so nobody can be identified. Share the survey with employees as Contributors and ask them to open the Survey tab.</p>
     ${S.owner ? `<button class="btn primary" data-act="example">Preview with example data</button>` : ""}</section>`;
@@ -536,7 +582,7 @@ function renderResults() {
   const kpis = `<div class="kpis">
     <div class="kpi"><span class="eyebrow">Engagement Index</span><span class="big">${pct(sum.engagement)}</span><span><span class="pill ${ec}">${eb}</span> <span class="small muted">favourable on A1 to A6</span></span></div>
     <div class="kpi"><span class="eyebrow">eNPS</span><span class="big">${sum.enps ? (sum.enps.score > 0 ? "+" : "") + sum.enps.score : "–"}</span>${sum.enps ? `<div class="split"><i class="f" style="width:${sum.enps.pro}%"></i><i class="n" style="width:${sum.enps.pas}%"></i><i class="u" style="width:${sum.enps.det}%"></i></div><span class="small muted">${pct(sum.enps.pro)} promoters, ${pct(sum.enps.det)} detractors</span>` : ""}</div>
-    <div class="kpi"><span class="eyebrow">Overall favourable</span><span class="big">${pct(sum.overall)}</span><span class="small muted">Average across all 64 statements</span></div>
+    <div class="kpi"><span class="eyebrow">Overall favourable</span><span class="big">${pct(sum.overall)}</span><span class="small muted">Average across all 83 statements</span></div>
     <div class="kpi"><span class="eyebrow">Responses</span><span class="big">${sum.n}</span><span class="small muted">${rate != null ? rate + "% of " + sum.headcount + " employees" : "Set headcount in Settings for a response rate"}</span></div>
   </div>`;
 
@@ -561,7 +607,8 @@ function renderResults() {
   const comments = sum.comments ? `<section class="panel"><h2>What people said</h2><p class="muted small">Shown in random order without names. Read them as themes, not as individual cases.</p>
     ${OPEN.map(([id, q]) => { const c = sum.comments[id] || []; return `<details class="sec"><summary><span>${id}. ${q}</span><span class="num">${c.length}</span></summary><ul class="comments" style="margin-top:10px">${c.length ? c.map(t => `<li>${esc(t)}</li>`).join("") : `<li class="muted">No comments.</li>`}</ul></details>` }).join("")}</section>` : "";
 
-  return `${top}${tools}${kpis}${burnout}${catPanel}${matrix}${extremes}${heat}${detail}${comments}`;
+  const noComments = !sum.comments && sum.n < 10 ? `<section class="panel"><h2>What people said</h2><p class="muted">Comments are shown once 10 or more people have responded, to protect anonymity.</p></section>` : "";
+  return `${top}${tools}${kpis}${burnout}${catPanel}${matrix}${extremes}${heat}${detail}${comments}${noComments}`;
 }
 
 function renderMatrix(sum) {
@@ -596,7 +643,7 @@ function renderHeat(sum) {
     <tbody>${rows.map(r => `<tr><td>${esc(r.group)}</td><td class="num">${r.n}</td>${SECTIONS.map(s => { const v = r.cats[s.id]; return v == null ? `<td>–</td>` : `<td class="cell" style="--p:${Math.round(Math.max(0, Math.min(100, (v - 30) / 60 * 100)))}%">${Math.round(v)}</td>` }).join("")}</tr>`).join("")}</tbody></table></div>`
     : `<p class="muted">No group in this breakdown has ${sum.min} or more people yet.</p>`;
   return `<section class="panel"><div class="row"><h2>Compare groups</h2><span class="spacer"></span><select id="dim" style="width:auto">${opts}</select></div>
-    <p class="muted small">Favourable % by category. Groups under ${sum.min} people are combined or hidden.</p>${body}</section>`;
+    <p class="muted small">Favourable % by category. Groups under ${sum.min} people (10 for population group and disability) are combined or hidden.</p>${body}</section>`;
 }
 
 async function publishReport() {
@@ -610,18 +657,23 @@ async function publishReport() {
 async function exportCsv() {
   if (!S.dl) { toast("Downloads are not available in this view"); return }
   const rs = flatResponses();
-  const cols = ["submittedOn", ...DEMO.map(d => d[0]), ...ITEMS.map(i => i.id), "L1", ...OPEN.map(o => o[0])];
+  const cols = ["submittedOn", ...DEMO.map(d => d[0]), ...ITEMS.map(i => i.id), "N1", ...OPEN.map(o => o[0])];
   const q = v => { const s = String(v ?? ""); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s };
-  const lines = [cols.join(","), ...shuffle(rs).map(r => cols.map(c => q(c === "submittedOn" ? r.submittedOn : c === "L1" ? r.enps : ITEM[c] ? (r.answers?.[c] === 0 ? "NA" : r.answers?.[c]) : c.startsWith("M") ? r.open?.[c] : r.demo?.[c])).join(","))];
+  const lines = [cols.join(","), ...shuffle(rs).map(r => cols.map(c => q(c === "submittedOn" ? r.submittedOn : c === "N1" ? r.enps : ITEM[c] ? (r.answers?.[c] === 0 ? "NA" : r.answers?.[c]) : /^O\d$/.test(c) ? r.open?.[c] : r.demo?.[c])).join(","))];
   try { await S.dl.save({ filename: `engagement-${cycleId()}.csv`, data: lines.join("\n") }) } catch (e) { if (e?.code !== "declined") toast("Could not export the file") }
+}
+
+async function saveClient() {
+  const v = document.getElementById("client-name").value.trim();
+  try { await S.db.doc("client/profile").set({ orgName: v }); toast("Organisation name saved") } catch (e) { toast("Could not save the name") }
 }
 
 /* ---------- Settings ---------- */
 function renderSettings() {
   const c = S.cfg;
-  return `<section class="panel"><p class="eyebrow">Survey administrator</p><h1>Settings</h1>
+  return `<section class="panel"><p class="eyebrow">X-Capital Resources: People</p><h1>Settings</h1>
     <div class="grid2">
-      <div class="field"><label for="set-org">Organisation name</label><input type="text" id="set-org" value="${esc(c.orgName)}"></div>
+      <div class="field"><label for="set-org">Organisation name (requesting organisation)</label><input type="text" id="set-org" value="${esc(c.orgName)}"></div>
       <div class="field"><label for="set-cycle">Survey round</label><input type="text" id="set-cycle" value="${esc(c.cycle)}"><span class="small muted">A new name starts a new round. Earlier rounds keep their results.</span></div>
       <div class="field"><label for="set-closes">Closing date</label><input type="date" id="set-closes" value="${esc(c.closes)}"></div>
       <div class="field"><label for="set-head">Number of employees invited</label><input type="number" id="set-head" min="0" value="${c.headcount || ""}"></div>
@@ -633,7 +685,8 @@ function renderSettings() {
   <section class="panel"><h2>Who sees what</h2>
     <ul class="steps"><li><b>Employees</b> need <b>Contributor</b> access to submit. They see only the survey.</li>
     <li><b>Managers and leaders</b> with <b>Editor</b> access see the results you share with the "Share results with management" button, never raw answers.</li>
-    <li><b>You, the owner,</b> see live results and can export anonymised raw data as CSV. Keep that file private.</li></ul></section>`;
+    <li><b>X-Capital Resources: People, as owner,</b> sees live results and can export de-identified raw data as CSV. Keep that file private.</li>
+    <li>Leaders of the requesting organisation can type their organisation's name on the Survey tab.</li></ul></section>`;
 }
 async function saveSettings() {
   const v = id => document.getElementById(id).value;
@@ -645,9 +698,9 @@ async function saveSettings() {
 /* ---------- About ---------- */
 function renderAbout() {
   return `<section class="panel"><p class="eyebrow">Method</p><h1>How this survey works</h1>
-    <p>Pulse SA measures engagement and the ten areas that drive it, using constructs from the most widely used instruments: Gallup Q12, the Utrecht Work Engagement Scale, Kincentric's Say, Stay, Strive model, Willis Towers Watson's Sustainable Engagement and the Great Place to Work Trust Index. The wording is written for South African SMEs and mid-market businesses.</p></section>
+    <p>The X-Capital Resources: People Employee Engagement Survey measures engagement and the twelve areas that drive it, using constructs from the most widely used instruments: Gallup Q12, the Utrecht Work Engagement Scale, Kincentric's Say, Stay, Strive model, Willis Towers Watson's Sustainable Engagement, the Great Place to Work Trust Index, the WorldatWork Total Rewards model and the Prosci ADKAR and Kotter change models. The wording is written for South African SMEs and mid-market businesses.</p></section>
   <div class="two">
-    <section class="panel"><h2>What is measured</h2><ul class="review-list">${SECTIONS.map(s => `<li class="row small"><b>${s.id}. ${s.name}</b><span class="spacer num muted">${s.items.length}</span></li>`).join("")}<li class="row small"><b>L. eNPS</b><span class="spacer num muted">1</span></li><li class="row small"><b>M. Open questions</b><span class="spacer num muted">4</span></li></ul></section>
+    <section class="panel"><h2>What is measured</h2><ul class="review-list">${SECTIONS.map(s => `<li class="row small"><b>${s.id}. ${s.name}</b><span class="spacer num muted">${s.items.length}</span></li>`).join("")}<li class="row small"><b>N. eNPS</b><span class="spacer num muted">1</span></li><li class="row small"><b>O. Open questions</b><span class="spacer num muted">5</span></li></ul></section>
     <section class="panel"><h2>How scores are read</h2>
       <p class="small"><b>Favourable</b> is the share of people who chose 4 or 5. N/A answers are left out.</p>
       <table><tbody><tr><td><span class="pill good">High</span></td><td class="num">75%+</td><td class="small">Protect it</td></tr><tr><td><span class="pill good">Healthy</span></td><td class="num">65 to 74%</td><td class="small">Improve specific areas</td></tr><tr><td><span class="pill warn">Moderate</span></td><td class="num">50 to 64%</td><td class="small">Turnover risk</td></tr><tr><td><span class="pill bad">Low</span></td><td class="num">Below 50%</td><td class="small">Urgent attention</td></tr></tbody></table>
@@ -655,7 +708,7 @@ function renderAbout() {
       <p class="small"><b>Drivers</b> are statements that move together with the Engagement Index. Low-scoring drivers are the priorities.</p></section>
   </div>
   <section class="panel"><h2>South African context</h2>
-    <p class="small">Statements E4 (load shedding and outages), E5 (commuter safety), F3 (transformation and employment equity), G3 (financial wellness), H5 (SETA training, learnerships and bursaries) and J2 (accessible language) reflect local realities. The privacy notice follows POPIA, and the demographic questions support Employment Equity analysis without identifying anyone.</p></section>
+    <p class="small">Statements E4 (load shedding and outages), E5 (commuter safety), F3 (transformation and employment equity), G3 (financial wellness), H5 (SETA training, learnerships and bursaries), J5 (equal pay for work of equal value), K2 (accessible language) and L2 (consultation before change) reflect local realities. The privacy notice follows POPIA, and the demographic questions support Employment Equity analysis without identifying anyone.</p></section>
   <section class="panel"><h2>From results to action</h2><ol class="steps">
     <li>Share the results with all staff within 4 to 6 weeks.</li><li>Pick 2 or 3 priorities from the driver analysis.</li><li>Agree actions with teams, with named owners and dates.</li><li>Report back on what changed ("You said, we did").</li><li>Run a short pulse check every quarter or six months.</li></ol></section>`;
 }
@@ -688,6 +741,7 @@ render();
     }
     if (document.activeElement?.closest?.("#app") && S.tab !== "results") renderTabs(); else render();
   }, () => {});
+  db.doc("client/profile").onSnapshot(s => { S.client = (s.data()?.orgName || "").trim(); if (!document.activeElement?.closest?.("#app")) render(); else renderTabs() }, () => {});
   if (S.owner) db.collection("responses").onSnapshot(snap => { S.responses = snap.docs.map(d => d.data()); if (S.tab === "results") render() }, () => { S.responses = [] });
   render();
 })();

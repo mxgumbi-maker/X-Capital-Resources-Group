@@ -1,40 +1,54 @@
-# Employee Engagement Survey for South African SMEs and MMEs
+# Employee Engagement Survey
 
-**Prepared by:** X-Capital Resources Group
-**Audience:** Small and medium enterprises (SMEs) and mid-market enterprises (MMEs) operating in South Africa
-**Length:** 64 rated statements, 1 Employee Net Promoter Score (eNPS) question and 4 open questions (69 questions in total)
-**Completion time:** About 15 to 20 minutes
+### A product of X-Capital Resources: People
+
+| | |
+|---|---|
+| **Organisation name** | ________________________________________________ |
+| **Survey round** | ________________________________________________ |
+| **Survey opens** | ____________________ **Survey closes** ____________________ |
+
+> **About this survey.** This survey is a product of **X-Capital Resources: People**. It is administered and owned by X-Capital Resources: People on behalf of the organisation named above, which requested it. X-Capital Resources: People holds the raw responses. Results are reported to the leaders of the requesting organisation in combined form only, never as individual answers, and only for groups of 5 or more people.
+
+**Audience:** Employees of small and medium enterprises (SMEs) and mid-market enterprises (MMEs) in South Africa
+**Length:** 83 rated statements, 1 Employee Net Promoter Score (eNPS) question and 5 open questions (89 questions in total)
+**Completion time:** About 20 to 25 minutes
+
+**Companion documents**
+
+| Document | What it covers |
+|---|---|
+| [01 Interpreting the Results](01-Interpreting-the-Results.md) | How to read scores, charts, links between questions, global benchmarks |
+| [02 The Science Behind the Survey](02-The-Science-Behind-the-Survey.md) | Research models, validity, reliability, why each section is included |
+| [03 Privacy and Anonymity](03-Privacy-and-Anonymity.md) | POPIA, data custody, minimum group sizes for manager reports |
+| [04 Action Plan Templates](04-Action-Plan-Templates.md) | Ready-to-use action plans for every section of the survey |
 
 ---
 
-## 1. Why this survey, and how it compares globally
+## 1. How it compares globally
 
-The survey was built by studying the instruments most widely used by large organisations around the world and adapting what they measure to the realities of South African small and mid-sized businesses. The question wording is original to this survey, but each category maps to a well-established construct so results can be read against international practice.
+The survey was built by studying the instruments most widely used around the world and adapting what they measure to the realities of South African small and mid-sized businesses. The wording is original to X-Capital Resources: People, but each section maps to a well-established construct so results can be read against international practice. See [02 The Science Behind the Survey](02-The-Science-Behind-the-Survey.md) for detail.
 
-| Global instrument | What it is known for | How it is reflected here |
+| Global instrument | What it is known for | Where it is reflected |
 |---|---|---|
-| Gallup Q12 | 12 workplace basics that predict productivity, retention and safety | Role clarity, tools, recognition, development, "someone cares about me" items (Sections C, E, I, H, K) |
-| Utrecht Work Engagement Scale (UWES) | Academic measure of vigour, dedication and absorption | State of mind and engagement outcome items (Sections A and B) |
-| Kincentric (formerly Aon Hewitt) "Say, Stay, Strive" | Engagement as advocacy, intent to stay and discretionary effort | Engagement Index (Section A) |
-| Willis Towers Watson "Sustainable Engagement" | Engagement plus enablement and energy | Work environment and wellbeing items (Sections B and E) |
-| Great Place to Work Trust Index | Credibility, respect, fairness, pride and camaraderie | Leadership, fairness and belonging items (Sections D and F) |
-| Qualtrics EX25 / Microsoft Viva Glint / Culture Amp | Driver-based design, eNPS, open comments, action planning | eNPS, open questions, driver analysis and action planning guidance (Sections L, M and Part 4) |
+| Gallup Q12 | 12 workplace basics that predict productivity, retention and safety | Sections C, E, H, I, M |
+| Utrecht Work Engagement Scale (UWES) | Vigour, dedication and absorption | Sections A and B |
+| Kincentric "Say, Stay, Strive" | Engagement as advocacy, intent to stay and discretionary effort | Section A (Engagement Index) |
+| Willis Towers Watson "Sustainable Engagement" | Engagement plus enablement and energy | Sections B and E |
+| Great Place to Work Trust Index | Credibility, respect, fairness, pride, camaraderie | Sections D, F, J |
+| Prosci ADKAR and Kotter change models | Awareness, involvement and support during change | Section L |
+| WorldatWork Total Rewards model | Pay, benefits, recognition, performance | Sections I and J |
+| Qualtrics, Microsoft Viva Glint, Culture Amp | Driver analysis, eNPS, open comments, action planning | Sections N and O, and the companion documents |
 
-**What makes this version South African:**
-
-- Questions on transformation, Employment Equity, fair treatment across race, gender, age, disability and language, in line with the Employment Equity Act.
-- Support in hard times that South African employees actually face: load shedding and infrastructure disruptions, transport and safety concerns, financial pressure and debt, family and community responsibilities, and access to an Employee Assistance Programme (EAP).
-- Learning and development linked to how skills are funded and recognised locally: SETAs, learnerships, the Skills Development Levy and NQF-aligned qualifications.
-- A data protection notice written for the Protection of Personal Information Act (POPIA).
-- Delivery guidance for workforces where many people do not use email or have limited data (WhatsApp, zero-rated links, QR codes, paper and assisted completion).
+**South African features:** transformation and Employment Equity (including equal pay for work of equal value), load shedding and infrastructure disruptions, commuter safety, financial pressure, EAP access, SETAs and learnerships, multilingual communication, consultation during change in the spirit of the Labour Relations Act, and a POPIA privacy notice.
 
 ---
 
-## 2. Instructions for employees (read before starting)
+## 2. Instructions for employees
 
-> This survey is confidential. Your individual answers will never be shown to your manager or anyone in the business. Results are only reported for groups of **5 or more people**. There are no right or wrong answers. Please answer honestly based on your experience over the **last 6 months**.
+> This survey is confidential. It is run by X-Capital Resources: People, an independent party. Your individual answers will never be shown to your manager or anyone in your organisation. Results are only reported for groups of **5 or more people**. There are no right or wrong answers. Please answer honestly based on your experience over the **last 6 months**.
 
-**Rating scale for statements in Sections A to K:**
+**Rating scale for Sections A to M:**
 
 | 1 | 2 | 3 | 4 | 5 |
 |---|---|---|---|---|
@@ -47,7 +61,7 @@ A "Not applicable / I don't know" option is available on every statement.
 ## 3. The survey
 
 ### Section A: Engagement Outcomes (Say, Stay, Strive)
-*Measures the overall level of engagement. These six items form the **Engagement Index**.*
+*These six items form the **Engagement Index**.*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -59,7 +73,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | A6 | I feel a sense of personal accomplishment from the work I do here. | Strive / dedication |
 
 ### Section B: State of Mind and Wellbeing
-*Is the employee in the right frame of mind to do good work?*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -71,7 +84,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | B6 | I feel mentally and emotionally safe at work. | Psychological wellbeing |
 
 ### Section C: My Immediate Manager or Supervisor
-*How employees experience the person they report to day to day.*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -83,7 +95,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | C6 | My manager supports my growth and encourages me to develop. | Coaching |
 
 ### Section D: Senior Leadership and Direction
-*How employees perceive the owners, directors and executive team.*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -95,7 +106,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | D6 | Senior leaders are visible and approachable. | Visibility |
 
 ### Section E: Work Environment, Tools and Safety
-*Does the environment enable people to do their best work?*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -107,7 +117,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | E6 | My working conditions (hours, breaks, facilities) are fair and comply with labour law. | Working conditions (BCEA) |
 
 ### Section F: Culture, Inclusion, Fairness and Belonging
-*Do people feel they belong and are treated fairly, in a uniquely diverse South African workforce?*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -118,8 +127,7 @@ A "Not applicable / I don't know" option is available on every statement.
 | F5 | Harassment, bullying and discrimination are not tolerated and are dealt with properly when reported. | Respect |
 | F6 | People in this organisation show ubuntu: they care for and help one another. | Ubuntu / camaraderie |
 
-### Section G: Organisational Support in Challenging Times
-*How the organisation shows up when life or work gets hard.*
+### Section G: Support in Challenging Times
 
 | # | Statement | Construct |
 |---|---|---|
@@ -131,7 +139,6 @@ A "Not applicable / I don't know" option is available on every statement.
 | G6 | I trust that the organisation would treat people fairly and humanely if it had to make difficult decisions such as restructuring. | Procedural justice |
 
 ### Section H: Growth, Learning and Development
-*Is the organisation investing in people's skills and careers?*
 
 | # | Statement | Construct |
 |---|---|---|
@@ -143,65 +150,93 @@ A "Not applicable / I don't know" option is available on every statement.
 | H6 | Promotion and development opportunities are given fairly and transparently. | Fair advancement |
 | H7 | I am given the chance to use and stretch my skills in new or challenging work. | Stretch / mastery |
 
-### Section I: Recognition, Pay and Benefits
+### Section I: Recognition and Performance
 
 | # | Statement | Construct |
 |---|---|---|
 | I1 | In the past month I have received recognition or praise for doing good work. | Recognition |
-| I2 | I am paid fairly for the work I do compared with similar jobs elsewhere. | External pay equity |
-| I3 | I understand how my pay, increases and any bonuses are decided. | Pay transparency |
-| I4 | The benefits offered (such as medical aid, retirement fund, leave or allowances) meet my needs. | Benefits |
-| I5 | Good performance is rewarded here, and poor performance is addressed. | Performance culture |
+| I2 | Good performance is rewarded here, and poor performance is addressed. | Performance culture |
+| I3 | Performance reviews are fair and based on clear, agreed goals. | Performance management |
+| I4 | Recognition is given fairly, not only to a favoured few. | Recognition equity |
 
-### Section J: Communication and Employee Voice
-
-| # | Statement | Construct |
-|---|---|---|
-| J1 | I receive the information I need to do my job in good time. | Information flow |
-| J2 | Important information is shared in a language and format that everyone can understand. | Accessible communication (SA) |
-| J3 | My ideas and suggestions are listened to and taken seriously. | Voice |
-| J4 | I believe positive action will be taken as a result of this survey. | Survey confidence |
-| J5 | I feel comfortable reporting unethical behaviour without fear of victimisation. | Speak up / whistleblowing |
-
-### Section K: Role Clarity, Purpose and Teamwork
+### Section J: Remuneration Standards and Policies
 
 | # | Statement | Construct |
 |---|---|---|
-| K1 | I know exactly what my job requires me to do. | Role clarity |
-| K2 | The work I do is meaningful and makes a difference to our customers or community. | Purpose |
-| K3 | My colleagues are committed to doing quality work. | Team standards |
-| K4 | Different teams or departments cooperate well to get work done. | Collaboration |
-| K5 | I have enough authority to make decisions about how I do my work. | Autonomy |
+| J1 | I am paid fairly for the work I do compared with similar jobs at other organisations. | External equity (market) |
+| J2 | My pay is fair compared with colleagues here who do similar work. | Internal equity |
+| J3 | I understand how my pay, increases and any bonuses are decided. | Pay transparency |
+| J4 | The organisation has a clear remuneration policy that employees can access and understand. | Policy clarity |
+| J5 | Pay decisions are applied consistently, without favouritism or discrimination, in line with equal pay for work of equal value. | Procedural fairness (EEA s6(4)) |
+| J6 | Annual increases are reasonable given the cost of living. | Cost-of-living adequacy |
+| J7 | The benefits offered (such as medical aid, retirement fund, leave or allowances) meet my needs. | Benefits |
+| J8 | I am paid correctly and on time, and my payslip deductions are clearly explained. | Payroll accuracy (BCEA s32-33) |
+| J9 | I understand the full value of my package, including benefits and contributions the organisation pays for me. | Total reward awareness |
 
-### Section L: Employee Net Promoter Score (eNPS)
+### Section K: Communication and Employee Voice
+
+| # | Statement | Construct |
+|---|---|---|
+| K1 | I receive the information I need to do my job in good time. | Information flow |
+| K2 | Important information is shared in a language and format that everyone can understand. | Accessible communication (SA) |
+| K3 | Leaders communicate regularly through channels that reach everyone, including staff without email (meetings, WhatsApp, notice boards). | Channel reach |
+| K4 | I hear about important news from the organisation before I hear it through rumours. | Communication timeliness |
+| K5 | I have regular opportunities to ask leaders questions and get honest answers. | Two-way dialogue |
+| K6 | My ideas and suggestions are listened to and taken seriously. | Voice |
+| K7 | I feel comfortable reporting unethical behaviour without fear of victimisation. | Speak up / whistleblowing |
+| K8 | I believe positive action will be taken as a result of this survey. | Survey confidence |
+
+### Section L: Change Management
+
+| # | Statement | Construct |
+|---|---|---|
+| L1 | When changes are made here, the reasons for them are clearly explained. | Awareness (why) |
+| L2 | Employees are consulted before changes that affect them are made. | Involvement / consultation |
+| L3 | I get enough training and support to adapt to new systems, processes or structures. | Ability / enablement |
+| L4 | Changes in this organisation are well planned and well implemented. | Change execution |
+| L5 | Leaders follow through on the changes they announce. | Follow-through |
+| L6 | My manager keeps me informed about how changes will affect me and my team. | Manager as change agent |
+| L7 | The pace of change is managed so that it does not overwhelm people. | Change load / fatigue |
+| L8 | I feel positive about the changes happening in this organisation. | Change readiness / commitment |
+
+### Section M: Role Clarity, Purpose and Teamwork
+
+| # | Statement | Construct |
+|---|---|---|
+| M1 | I know exactly what my job requires me to do. | Role clarity |
+| M2 | The work I do is meaningful and makes a difference to our customers or community. | Purpose |
+| M3 | My colleagues are committed to doing quality work. | Team standards |
+| M4 | Different teams or departments cooperate well to get work done. | Collaboration |
+| M5 | I have enough authority to make decisions about how I do my work. | Autonomy |
+
+### Section N: Employee Net Promoter Score (eNPS)
 
 | # | Question | Scale |
 |---|---|---|
-| L1 | On a scale of 0 to 10, how likely are you to recommend this organisation as a place to work? | 0 (Not at all likely) to 10 (Extremely likely) |
+| N1 | On a scale of 0 to 10, how likely are you to recommend this organisation as a place to work? | 0 (Not at all likely) to 10 (Extremely likely) |
 
-### Section M: Open Questions
+### Section O: Open Questions
 
 | # | Question |
 |---|---|
-| M1 | What is the one thing this organisation does well that you would not want to change? |
-| M2 | What is the one thing that would most improve your experience of working here? |
-| M3 | What support would help you most when work or life becomes challenging? |
-| M4 | What skills or training would you like to develop over the next 12 months? |
+| O1 | What is the one thing this organisation does well that you would not want to change? |
+| O2 | What is the one thing that would most improve your experience of working here? |
+| O3 | What support would help you most when work or life becomes challenging? |
+| O4 | What skills or training would you like to develop over the next 12 months? |
+| O5 | What would help you most during changes in the organisation, or what concerns you about current changes? |
 
-### Optional demographic questions (for group reporting only)
+### Optional "About you" questions (for group reporting only)
 
-Use only the fields you need, with broad bands so small groups cannot be identified. Each must include a "Prefer not to say" option.
+Every question is optional and includes "Prefer not to say". Results are never reported for a group smaller than 5 people.
 
 - Department or business unit
-- Site or region
 - Length of service: less than 1 year, 1 to 3 years, 3 to 5 years, 5 to 10 years, more than 10 years
-- Job level: general worker / operator, administrative / skilled, supervisor / team leader, manager, senior manager / executive
+- Job level: general worker or operator, administrative or skilled, supervisor or team leader, manager, senior manager or executive
 - Employment type: permanent, fixed-term, part-time, contractor or temp (labour broker)
 - Age band: under 25, 25 to 34, 35 to 44, 45 to 54, 55 and older
 - Gender
-- Population group (only if needed for Employment Equity analysis, and only reported where groups are large enough)
+- Population group (only for Employment Equity analysis)
 - Disability (voluntary)
-- Preferred language
 
 ---
 
@@ -215,72 +250,31 @@ Use only the fields you need, with broad bands so small groups cannot be identif
 | D | Senior Leadership and Direction | 6 |
 | E | Work Environment, Tools and Safety | 6 |
 | F | Culture, Inclusion, Fairness and Belonging | 6 |
-| G | Organisational Support in Challenging Times | 6 |
+| G | Support in Challenging Times | 6 |
 | H | Growth, Learning and Development | 7 |
-| I | Recognition, Pay and Benefits | 5 |
-| J | Communication and Employee Voice | 5 |
-| K | Role Clarity, Purpose and Teamwork | 5 |
-| | **Rated statements** | **64** |
-| L | eNPS | 1 |
-| M | Open questions | 4 |
-| | **Total questions** | **69** |
+| I | Recognition and Performance | 4 |
+| J | Remuneration Standards and Policies | 9 |
+| K | Communication and Employee Voice | 8 |
+| L | Change Management | 8 |
+| M | Role Clarity, Purpose and Teamwork | 5 |
+| | **Rated statements** | **83** |
+| N | eNPS | 1 |
+| O | Open questions | 5 |
+| | **Total questions** | **89** |
 
 ---
 
-## 5. Scoring and analysis
+## 5. Running the survey
 
-**Favourable score.** For each statement, report the percentage of people who chose 4 or 5 (favourable), 3 (neutral) and 1 or 2 (unfavourable). Favourable percentage is the headline figure used by most global providers and is easier for managers to understand than averages.
+- **Administration:** X-Capital Resources: People sets up the survey, holds the raw data and prepares reports. See [03 Privacy and Anonymity](03-Privacy-and-Anonymity.md).
+- **Language:** offer the survey in English and the main languages of the workforce (for example isiZulu, isiXhosa, Afrikaans, Sesotho, Setswana or Sepedi), checked by first-language speakers.
+- **Access:** a mobile link via WhatsApp or SMS, QR codes on notice boards, a shared tablet on site, or a paper version collected in a sealed box. Allow completion in paid working time.
+- **Timing:** keep it open for 2 to 3 weeks, avoiding peak periods, shutdowns and wage negotiations. Run the full survey yearly and a 15 to 20 item pulse survey every quarter or six months.
+- **Unions and forums:** brief any recognised union or Employment Equity forum before launch.
+- **Response rate:** aim for at least 70%, or 85% in businesses under 50 people.
 
-**Engagement Index.** Average the favourable percentage of items A1 to A6. As a rough guide used across global benchmarks:
-
-| Engagement Index | Interpretation |
-|---|---|
-| 75% and above | High engagement, a clear strength to protect |
-| 65% to 74% | Healthy, with specific areas to improve |
-| 50% to 64% | Moderate, risk of disengagement and turnover |
-| Below 50% | Low, needs urgent attention |
-
-**Category scores.** Average the favourable percentage of all items in each section to produce a score for each of the 10 driver categories (B to K).
-
-**Key driver analysis.** Correlate each statement with the Engagement Index. Statements that correlate strongly with engagement but score low are the **priority areas**: fixing them will lift engagement the most. Statements that score high and correlate strongly are **strengths to protect**.
-
-**eNPS.** Promoters score 9 or 10, passives 7 or 8, detractors 0 to 6. eNPS = % promoters minus % detractors, giving a score from -100 to +100. Anything above 0 is positive, above +20 is good and above +40 is excellent.
-
-**Wellbeing and burnout flag.** If B2, B3 and B5 all score below 50% favourable in a team, treat this as a burnout risk and act quickly, regardless of the overall engagement score.
-
-**Open comments.** Group comments into themes, count how often each appears, and share anonymised examples. Never share comments that could identify the person.
+Scoring, benchmarks and interpretation are covered in [01 Interpreting the Results](01-Interpreting-the-Results.md). Action planning is covered in [04 Action Plan Templates](04-Action-Plan-Templates.md).
 
 ---
 
-## 6. Running the survey in a South African SME or MME
-
-**Anonymity and POPIA.** Include a short notice at the start covering: why the data is collected, who will see it, how long it will be kept, that participation is voluntary, and who the Information Officer is. Use an independent party or survey tool where possible, so employees trust that management cannot see individual answers. Set a minimum reporting group of 5 people (or 3 in very small businesses, if staff agree).
-
-**Language.** Offer the survey in English and the main languages of your workforce (for example isiZulu, isiXhosa, Afrikaans, Sesotho, Setswana or Sepedi). Have translations checked by a first-language speaker so the meaning stays the same.
-
-**Access.** Many frontline workers do not have work email or much mobile data. Offer several ways to respond: a mobile-friendly link shared via WhatsApp or SMS, a QR code on notice boards, a zero-rated or data-free link where possible, a shared tablet or kiosk on site, or a paper version collected in a sealed box. Allow completion during paid working time.
-
-**Timing.** Keep the survey open for 2 to 3 weeks. Avoid peak periods, year-end shutdowns and wage negotiation periods. Run the full survey once a year, with a short pulse survey of 10 to 15 items (including A1 to A6 and L1) every quarter or six months.
-
-**Unions and employee forums.** Where a recognised union or Employment Equity forum exists, brief them before launch. This builds trust and lifts participation.
-
-**Target response rate.** Aim for at least 70%. In businesses under 50 people, aim for 85% or more so results are reliable.
-
----
-
-## 7. From results to action
-
-1. **Share results within 4 to 6 weeks.** Leadership presents the headline results to all staff, including what did not go well.
-2. **Pick 2 or 3 priorities, not 10.** Use the key driver analysis to choose the issues that matter most.
-3. **Involve employees in the solutions.** Run short team sessions to discuss results and agree actions.
-4. **Assign owners and deadlines.** Each action has a named owner and a date.
-5. **Report back on progress.** Tell people what has changed because of the survey ("You said, we did"). This is what drives item J4 up next year.
-6. **Measure again.** Use pulse surveys to track whether the actions are working.
-
----
-
-## 8. Notes on adapting the survey
-
-- Items E4, E5, F3, G3, H5 and J2 are specific to the South African context. Keep them for a local benchmark; remove them if you want a strictly international comparison.
-- If the business has no supervisors between staff and owners, combine Sections C and D and ask about "the owner or management".
-- Keep the wording of items the same from year to year so results can be compared over time.
+*Employee Engagement Survey © X-Capital Resources: People. Administered and owned by X-Capital Resources: People. Not to be reproduced or administered without permission.*
