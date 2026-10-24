@@ -323,6 +323,7 @@ function render() {
 /* ---------- Survey ---------- */
 function submitBlocker() {
   if (!S.ready) return "Connecting to the survey store…";
+  if (S.standalone) return "This is a preview copy of the survey. Answers are not saved here. To take part, use the survey link from X-Capital Resources: People.";
   if (!S.db || !S.uid) return "Sign in to claude.ai with the account this survey was shared with to submit your answers.";
   if (S.canWrite === false || S.writeRefused) return "Your access to this page is view-only. Ask X-Capital Resources: People for Contributor access so you can submit.";
   return "";
@@ -720,7 +721,7 @@ loadDraft();
 render();
 (async () => {
   const use = window.claude?.use;
-  if (!use) { S.ready = true; render(); return }
+  if (!use) { S.ready = true; S.standalone = true; render(); return }
   const [db, user, dl] = await Promise.all([use("db"), use("user"), use("downloads")]);
   S.db = db; S.dl = dl;
   if (user) {
